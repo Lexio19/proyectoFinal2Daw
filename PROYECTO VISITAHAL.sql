@@ -1,0 +1,53 @@
+CREATE DATABASE PROYECTO_VISITAHAL;
+
+CREATE TABLE SERVICIO(
+idServicio int PRIMARY KEY,
+nombre VARCHAR(50),
+descripcion VARCHAR(100)
+);
+
+CREATE TABLE ROL(
+idRol int PRIMARY KEY,
+tipo VARCHAR(50)
+);
+
+CREATE TABLE ALOJAMIENTO(
+idAlojamiento int PRIMARY KEY,
+tipo varchar(50)
+);
+
+CREATE TABLE USUARIO(
+DNI VARCHAR(9),
+contrasenna VARCHAR(30),
+nombre VARCHAR(30),
+apellidos VARCHAR(50), 
+CP CHAR(5),
+idRol int,
+PRIMARY KEY (DNI, contrasenna),
+FOREIGN KEY (idRol) REFERENCES ROL(idRol)
+ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+CREATE TABLE CONTRATA(
+idServicio int,
+DNI VARCHAR(9),
+contrasenna VARCHAR(30),
+fechaContrata DATE,
+PRIMARY KEY(idServicio, DNI, contrasenna, fechaContrata),
+FOREIGN KEY(idServicio) REFERENCES SERVICIO (idServicio)
+ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (DNI, contrasenna) REFERENCES usuario(DNI, contrasenna)
+ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+CREATE TABLE RESERVA(
+DNI VARCHAR(9),
+contrasenna VARCHAR(30),
+idAlojamiento int,
+fechaReserva DATE,
+PRIMARY KEY(DNI, contrasenna, idAlojamiento, fechaReserva),
+FOREIGN KEY (idAlojamiento) REFERENCES ALOJAMIENTO(idAlojamiento)
+ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (DNI, contrasenna) REFERENCES USUARIO (DNI, contrasenna)
+ON DELETE RESTRICT ON UPDATE RESTRICT
+);

@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  apache:
+    image: php:apache
+    container_name: apache_server
+    ports:
+      - "80:80"
+    volumes:
+      - ./html:/usr/local/apache2/htdocs
+    networks:
+      - my_network
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql_server
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
