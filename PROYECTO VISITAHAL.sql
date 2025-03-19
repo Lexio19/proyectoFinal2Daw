@@ -1,42 +1,44 @@
 CREATE DATABASE PROYECTO_VISITAHAL;
 
 CREATE TABLE SERVICIO(
-idServicio int PRIMARY KEY,
+idServicio int AUTO_INCREMENT PRIMARY KEY,
 nombre VARCHAR(50),
 descripcion VARCHAR(100)
 );
 
 CREATE TABLE ROL(
-idRol int PRIMARY KEY,
+idRol int AUTO_INCREMENT PRIMARY KEY,
 tipo VARCHAR(50)
 );
 
 CREATE TABLE ALOJAMIENTO(
-idAlojamiento int PRIMARY KEY,
+idAlojamiento int AUTO_INCREMENT  PRIMARY KEY,
 tipo varchar(50)
 );
 
-CREATE TABLE USUARIO(
-DNI VARCHAR(9),
-contrasenna VARCHAR(30),
-nombre VARCHAR(30),
-apellidos VARCHAR(50), 
-CP CHAR(5),
-idRol int,
-PRIMARY KEY (DNI, contrasenna),
-FOREIGN KEY (idRol) REFERENCES ROL(idRol)
-ON DELETE RESTRICT ON UPDATE RESTRICT
+CREATE TABLE USUARIO (
+    idUsuario INT AUTO_INCREMENT PRIMARY KEY,
+    DNI VARCHAR(9) UNIQUE,
+    correoElectronico VARCHAR(30) UNIQUE,
+    contrasenna VARCHAR(30),
+    nombre VARCHAR(30),
+    apellidos VARCHAR(50), 
+    CP CHAR(5),
+    idRol INT,
+    FOREIGN KEY (idRol) REFERENCES ROL(idRol)
+    ON DELETE RESTRICT ON UPDATE RESTRICT
 );
+
 
 CREATE TABLE CONTRATA(
 idServicio int,
-DNI VARCHAR(9),
+idUsuario int,
 contrasenna VARCHAR(30),
 fechaContrata DATE,
-PRIMARY KEY(idServicio, DNI, contrasenna, fechaContrata),
+PRIMARY KEY(idServicio, idUsuario, fechaContrata),
 FOREIGN KEY(idServicio) REFERENCES SERVICIO (idServicio)
 ON DELETE RESTRICT ON UPDATE RESTRICT,
-FOREIGN KEY (DNI, contrasenna) REFERENCES usuario(DNI, contrasenna)
+FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario)
 ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 

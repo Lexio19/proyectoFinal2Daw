@@ -7,7 +7,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./html:/usr/local/apache2/htdocs
+      - ./html:/var/www/html
     networks:
       - my_network
     depends_on:
@@ -26,6 +26,18 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - my_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "8080:80"
     networks:
       - my_network
 
