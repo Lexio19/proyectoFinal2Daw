@@ -33,23 +33,21 @@ CREATE TABLE USUARIO (
 CREATE TABLE CONTRATA(
 idServicio int,
 idUsuario int,
-contrasenna VARCHAR(30),
 fechaContrata DATE,
 PRIMARY KEY(idServicio, idUsuario, fechaContrata),
 FOREIGN KEY(idServicio) REFERENCES SERVICIO (idServicio)
 ON DELETE RESTRICT ON UPDATE RESTRICT,
-FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario)
+FOREIGN KEY (idUsuario) REFERENCES USUARIO(idUsuario)
 ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
 CREATE TABLE RESERVA(
-DNI VARCHAR(9),
-contrasenna VARCHAR(30),
+idUsuario int,
 idAlojamiento int,
 fechaReserva DATE,
-PRIMARY KEY(DNI, contrasenna, idAlojamiento, fechaReserva),
+PRIMARY KEY(idUsuario, idAlojamiento, fechaReserva),
 FOREIGN KEY (idAlojamiento) REFERENCES ALOJAMIENTO(idAlojamiento)
 ON DELETE RESTRICT ON UPDATE RESTRICT,
-FOREIGN KEY (DNI, contrasenna) REFERENCES USUARIO (DNI, contrasenna)
+FOREIGN KEY (idUsuario) REFERENCES USUARIO (idUsuario)
 ON DELETE RESTRICT ON UPDATE RESTRICT
 );
