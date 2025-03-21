@@ -12,7 +12,7 @@ class Conexion {
     private $conexion;
 
     public function __construct(
-        $servidor = 'localhost', 
+        $servidor = 'mysql_server', 
         $usuario = 'root', 
         $contrasenna = 'rootpassword', 
         $bbdd = 'PROYECTO_VISITAHAL'
