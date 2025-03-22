@@ -1,14 +1,13 @@
 <?php 
+session_start();
 require_once 'Conexion.php';
-
+require_once 'controladorLogin.php';
 try{
-    $db = new Conexion();
+    $db= new Conexion;
     $conexion = $db->conectar();
-    //echo "Conexión exitosa";
-    
 } catch (PDOException $ex) {
-    die("Error en la conexión $ex->getMessage");
-}
+    $error = $ex->getMessage();
+};
 
 
 ?>
@@ -26,16 +25,21 @@ try{
 
     <div class="formulario">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-            <label>Introduzca su usuario</label><br>
-            <input type="text" name="login" value="<?php if (filter_has_var(INPUT_POST, "login")) echo filter_input(INPUT_POST, "login"); ?>"><br><br>
+            <label>Introduzca su email</label><br>
+            <input type="text" name="email" value="<?php if (filter_has_var(INPUT_POST, "email")) echo filter_input(INPUT_POST, "email"); ?>"><br><br>
 
             <label>Introduzca la contraseña</label><br>
-            <input type="text" name="clave" value="<?php if (filter_has_var(INPUT_POST, "clave")) echo filter_input(INPUT_POST, "clave"); ?>"><br><br>
+            <input type="text" name="password" value="<?php if (filter_has_var(INPUT_POST, "password")) echo filter_input(INPUT_POST, "password"); ?>"><br><br>
 
             <br><br>
 
             <button class="boton" type="submit" name="autenticarse">Iniciar sesión</button>
         </form>
+    </div>
+
+    <div class="registro">
+        <h2>¿No tienes cuenta?</h2>
+        <a href="registro.php">Regístrate</a>
     </div>
 
 </body>
@@ -50,4 +54,8 @@ while ($bungalow = $consultaBungalows->fetch(PDO::FETCH_ASSOC)) {
     echo $bungalow['tipo'] . "<br>";
 }
 
+if (isset($error) && !empty($error)) {
+    echo "<h2>Error en la conexión</h2>";
+    echo $error;
+}
 ?>

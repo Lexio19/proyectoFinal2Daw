@@ -20,7 +20,7 @@ CREATE TABLE USUARIO (
     idUsuario INT AUTO_INCREMENT PRIMARY KEY,
     DNI VARCHAR(9) UNIQUE,
     correoElectronico VARCHAR(30) UNIQUE,
-    contrasenna VARCHAR(30),
+    contrasenna VARCHAR(400),
     nombre VARCHAR(30),
     apellidos VARCHAR(50), 
     CP CHAR(5),
