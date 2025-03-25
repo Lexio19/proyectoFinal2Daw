@@ -11,8 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
         // Se puede meter todo en un do-while para controlar mejor las veces que dejamos al usuario intentar la autenticación
         if ((filter_input(INPUT_POST, "email") && (filter_input(INPUT_POST, "password") !== null))) {
             // Validación básica de los campos del formulario
-            $email = validarEmail(filter_input(INPUT_POST, "email"));
-            $password = validarPassword(filter_input(INPUT_POST, "password"));
+            $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
+            $password = filter_input(INPUT_POST, "password");
 
             $errores = []; // Inicializamos el array de errores
 
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
 
         if (empty($errores)) {
             // Conexión a la base de datos
-            $passwordCifrada = password_hash($password, PASSWORD_DEFAULT);
+            
 
             // Consulta preparada para obtener la clave del usuario
             $consultaPassword = $conexion->prepare("SELECT contrasenna FROM USUARIO WHERE correoElectronico = ?");
@@ -42,11 +42,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
                 // Si el usuario y la contraseña coinciden, comprobamos su rol con consultas preparadas
                 if (password_verify($password, $fila['contrasenna'])) {
                     //Con este INNER JOIN nos ahorramos una consulta
-                    $consultaRolYTipoUusario = $conexion->prepare("SELECT u.id_rol, r.tipo FROM usuarios u INNER JOIN "
-                        . "roles r ON u.id_rol= r.id_rol WHERE u.login= ?");
-                    $consultaRolYTipoUusario->bindParam(1, $login, PDO::PARAM_STR);
-                    $consultaRolYTipoUusario->execute();
-                    $fila = $consultaRolYTipoUusario->fetch(PDO::FETCH_ASSOC);
+                    $consultaRolYTipoUsuario = $conexion->prepare("SELECT u.idRol, r.tipo FROM USUARIO u INNER JOIN "
+                        . "ROL r ON u.idRol= r.idRol WHERE u.correoElectronico= ?");
+                    $consultaRolYTipoUsuario->bindParam(1, $email, PDO::PARAM_STR);
+                    $consultaRolYTipoUsuario->execute();
+                    $fila = $consultaRolYTipoUsuario->fetch(PDO::FETCH_ASSOC);
 
                     if ($fila) {
                         $tipo = $fila['tipo'];
@@ -55,15 +55,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
                         switch ($tipo) {
                             case 'administrador':
                                 $_SESSION['rol'] = $tipo;
-                                header('Location: areaAdmin.php?usuario=' . $login);
+                                header('Location: areaAdmin.php?usuario=' . $email);
+                            
                                 break;
-                            case 'usuario':
+                            case 'cliente':
                                 $_SESSION['rol'] = $tipo;
-                                header('Location: paginaUsuario.php?usuario=' . $login);
-                                break;
-                            case 'invitado':
-                                $_SESSION['rol'] = $tipo;
-                                header('Location: verEspectaculo.php?usuario=' . $login);
+                                header('Location: bienvenidoCliente.php?usuario=' . $email);
                                 break;
                         }
                     } else {
@@ -83,6 +80,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
     } catch (Exception $ex) {
         echo "ERROR: $ex";
     }
+
+    if (!empty($errores)) {
+        foreach ($errores as $error) {
+            echo "<p style='color:red;'>$error</p>";
+        }
+    }
+    
 }
 ?>
 

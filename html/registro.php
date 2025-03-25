@@ -28,6 +28,7 @@ require_once 'controladorRegistro.php';
             <input type="text" name="apellidos" value="<?php if (filter_has_var(INPUT_POST, "apellidos")) echo filter_input(INPUT_POST, "apellidos"); ?>"><br><br>
             
             <label>Introduzca la contraseña</label><br>
+            <p>La contraseña deberá tener al menos 5 caracteres, una mayúscula y un número</p>
             <input type="text" name="password" value="<?php if (filter_has_var(INPUT_POST, "password")) echo filter_input(INPUT_POST, "password"); ?>"><br><br>
 
           
@@ -38,7 +39,7 @@ require_once 'controladorRegistro.php';
             <button class="boton" type="submit" name="registrarse">Registrarse</button>
         </form>
     </div>
-
+    <br><br>
     <div>   
         <a href="index.php">Volver a la página de inicio</a>
     </div>
