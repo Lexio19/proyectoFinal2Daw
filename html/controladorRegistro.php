@@ -45,13 +45,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "registra
     if (empty($errores)) {
         $passwordCifrada = password_hash($password, PASSWORD_DEFAULT);
 
-        $consulta = $conexion->prepare("INSERT INTO USUARIO (DNI, correoElectronico, contrasenna, nombre, apellidos, CP) VALUES (?, ?, ?, ?, ?, ?)");
+        $consulta = $conexion->prepare("INSERT INTO USUARIO (DNI, correoElectronico, contrasenna, nombre, apellidos, CP, idRol) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $consulta->bindParam(1, $dni, PDO::PARAM_STR);
         $consulta->bindParam(2, $email, PDO::PARAM_STR);
         $consulta->bindParam(3, $passwordCifrada, PDO::PARAM_STR);
         $consulta->bindParam(4, $usuario, PDO::PARAM_STR);
         $consulta->bindParam(5, $apellidos, PDO::PARAM_STR);
         $consulta->bindParam(6, $codigoPostal, PDO::PARAM_STR);
+        $consulta->bindParam(7, $idRol = 2, PDO::PARAM_INT);
         $consulta->execute();
 
         header('Location: index.php');

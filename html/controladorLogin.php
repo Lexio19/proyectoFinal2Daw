@@ -1,5 +1,5 @@
 <?php
-
+ob_start();//Activar el buffer de salida
 session_start();
 require_once 'Conexion.php';
 require_once 'funcionesValidacion.php';
@@ -47,10 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
                     $consultaRolYTipoUsuario->bindParam(1, $email, PDO::PARAM_STR);
                     $consultaRolYTipoUsuario->execute();
                     $fila = $consultaRolYTipoUsuario->fetch(PDO::FETCH_ASSOC);
-
+        
                     if ($fila) {
-                        $tipo = $fila['tipo'];
-
+                    $tipo = $fila['tipo'];
                         // Redirigir según el tipo de rol usando un switch
                         switch ($tipo) {
                             case 'administrador':
@@ -60,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
                                 break;
                             case 'cliente':
                                 $_SESSION['rol'] = $tipo;
-                                header('Location: bienvenidoCliente.php?usuario=' . $email);
+                                header('Location: bienvenidaCliente.php?usuario=' . $email);
                                 break;
                         }
                     } else {
@@ -81,12 +80,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
         echo "ERROR: $ex";
     }
 
-    if (!empty($errores)) {
-        foreach ($errores as $error) {
-            echo "<p style='color:red;'>$error</p>";
-        }
-    }
+  
     
 }
+
+if (!empty($errores)) {
+    foreach ($errores as $error) {
+        echo "<p style='color:red;'>$error</p>";
+    }
+}
+
+ob_end_flush();//Vaciar el buffer de salida
 ?>
 

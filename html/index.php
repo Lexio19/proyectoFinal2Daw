@@ -42,20 +42,29 @@ try{
         <a href="registro.php">Regístrate</a>
     </div>
 
+
+<br><br>
+    <h2>ALOJAMIENTOS</h2>
+    <?php 
+
+$consultaBungalows= $conexion->query("SELECT * FROM ALOJAMIENTO"); 
+
+while ($bungalow = $consultaBungalows->fetch(PDO::FETCH_ASSOC)) {
+
+    echo "<a href='alojamiento.php?id=" . $bungalow['idAlojamiento'] . "'>" . $bungalow['tipo'] . "</a><br>";
+} ?>
+
+<br><br>
+<h2>SERVICIOS</h2>
+<?php 
+$consultaServicios=$conexion->query("SELECT * FROM SERVICIO");
+ while ($servicio = $consultaServicios->fetch(PDO::FETCH_ASSOC)) {
+    echo $servicio['descripcion'] . "<br>";
+ }
+
+
+?>
 </body>
 </html>
 
 
-<?php 
-
-$consultaBungalows= $conexion->query("SELECT * FROM ALOJAMIENTO");
-
-while ($bungalow = $consultaBungalows->fetch(PDO::FETCH_ASSOC)) {
-    echo $bungalow['tipo'] . "<br>";
-}
-
-if (isset($error) && !empty($error)) {
-    echo "<h2>Error en la conexión</h2>";
-    echo $error;
-}
-?>
