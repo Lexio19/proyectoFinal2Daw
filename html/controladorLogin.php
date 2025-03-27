@@ -49,17 +49,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
                     $fila = $consultaRolYTipoUsuario->fetch(PDO::FETCH_ASSOC);
         
                     if ($fila) {
+                        $consultaDatosUsuario= $conexion->query("SELECT * FROM USUARIO WHERE correoElectronico = '$email'");
+                        $datosUsuario = $consultaDatosUsuario->fetch(PDO::FETCH_ASSOC);
                     $tipo = $fila['tipo'];
                         // Redirigir según el tipo de rol usando un switch
                         switch ($tipo) {
                             case 'administrador':
                                 $_SESSION['rol'] = $tipo;
-                                header('Location: areaAdmin.php?usuario=' . $email);
+                                $_SESSION['email'] = $email;
+                                $_SESSION['DNI']= $datosUsuario['DNI'];
+                                $_SESSION['usuario'] = $datosUsuario['nombre'];
+                                $dni= $datosUsuario['DNI'];
+                                header('Location: areaAdmin.php?usuario=' . $dni);
                             
                                 break;
                             case 'cliente':
                                 $_SESSION['rol'] = $tipo;
-                                header('Location: bienvenidaCliente.php?usuario=' . $email);
+                                $_SESSION['email'] = $email;
+                                $_SESSION['DNI']= $datosUsuario['DNI'];
+                                $_SESSION['usuario'] = $datosUsuario['nombre'];
+                                $nombreUsuario= $datosUsuario['nombre'];
+                                header('Location: bienvenidaCliente.php');
                                 break;
                         }
                     } else {

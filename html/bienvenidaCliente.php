@@ -1,5 +1,8 @@
 <?php 
-
+session_start();
+require_once 'Conexion.php';
+require_once 'controladorLogin.php';
+$nombreUsuario= $_SESSION['usuario'];
 
 
 ?>
@@ -12,7 +15,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>HOLA, CLIENTE</h1>
+    <h1>HOLA, CLIENTE <?php echo $nombreUsuario ?></h1>
     <div>   
         <a href="index.php">Volver a la página de inicio</a>
     </div>

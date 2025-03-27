@@ -1,5 +1,4 @@
 <?php 
-session_start();
 require_once 'Conexion.php';
 require_once 'controladorLogin.php';
 try{

@@ -1,50 +1,62 @@
-<?php 
+<?php
 session_start();
 require_once 'Conexion.php';
 
 try {
     $db = new Conexion;
     $conexion = $db->conectar();
-
-    // Guardar en sesión si viene por POST
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idAlojamiento'])) {
-        $_SESSION['idAlojamiento'] = intval($_POST['idAlojamiento']);
-    }
-
-    // Recuperar el ID desde la sesión
-    if (isset($_SESSION['idAlojamiento'])) {
-        $id = $_SESSION['idAlojamiento'];
-        $consulta = $conexion->prepare("SELECT * FROM ALOJAMIENTO WHERE id = ?");
-        $consulta->bindParam(1, $id, PDO::PARAM_INT);
-        $consulta->execute();
-        $alojamiento = $consulta->fetch(PDO::FETCH_ASSOC);
-
-        if (!$alojamiento) {
-            echo "Alojamiento no encontrado.";
-            exit;
-        }
-    } else {
-        echo "No se ha seleccionado un alojamiento.";
-        exit;
-    }
 } catch (PDOException $ex) {
-    echo "Error en la conexión: " . $ex->getMessage();
-    exit;
+    die("Error de conexión: " . $ex->getMessage());
+}
+
+// Verificar si hay un ID en la URL
+if (filter_has_var(INPUT_GET, 'id') && filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT)) {
+    $idAlojamiento = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+
+    // Obtener los datos del bungalow desde la base de datos
+    $consulta = $conexion->prepare("SELECT * FROM ALOJAMIENTO WHERE idAlojamiento = ?");
+    $consulta->bindParam(1, $idAlojamiento, PDO::PARAM_INT);
+    $consulta->execute();
+    $bungalow = $consulta->fetch(PDO::FETCH_ASSOC);
+
+    if (!$bungalow) {
+        die("El alojamiento no existe.");
+    }
+} else {
+    die("ID de alojamiento no válido.");
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title><?php echo htmlspecialchars($alojamiento['tipo']); ?></title>
     <link rel="stylesheet" href="styles.css">
+    <title><?php echo htmlspecialchars($bungalow['tipo']); ?></title>
 </head>
 <body>
-    <h1><?php echo htmlspecialchars($alojamiento['tipo']); ?></h1>
-    <p>Descripción: <?php echo htmlspecialchars($alojamiento['descripcion']); ?></p>
-    <p>Precio: <?php echo htmlspecialchars($alojamiento['precio']); ?> €</p>
-    <p>Ubicación: <?php echo htmlspecialchars($alojamiento['ubicacion']); ?></p>
+
+    <h1><?php echo htmlspecialchars($bungalow['tipo']); ?></h1>
+
+    <img src="imagenes/alojamientos/<?php echo $bungalow['idAlojamiento']; ?>.jpg" 
+         alt="<?php echo htmlspecialchars($bungalow['tipo']); ?>" 
+         width="300px">
+
+    <p><strong>Tipo:</strong> <?php echo htmlspecialchars($bungalow['tipo']); ?></p>
+    <!--<p><strong>Capacidad:</strong> <?php echo htmlspecialchars($bungalow['capacidad']); ?> personas</p>
+    <p><strong>Precio:</strong> <?php echo htmlspecialchars($bungalow['precio']); ?> € por noche</p> -->
 
     <a href="index.php">Volver a la página principal</a>
+
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
