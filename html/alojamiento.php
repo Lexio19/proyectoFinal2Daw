@@ -55,7 +55,8 @@ if (filter_has_var(INPUT_GET, 'id') && filter_input(INPUT_GET, 'id', FILTER_VALI
     <?php } else { ?>
         <p><a href="index.php">Inicia sesión</a> para reservar este bungaló.</p>
     <?php }; ?>
-
+    <a href="bienvenidaCliente.php">Bienvenida</a>
+    <br><br>
     <a href="index.php">Volver a la página principal</a>
 
 </body>
