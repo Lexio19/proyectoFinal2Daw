@@ -17,6 +17,11 @@
             exit; // Detener la ejecución después de redirigir
         }
 
+        if(filter_has_var(INPUT_POST, "inicio")){
+            header('Location: bienvenidaCliente.php');
+            exit; // Detener la ejecución después de redirigir
+        }
+
         ?>
 
 <form action="controladorReserva.php" method="POST">
@@ -48,4 +53,7 @@
 
     <button type="submit" name="cerrarSesion">Cerrar sesión</button>
 
+    <br><br>
+    <button type="submit" name="inicio">Inicio</button>
+    
     </form>

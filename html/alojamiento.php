@@ -12,7 +12,6 @@ try {
 // Verificar si hay un ID en la URL
 if (filter_has_var(INPUT_GET, 'id') && filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT)) {
     $idAlojamiento = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-
     // Obtener los datos del bungalow desde la base de datos
     $consulta = $conexion->prepare("SELECT * FROM ALOJAMIENTO WHERE idAlojamiento = ?");
     $consulta->bindParam(1, $idAlojamiento, PDO::PARAM_INT);
@@ -55,7 +54,6 @@ if (filter_has_var(INPUT_GET, 'id') && filter_input(INPUT_GET, 'id', FILTER_VALI
     <?php } else { ?>
         <p><a href="index.php">Inicia sesión</a> para reservar este bungaló.</p>
     <?php }; ?>
-    <a href="bienvenidaCliente.php">Bienvenida</a>
     <br><br>
     <a href="index.php">Volver a la página principal</a>
 

@@ -39,6 +39,10 @@ if (filter_has_var(INPUT_POST, "eliminarReserva")) {
     }
 }
 
+if(filter_has_var(INPUT_POST, "reservar")){
+    header('Location: reservar.php');
+    exit; // Detener la ejecución después de redirigir
+}
 
 
 
@@ -50,29 +54,22 @@ if (filter_has_var(INPUT_POST, "eliminarReserva")) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=, initial-scale=1.0">
-    <title>Document</title>
+    <title>Página principal de cliente</title>
 </head>
 <body>
     <h1>HOLA, CLIENTE <?php echo $nombreUsuario ?></h1>
 
-    <div>
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-
-    <button type="submit" name="cerrarSesion">Cerrar sesión</button>
-
-    </form>
-    </div>
+   
     
 
-    <h2>ALOJAMIENTOS</h2>
-    <?php 
+    <h2>RESERVA DE ALOJAMIENTOS</h2>
+    
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 
-$consultaBungalows= $conexion->query("SELECT * FROM ALOJAMIENTO"); 
+    <button type="submit" name="reservar">Reservar</button>
 
-while ($bungalow = $consultaBungalows->fetch(PDO::FETCH_ASSOC)) {
+</form>
 
-    echo "<a href='alojamiento.php?id=" . $bungalow['idAlojamiento'] . "'>" . $bungalow['tipo'] . "</a><br>";
-} ?>
 
 <br><br>
 <h2>SERVICIOS</h2>
@@ -85,9 +82,7 @@ $consultaServicios=$conexion->query("SELECT * FROM SERVICIO");
  } ?>
 
 <br><br>
-<div>   
-        <a href="index.php">Volver a la página de inicio</a>
-    </div>
+
 
     <div>
     <br><br>
@@ -120,6 +115,14 @@ $consultaServicios=$conexion->query("SELECT * FROM SERVICIO");
         echo "<p>$mensaje</p>";
     }
 } ?>
+<br><br>
+<div>
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+
+    <button type="submit" name="cerrarSesion">Cerrar sesión</button>
+
+    </form>
+    </div>
 
 </body>
 </html>
