@@ -8,7 +8,7 @@ $conexion = $db->conectar();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autenticarse")) {
     try {
-        // Se puede meter todo en un do-while para controlar mejor las veces que dejamos al usuario intentar la autenticación
+        
         if ((filter_input(INPUT_POST, "email") && (filter_input(INPUT_POST, "password") !== null))) {
             // Validación básica de los campos del formulario
             $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
@@ -60,6 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
                                 $_SESSION['DNI']= $datosUsuario['DNI'];
                                 $_SESSION['usuario'] = $datosUsuario['nombre'];
                                 $dni= $datosUsuario['DNI'];
+
                                 header('Location: areaAdmin.php?usuario=' . $dni);
                             
                                 break;
@@ -68,6 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
                                 $_SESSION['email'] = $email;
                                 $_SESSION['DNI']= $datosUsuario['DNI'];
                                 $_SESSION['usuario'] = $datosUsuario['nombre'];
+                                $_SESSION['idUsuario'] = $datosUsuario['idUsuario'];
                                 $nombreUsuario= $datosUsuario['nombre'];
                                 header('Location: bienvenidaCliente.php');
                                 break;
@@ -101,5 +103,5 @@ if (!empty($errores)) {
 }
 
 ob_end_flush();//Vaciar el buffer de salida
-?>
+
 

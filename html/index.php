@@ -9,6 +9,7 @@ try{
 };
 
 
+
 ?>
 
 <!DOCTYPE html>
@@ -41,6 +42,8 @@ try{
         <a href="registro.php">Regístrate</a>
     </div>
 
+
+    
 
 <br><br>
     <h2>ALOJAMIENTOS</h2>

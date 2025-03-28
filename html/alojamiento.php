@@ -45,6 +45,17 @@ if (filter_has_var(INPUT_GET, 'id') && filter_input(INPUT_GET, 'id', FILTER_VALI
     <!--<p><strong>Capacidad:</strong> <?php echo htmlspecialchars($bungalow['capacidad']); ?> personas</p>
     <p><strong>Precio:</strong> <?php echo htmlspecialchars($bungalow['precio']); ?> € por noche</p> -->
 
+
+
+    <?php if (isset($_SESSION['usuario'])){ ?>
+        <form action="reservar.php" method="POST">
+            <input type="hidden" name="idAlojamiento" value="<?php echo $bungalow['idAlojamiento']; ?>">
+            <button type="submit">Reservar Bungaló</button>
+        </form>
+    <?php } else { ?>
+        <p><a href="index.php">Inicia sesión</a> para reservar este bungaló.</p>
+    <?php }; ?>
+
     <a href="index.php">Volver a la página principal</a>
 
 </body>

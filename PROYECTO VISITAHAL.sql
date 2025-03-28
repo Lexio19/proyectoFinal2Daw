@@ -31,10 +31,10 @@ CREATE TABLE USUARIO (
 
 
 CREATE TABLE CONTRATA(
-idServicio int,
-idUsuario int,
-fechaContrata DATE,
-PRIMARY KEY(idServicio, idUsuario, fechaContrata),
+idContrata int AUTO_INCREMENT PRIMARY KEY,
+idServicio int NOT NULL,
+idUsuario int NOT NULL,
+fechaContrata DATE NOT NULL,
 FOREIGN KEY(idServicio) REFERENCES SERVICIO (idServicio)
 ON DELETE RESTRICT ON UPDATE RESTRICT,
 FOREIGN KEY (idUsuario) REFERENCES USUARIO(idUsuario)
@@ -42,10 +42,11 @@ ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
 CREATE TABLE RESERVA(
-idUsuario int,
-idAlojamiento int,
-fechaReserva DATE,
-PRIMARY KEY(idUsuario, idAlojamiento, fechaReserva),
+idReserva int AUTO_INCREMENT PRIMARY KEY,
+idUsuario int NOT NULL,
+idAlojamiento int NOT NULL,
+fechaEntrada DATE NOT NULL,
+fechaSalida DATE NOT NULL,
 FOREIGN KEY (idAlojamiento) REFERENCES ALOJAMIENTO(idAlojamiento)
 ON DELETE RESTRICT ON UPDATE RESTRICT,
 FOREIGN KEY (idUsuario) REFERENCES USUARIO (idUsuario)
