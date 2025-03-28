@@ -4,13 +4,29 @@ session_start();
 require_once 'Conexion.php';
 require_once 'controladorLogin.php';
 $nombreUsuario= $_SESSION['usuario'];
-
+$idUsuario= $_SESSION['idUsuario'];
+try{
+    $db= new Conexion;
+    $conexion = $db->conectar();
+} catch (PDOException $ex) {
+    $error = $ex->getMessage();
+};
 if(filter_has_var(INPUT_POST, "cerrarSesion")){
     session_unset(); // Destruir todas las variables de sesión
     session_destroy();
     header('Location: index.php');
     exit; // Detener la ejecución después de redirigir
 }
+
+if (!isset($_SESSION['usuario'])) {
+    header('Location: index.php');
+    exit; // Detener la ejecución después de redirigir
+}
+
+$consultaReservas= $conexion->query("SELECT * FROM RESERVA WHERE idUsuario = '$idUsuario'");
+$consultaReservas->execute();
+
+
 
 
 ?>
@@ -55,6 +71,23 @@ $consultaServicios=$conexion->query("SELECT * FROM SERVICIO");
 <br><br>
 <div>   
         <a href="index.php">Volver a la página de inicio</a>
+    </div>
+
+    <div>
+    <br><br>
+    <h2>Mis Reservas</h2>
+    <?php 
+    // Verificar si el usuario tiene reservas
+    if ($consultaReservas->rowCount() > 0) {
+        echo "<ul>"; // Empezamos una lista desordenada
+        while ($reserva = $consultaReservas->fetch(PDO::FETCH_ASSOC)) {
+            echo "<li><strong>Bungalow:</strong> | <strong>Fecha de entrada:</strong> " . $reserva['fechaEntrada'] . " | <strong>Fecha de salida:</strong> " . $reserva['fechaSalida'] . "</li>";
+        }
+        echo "</ul>"; // Cerramos la lista
+    } else {
+        echo "No tienes reservas activas en este momento.";
+    }
+    ?>
     </div>
 </body>
 </html>

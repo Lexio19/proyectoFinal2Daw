@@ -32,7 +32,7 @@ try{
 
 
 // Verificar si hay alguna reserva que se solape con las fechas seleccionadas
-$insertarReserva = $conexion->prepare("
+$comprobarReservas = $conexion->prepare("
     SELECT * FROM RESERVA
     WHERE idAlojamiento = ? 
     AND (
@@ -41,20 +41,20 @@ $insertarReserva = $conexion->prepare("
         (fechaEntrada >= ? AND fechaSalida <= ?)     -- La reserva está completamente dentro del rango
     )
 ");
-$insertarReserva->execute([$idAlojamiento, $fechaEntrada, $fechaEntrada, $fechaSalida, $fechaSalida, $fechaEntrada, $fechaSalida]);
+$comprobarReservas->execute([$idAlojamiento, $fechaEntrada, $fechaEntrada, $fechaSalida, $fechaSalida, $fechaEntrada, $fechaSalida]);
 
-$reservaExistente = $insertarReserva->fetch(); // Cambié $query->fetch() a $insertarReserva->fetch()
+$reservaExistente = $comprobarReservas->fetch(); 
 
 if ($reservaExistente) {
     die("Este bungalow ya está reservado entre las fechas seleccionadas.");
 }
 
 // Si no hay conflictos, insertar la nueva reserva
-$reserva = $conexion->prepare("
+$insertarReserva = $conexion->prepare("
     INSERT INTO RESERVA (idUsuario, idAlojamiento, fechaEntrada, fechaSalida) 
     VALUES (?, ?, ?, ?)
 ");
-$reserva->execute([$idUsuario, $idAlojamiento, $fechaEntrada, $fechaSalida]);
+$insertarReserva->execute([$idUsuario, $idAlojamiento, $fechaEntrada, $fechaSalida]);
 
 echo "¡Reserva confirmada del $fechaEntrada al $fechaSalida!";
 

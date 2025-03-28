@@ -8,6 +8,11 @@ try{
     $error = $ex->getMessage();
 };
 
+if (isset($_SESSION['usuario'])) {
+    header('Location: bienvenidaCliente.php');
+    exit;
+}
+
 
 
 ?>
