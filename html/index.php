@@ -64,13 +64,14 @@ while ($bungalow = $consultaBungalows->fetch(PDO::FETCH_ASSOC)) {
 <br><br>
 <h2>SERVICIOS</h2>
 <?php 
-$consultaServicios=$conexion->query("SELECT * FROM SERVICIO");
- while ($servicio = $consultaServicios->fetch(PDO::FETCH_ASSOC)) {
-    echo $servicio['descripcion'] . "<br>";
- }
+$consultaServicios = $conexion->query("SELECT * FROM SERVICIO");
 
-
+while ($servicio = $consultaServicios->fetch(PDO::FETCH_ASSOC)) {
+    $nombreArchivo = strtolower(str_replace(' ', '_', $servicio['nombre'])) . ".html"; 
+    echo "<a href='$nombreArchivo'>" . htmlspecialchars($servicio['descripcion']) . "</a><br>";
+}
 ?>
+
 </body>
 </html>
 
