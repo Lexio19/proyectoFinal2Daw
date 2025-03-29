@@ -44,6 +44,11 @@ if(filter_has_var(INPUT_POST, "reservar")){
     exit; // Detener la ejecución después de redirigir
 }
 
+if(filter_has_var(INPUT_POST, "contratar")){
+    header('Location: contratar.php');
+    exit; // Detener la ejecución después de redirigir
+}
+
 
 
 
@@ -74,12 +79,19 @@ if(filter_has_var(INPUT_POST, "reservar")){
 <br><br>
 <h2>SERVICIOS</h2>
 <?php 
-$consultaReservas= $conexion->query("SELECT * FROM RESERVA WHERE idUsuario = '$idUsuario'");
-$consultaReservas->execute();
+
 $consultaServicios=$conexion->query("SELECT * FROM SERVICIO");
  while ($servicio = $consultaServicios->fetch(PDO::FETCH_ASSOC)) {
     echo $servicio['descripcion'] . "<br>";
- } ?>
+ } 
+ ?>
+ <br><br>
+
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+
+<button type="submit" name="contratar">Contratar un servicio</button>
+
+</form>
 
 <br><br>
 
@@ -88,6 +100,8 @@ $consultaServicios=$conexion->query("SELECT * FROM SERVICIO");
     <br><br>
     <h2>Mis reservas</h2>
     <?php 
+    $consultaReservas= $conexion->query("SELECT * FROM RESERVA WHERE idUsuario = '$idUsuario'");
+    $consultaReservas->execute();
     // Verificar si el usuario tiene reservas
     if ($consultaReservas->rowCount() > 0) {
         echo "<ul>"; // Empezamos una lista desordenada
