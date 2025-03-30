@@ -1,6 +1,6 @@
 <?php 
 
-
+try{
 require_once 'Conexion.php';
 require_once 'funcionesValidacion.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "registrarse")) {
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "registra
 
     if (empty($errores)) {
         $passwordCifrada = password_hash($password, PASSWORD_DEFAULT);
-
+        $idRol=2;
         $consulta = $conexion->prepare("INSERT INTO USUARIO (DNI, correoElectronico, contrasenna, nombre, apellidos, CP, idRol) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $consulta->bindParam(1, $dni, PDO::PARAM_STR);
         $consulta->bindParam(2, $email, PDO::PARAM_STR);
@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "registra
         $consulta->bindParam(4, $usuario, PDO::PARAM_STR);
         $consulta->bindParam(5, $apellidos, PDO::PARAM_STR);
         $consulta->bindParam(6, $codigoPostal, PDO::PARAM_STR);
-        $consulta->bindParam(7, $idRol = 2, PDO::PARAM_INT);
+        $consulta->bindParam(7, $idRol, PDO::PARAM_INT);
         $consulta->execute();
 
         header('Location: index.php');
@@ -63,6 +63,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "registra
     }
 
 
+}}catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+} finally {
+    $conexion = null; // Cerrar la conexión a la base de datos
 }
 
 

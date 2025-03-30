@@ -9,8 +9,8 @@ if (!isset($_SESSION['usuario'])) {
 // Recoger los datos enviados por el formulario
 $idUsuario = $_SESSION['idUsuario']; // ID del usuario desde la sesión
 $idAlojamiento = filter_input(INPUT_POST, 'bungalow', FILTER_SANITIZE_NUMBER_INT);
-$fechaEntrada = filter_input(INPUT_POST, 'fecha_inicio', FILTER_SANITIZE_SPECIAL_CHARS); // Reemplazado FILTER_SANITIZE_STRING
-$fechaSalida = filter_input(INPUT_POST, 'fecha_fin', FILTER_SANITIZE_SPECIAL_CHARS); // Reemplazado FILTER_SANITIZE_STRING
+$fechaEntrada = filter_input(INPUT_POST, 'fechaInicio', FILTER_SANITIZE_SPECIAL_CHARS); // Reemplazado FILTER_SANITIZE_STRING
+$fechaSalida = filter_input(INPUT_POST, 'fechaFin', FILTER_SANITIZE_SPECIAL_CHARS); // Reemplazado FILTER_SANITIZE_STRING
 
 $fechaActual= date('Y-m-d'); // Obtener la fecha actual
 if ($fechaEntrada < $fechaActual) {

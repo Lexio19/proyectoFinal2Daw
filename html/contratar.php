@@ -39,7 +39,7 @@
        
     </select>
         <br><br>
-    <label for="fecha_inicio">Fecha del servicio:</label>
+    <label for="fechaContrata">Fecha del servicio:</label>
     <input type="date" name="fechaContrata" required>
         <br><br>
 <br><br>
