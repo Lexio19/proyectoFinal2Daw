@@ -18,6 +18,8 @@
 --
 -- Table structure for table `ALOJAMIENTO`
 --
+USE PROYECTO_VISITAHAL;
+
 
 DROP TABLE IF EXISTS `ALOJAMIENTO`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

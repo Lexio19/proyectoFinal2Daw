@@ -3,7 +3,6 @@ version: '3.8'
 services:
   apache:
     build: .
-    container_name: apache_server
     ports:
       - "80:80"
     volumes:
@@ -11,30 +10,29 @@ services:
     networks:
       - my_network
     depends_on:
-      - mysql
+      - mysql_server
 
-  mysql:
+  mysql_server:
     image: mysql:8.0
-    container_name: mysql_server
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: mydatabase
+      MYSQL_DATABASE: PROYECTO_VISITAHAL
       MYSQL_USER: user
       MYSQL_PASSWORD: userpassword
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql_data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
     networks:
       - my_network
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
+    image: phpmyadmin
     restart: always
     environment:
-      PMA_HOST: mysql
+      PMA_HOST: mysql_server
       MYSQL_ROOT_PASSWORD: rootpassword
     ports:
       - "8080:80"

@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo pdo_mysql
 
 # Copiar el contenido de tu proyecto en el contenedor
-COPY ./html /var/www/html
+# COPY ./html /var/www/html
 
 # Asegurar que Apache esté habilitado
 RUN a2enmod rewrite
