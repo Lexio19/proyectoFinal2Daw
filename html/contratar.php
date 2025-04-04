@@ -1,7 +1,7 @@
 <?php
 // Mostrar los servicios disponibles
 session_start();
-require 'Conexion.php';
+require_once 'Conexion.php';
 $db = new Conexion();
 $conexion = $db->conectar();
 
@@ -23,20 +23,29 @@ if(filter_has_var(INPUT_POST, "inicio")){
 }
 ?>
 
-<form action="controladorReserva.php" method="POST">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<form action="controladorContrata.php" method="POST">
     <label for="servicio">Selecciona un servicio:</label>
-    <select name="servicio" id="servicio" required onchange="actualizarDiasDisponibles()">
+    <select name="servicio" id="servicio" required onchange="actualizarDiasServicio()">
         <option value="" disabled selected>Selecciona un servicio</option>
         <?php
         // Obtener los servicios disponibles desde la base de datos
         $consultaServicios = $conexion->query("SELECT * FROM SERVICIO");
         while ($servicio = $consultaServicios->fetch(PDO::FETCH_ASSOC)) {
             // Recuperamos los días disponibles como una cadena de texto
-            $diasDisponibles = $servicio['diasDisponibles']; // Ejemplo: "Lunes, Miércoles, Viernes"
-            echo "<option value='" . $servicio['idServicio'] . "' data-dias='" . htmlspecialchars($diasDisponibles) . "'>"
-                . htmlspecialchars($servicio['descripcion']) . 
-                "</option>";
+            $diasServicio = $servicio['diasServicio']; // Ejemplo: "Lunes, Miércoles, Viernes"
+            echo "<option value='" . $servicio['idServicio'] . "' data-dias='" . htmlspecialchars($diasServicio) . "'>"
+            . htmlspecialchars($servicio['descripcion']) . " (" . htmlspecialchars($diasServicio) . ")</option>";
+        
         }
+        
         ?>
     </select>
 
@@ -58,40 +67,36 @@ if(filter_has_var(INPUT_POST, "inicio")){
 
 <script>
 function actualizarDiasDisponibles() {
-    let selectServicio = document.getElementById("servicio");
-    let diasDisponibles = selectServicio.options[selectServicio.selectedIndex].getAttribute("data-dias");
-    let inputFecha = document.getElementById("fechaContrata");
+    const selectServicio = document.getElementById("servicio");
+    const inputFecha = document.getElementById("fechaContrata");
+    const diasDisponibles = selectServicio.options[selectServicio.selectedIndex].getAttribute("data-dias");
 
+    inputFecha.value = ""; // Resetear el campo de fecha
+    
     if (!diasDisponibles) {
-        inputFecha.value = ""; // Resetear campo si no hay días disponibles
         inputFecha.disabled = true;
         return;
     }
 
     inputFecha.disabled = false;
 
-    // Convertimos la cadena de días disponibles en un array y la normalizamos a minúsculas
-    let diasPermitidos = diasDisponibles.split(",").map(dia => dia.trim().toLowerCase());
+    const diasPermitidos = diasDisponibles.split(",").map(d => d.trim().toLowerCase());
 
-    // Ajustar la fecha mínima al primer día disponible
+    // Buscar la primera fecha válida disponible
     let hoy = new Date();
-    let diaHoy = hoy.getDay(); // 0 = Domingo, 6 = Sábado
-
     let proximaFecha = new Date(hoy);
-    // Buscar el primer día disponible
+    
     while (!diasPermitidos.includes(diaSemana(proximaFecha))) {
         proximaFecha.setDate(proximaFecha.getDate() + 1);
     }
 
-    let fechaMinima = proximaFecha.toISOString().split("T")[0];
-    inputFecha.setAttribute("min", fechaMinima);
+    inputFecha.setAttribute("min", proximaFecha.toISOString().split("T")[0]);
 
-    // Escuchamos el evento de cambio de fecha
-    inputFecha.addEventListener("input", function () {
-        let fechaSeleccionada = new Date(this.value);
-        let diaSeleccionado = diaSemana(fechaSeleccionada); // Nombre del día (e.g. "lunes", "martes")
+    // Bloquear fechas no permitidas
+    inputFecha.addEventListener("change", function () {
+        const fechaSeleccionada = new Date(this.value);
+        const diaSeleccionado = diaSemana(fechaSeleccionada);
 
-        // Comprobamos si el día seleccionado es uno de los permitidos
         if (!diasPermitidos.includes(diaSeleccionado)) {
             alert("Solo puedes seleccionar los siguientes días: " + diasPermitidos.join(", "));
             this.value = ""; // Borrar fecha si no es válida
@@ -99,13 +104,20 @@ function actualizarDiasDisponibles() {
     });
 }
 
-// Función para obtener el nombre del día en minúsculas
 function diaSemana(fecha) {
     const dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
     return dias[fecha.getDay()].toLowerCase();
 }
 </script>
 
+
+
+
+
 <div>   
     <a href="index.php">Volver a la página de inicio</a>
 </div>
+ 
+</body>
+</html>
+
