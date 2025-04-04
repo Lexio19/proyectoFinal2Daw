@@ -107,7 +107,7 @@ $consultaServicios=$conexion->query("SELECT * FROM SERVICIO");
         echo "<ul>"; // Empezamos una lista desordenada
         while ($reserva = $consultaReservas->fetch(PDO::FETCH_ASSOC)) {
             echo "<li>
-                    <strong>Bungalow:</strong> | 
+                    <strong>Bungalow $reserva[idAlojamiento] :</strong> | 
                     <strong>Fecha de entrada:</strong> " . $reserva['fechaEntrada'] . " | 
                     <strong>Fecha de salida:</strong> " . $reserva['fechaSalida'] . "
                     

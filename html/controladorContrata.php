@@ -9,7 +9,7 @@ if (!isset($_SESSION['usuario'])) {
 // Recoger los datos enviados por el formulario
 $idUsuario = $_SESSION['idUsuario']; // ID del usuario desde la sesión
 $idServicio = filter_input(INPUT_POST, 'servicio', FILTER_SANITIZE_NUMBER_INT);
-$fechaContrata = filter_input(INPUT_POST, 'fechaContrata', FILTER_SANITIZE_SPECIAL_CHARS); // Reemplazado FILTER_SANITIZE_STRING
+$fechaContrata = filter_input(INPUT_POST, 'fechaContrata', FILTER_SANITIZE_SPECIAL_CHARS); 
 
 
 $fechaActual= date('Y-m-d'); // Obtener la fecha actual
@@ -18,41 +18,28 @@ if ($fechaContrata < $fechaActual) {
 }
 
 try{
-    $db = new Conexion(); // Asegúrate de crear una instancia de la clase Conexion
+    $db = new Conexion(); 
     $conexion = $db->conectar(); // Establecer la conexión correctamente
 } catch (PDOException $ex) {
     die("Error de conexión: " . $ex->getMessage());
 } catch (Exception $ex) {
     die("Error inesperado: " . $ex->getMessage());
 }
+//Consultamos la tabla SERVICIO para obtener el aforo y el día disponible
+$consultaTablaServicio = $conexion->prepare("SELECT * FROM SERVICIO WHERE idServicio = ?");
+$consultaTablaServicio->execute([$idServicio]);
+$servicio = $consultaTablaServicio->fetch(PDO::FETCH_ASSOC);
 
-
-// Verificar si hay alguna reserva que se solape con las fechas seleccionadas
-$comprobarServicios = $conexion->prepare("
-    SELECT * FROM CONTRATA
-    WHERE idServicio = ? 
-    AND (
-        (fechaEntrada <= ? AND fechaSalida >= ?) OR  -- La reserva empieza dentro del rango
-        (fechaEntrada <= ? AND fechaSalida >= ?) OR  -- La reserva termina dentro del rango
-        (fechaEntrada >= ? AND fechaSalida <= ?)     -- La reserva está completamente dentro del rango
-    )
-");
-$comprobarReservas->execute([$idAlojamiento, $fechaEntrada, $fechaEntrada, $fechaSalida, $fechaSalida, $fechaEntrada, $fechaSalida]);
-
-$reservaExistente = $comprobarReservas->fetch(); 
-
-if ($reservaExistente) {
-    die("Este bungalow ya está reservado entre las fechas seleccionadas.");
+$diaDisponible = $servicio['diaDisponible'];
+$aforo = $servicio['aforo'];
+//Contamos las reservas que hay para el servicio y la fecha seleccionada
+$consultaReservas = $conexion->prepare("SELECT COUNT(*) FROM RESERVA WHERE idServicio = ? AND fechaContrata = ?");
+$consultaReservas->execute([$idServicio, $fechaContrata]);
+$numeroReservas = $consultaReservas->fetchColumn();
+if ($numeroReservas >= $aforo) {
+    die("No hay disponibilidad para el servicio seleccionado en la fecha indicada.");
 }
 
-// Si no hay conflictos, insertar la nueva reserva
-$insertarReserva = $conexion->prepare("
-    INSERT INTO RESERVA (idUsuario, idAlojamiento, fechaEntrada, fechaSalida) 
-    VALUES (?, ?, ?, ?)
-");
-$insertarReserva->execute([$idUsuario, $idAlojamiento, $fechaEntrada, $fechaSalida]);
-
-echo "¡Reserva confirmada del $fechaEntrada al $fechaSalida!";
 
 
 ?>
