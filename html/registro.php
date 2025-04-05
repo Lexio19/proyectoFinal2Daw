@@ -29,7 +29,7 @@ require_once 'controladorRegistro.php';
             
             <label>Introduzca la contraseña</label><br>
             <p>La contraseña deberá tener al menos 5 caracteres, una mayúscula y un número</p>
-            <input type="text" name="password" value="<?php if (filter_has_var(INPUT_POST, "password")) echo filter_input(INPUT_POST, "password"); ?>"><br><br>
+            <input type="password" name="password" value="<?php if (filter_has_var(INPUT_POST, "password")) echo filter_input(INPUT_POST, "password"); ?>"><br><br>
 
           
             <label>Introduzca su código postal</label><br>

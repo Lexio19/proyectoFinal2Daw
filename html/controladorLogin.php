@@ -38,7 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
             $fila = $consultaPassword->fetch(PDO::FETCH_ASSOC);
 
             // Si encontramos al usuario en la BBDD
+            var_dump($fila);
             if ($fila) {
+                
                 // Si el usuario y la contraseña coinciden, comprobamos su rol con consultas preparadas
                 if (password_verify($password, $fila['contrasenna'])) {
                     //Con este INNER JOIN nos ahorramos una consulta
@@ -51,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
                     if ($fila) {
                         $consultaDatosUsuario= $conexion->query("SELECT * FROM USUARIO WHERE correoElectronico = '$email'");
                         $datosUsuario = $consultaDatosUsuario->fetch(PDO::FETCH_ASSOC);
-                    $tipo = $fila['tipo'];
+                        $tipo = strtolower(trim($fila['tipo']));
                         // Redirigir según el tipo de rol usando un switch
                         switch ($tipo) {
                             case 'administrador':
@@ -59,10 +61,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
                                 $_SESSION['email'] = $email;
                                 $_SESSION['DNI']= $datosUsuario['DNI'];
                                 $_SESSION['usuario'] = $datosUsuario['nombre'];
+                                $_SESSION['idUsuario'] = $datosUsuario['idUsuario'];
                                 $dni= $datosUsuario['DNI'];
 
                                 header('Location: areaAdmin.php?usuario=' . $dni);
-                            
+                                exit();
                                 break;
                             case 'cliente':
                                 $_SESSION['rol'] = $tipo;
@@ -72,6 +75,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
                                 $_SESSION['idUsuario'] = $datosUsuario['idUsuario'];
                                 $nombreUsuario= $datosUsuario['nombre'];
                                 header('Location: bienvenidaCliente.php');
+                                break;
+                                exit();
+                            default:
+                                $errores[] = "Rol no encontrado.";
                                 break;
                         }
                     } else {
