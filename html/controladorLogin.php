@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
             $fila = $consultaPassword->fetch(PDO::FETCH_ASSOC);
 
             // Si encontramos al usuario en la BBDD
-            var_dump($fila);
+        
             if ($fila) {
                 
                 // Si el usuario y la contraseña coinciden, comprobamos su rol con consultas preparadas
