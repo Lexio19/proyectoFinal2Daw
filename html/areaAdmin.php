@@ -27,6 +27,11 @@ if(filter_has_var(INPUT_POST, "gestionarServicios")){
     exit; // Detener la ejecución después de redirigir
 }
 
+if(filter_has_var(INPUT_POST, "crearNuevoAdministrador")){
+    header('Location: crearNuevoAdministrador.php');
+    exit; // Detener la ejecución después de redirigir
+}
+
 
 echo "BIENVENIDO A LA ZONA DE ADMINISTRADOR DE VisiTahal<br>";
 

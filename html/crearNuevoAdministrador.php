@@ -24,8 +24,16 @@ if(filter_has_var(INPUT_POST, "cerrarSesion")) {
 }
 
 
-echo "Bienvenido a la zona para GESTIONAR los SERVICIOS<br>";
-echo "Hay que añadir: crear nuevo servicio, eliminar servicio, modificar servicio, ver servicios<br>";
+
+
+
+
+
+
+
+
+echo "Bienvenido a la zona para GESTIONAR los administradores<br>";
+echo "Hay que añadir: crear nuevo administrador, eliminar administrador, modificar administrador, ver administradores<br>";
 ?>
 
 <br><br>

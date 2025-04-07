@@ -25,14 +25,14 @@ if(filter_has_var(INPUT_POST, "cerrarSesion")) {
 
 
 echo "Bienvenido a la zona para GESTIONAR los alojamientos<br>";
-
+echo "Hay que añadir: crear nuevo alojamiento, eliminar alojamiento, modificar alojamiento, ver alojamientos<br>";
 ?>
 
 <br><br>
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 
-<button type="submit" name="cerrarSesion">Cerrar sesión</button>
 <button type="submit" name="areaAdmin">Volver al área principal de administrador</button>
+<button type="submit" name="cerrarSesion">Cerrar sesión</button>
 
 
 </form>
