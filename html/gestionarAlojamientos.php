@@ -28,6 +28,11 @@ if(filter_has_var(INPUT_POST, "crearAlojamiento")) {
     exit; // Detener la ejecución después de redirigir
 }
 
+if  (filter_has_var(INPUT_POST, "eliminarAlojamiento")) {
+    header('Location: eliminarAlojamiento.php');
+    exit; // Detener la ejecución después de redirigir
+}
+
 
 echo "Bienvenido a la zona para GESTIONAR los alojamientos<br>";
 echo "Hay que añadir: eliminar alojamiento, modificar alojamiento, ver alojamientos<br>";

@@ -12,11 +12,7 @@ if (isset($_SESSION['usuario'])) {
     header('Location: bienvenidaCliente.php');
     exit;
 }
-
-
-
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -47,8 +43,6 @@ if (isset($_SESSION['usuario'])) {
         <a href="registro.php">Regístrate</a>
     </div>
 
-
-    
 
 <br><br>
     <h2>ALOJAMIENTOS</h2>

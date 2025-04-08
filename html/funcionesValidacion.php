@@ -67,3 +67,19 @@ function validarCodigoPostal($codigoPostal){
     return $codigoPostalSaneado;
 }
 
+//Funciones de mensajes Flash. Evito mostrar los mensajes en 
+//la página del controlador.
+
+
+function setFlash($key, $message) {
+    $_SESSION['flash'][$key] = $message;
+}
+
+function getFlash($key) {
+    if (isset($_SESSION['flash'][$key])) {
+        $msg = $_SESSION['flash'][$key];
+        unset($_SESSION['flash'][$key]);
+        return $msg;
+    }
+    return null;
+}
