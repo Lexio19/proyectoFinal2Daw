@@ -40,15 +40,21 @@ if ($mensaje = getFlash('error')) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear alojamiento</title>
+    <title>Crear servicio</title>
 </head>
 <body>
-    <h1>Crear nuevo alojamiento</h1>
-    <form action="controladorCrearAlojamiento.php" method="POST">
-        <label for="nombre">Tipo de alojamiento:</label><br>
-        <input type="text" name="tipo" required><br><br>
+    <h1>Crear nuevo servicio</h1>
+    <form action="controladorCrearServicio.php" method="POST">
+        <label for="nombre">Nombre</label><br>
+        <input type="text" name="nombre" required><br><br>
+        <label for="descripcion">Descripción</label><br>
+        <textarea name="descripcion" rows="4" cols="50" required></textarea><br><br>
+        <label for="aforo">Aforo</label><br>
+        <input type="number" name="aforo" required><br><br>
+        <label for="diaServicio">Día del servicio</label><br>
+        <input type="text" name="diaServicio" required><br><br>
 
-        <button type="submit" name="crearAlojamiento">Crear alojamiento</button>
+        <button type="submit" name="crearServicio">Crear servicio</button>
     </form>
 
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">

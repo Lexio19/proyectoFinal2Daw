@@ -23,13 +23,27 @@ if(filter_has_var(INPUT_POST, "cerrarSesion")) {
     exit; // Detener la ejecución después de redirigir
 }
 
+if(filter_has_var(INPUT_POST, "crearServicio")) {
+    header('Location: crearServicio.php');
+    exit; // Detener la ejecución después de redirigir
+}
 
-echo "Bienvenido a la zona para GESTIONAR los SERVICIOS<br>";
-echo "Hay que añadir: crear nuevo servicio, eliminar servicio, modificar servicio, ver servicios<br>";
-?>
+if  (filter_has_var(INPUT_POST, "eliminarServicio")) {
+    header('Location: eliminarServicio.php');
+    exit; // Detener la ejecución después de redirigir
+}
+
+
+echo "Bienvenido a la zona para GESTIONAR los SERVICIOS<br>";?>
 
 <br><br>
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+<button type="submit" name="crearServicio">Crear servicio</button>
+<br><br>
+<button type="submit" name="eliminarServicio">Eliminar servicio</button>
+
+<br><br>
+
 
 <button type="submit" name="areaAdmin">Volver al área principal de administrador</button>
 <button type="submit" name="cerrarSesion">Cerrar sesión</button>
