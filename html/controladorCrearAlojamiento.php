@@ -1,5 +1,6 @@
 <?php
 require_once 'Conexion.php';
+require_once 'funcionesValidacion.php';
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearAlojamiento")) {
@@ -8,28 +9,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearAlo
     $errores = [];
 
     if (empty($tipo)) {
-        $errores[] = "Tipo de alojamiento no válido<br>";
+        $errores[] = "❌ Tipo de alojamiento no válido.";
     }
 
-    if (empty($errores)) {
-        try {
-            $db = new Conexion();
-            $conexion = $db->conectar();
-            
+    try {
+        $db = new Conexion();
+        $conexion = $db->conectar();
+
+        // Comprobar duplicado
+        $consultaAlojamiento = $conexion->prepare("SELECT * FROM ALOJAMIENTO WHERE tipo = :tipo");
+        $consultaAlojamiento->bindParam(':tipo', $tipo);
+        $consultaAlojamiento->execute();
+
+        if ($consultaAlojamiento->rowCount() > 0) {
+            $errores[] = "❌ El tipo de alojamiento ya existe.";
+        }
+
+        if (empty($errores)) {
             $insertarAlojamiento = $conexion->prepare("INSERT INTO ALOJAMIENTO (tipo) VALUES (:tipo)");
             $insertarAlojamiento->bindParam(':tipo', $tipo);
             $insertarAlojamiento->execute();
 
-            echo "Alojamiento creado con éxito.";
-        } catch (PDOException $ex) {
-            die("Error de conexión: " . $ex->getMessage());
-        } catch (Exception $ex) {
-            die("Error inesperado: " . $ex->getMessage());
+            setFlash("success", "✅ Alojamiento creado con éxito.");
+        } else {
+            setFlash("error", implode("<br>", $errores));
         }
-    } else {
-        foreach ($errores as $error) {
-            echo $error;
-        }
+
+        // Redirigir a la vista de nuevo
+        header("Location: crearAlojamiento.php");
+        exit;
+
+    } catch (PDOException $ex) {
+        setFlash("error", "❌ Error de conexión: " . $ex->getMessage());
+        header("Location: crearAlojamiento.php");
+        exit;
     }
 }
-?>

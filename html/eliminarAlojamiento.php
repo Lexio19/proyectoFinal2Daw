@@ -2,6 +2,7 @@
 session_start();
 require_once 'Conexion.php';
 require_once 'funcionesValidacion.php';
+require_once 'controladorEliminarAlojamiento.php';
 try {
     $db = new Conexion;
     $conexion = $db->conectar();
@@ -39,7 +40,18 @@ if ($mensaje = getFlash('success')) {
 if ($mensaje = getFlash('error')) {
     echo "<div style='color: red; font-weight: bold;'>$mensaje</div>";
 }
+
+
+// Mostrar mensajes flash
+if ($mensaje = getFlash('success')) {
+    echo "<div style='color: green; font-weight: bold;'>$mensaje</div>";
+}
+
+if ($mensaje = getFlash('error')) {
+    echo "<div style='color: red; font-weight: bold;'>$mensaje</div>";
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +67,9 @@ if ($mensaje = getFlash('error')) {
         <select name="id" required>
     <?php
     try {
-        $consultaBungalows = $conexion->query("SELECT * FROM ALOJAMIENTO");
+        //Para que los bungalós siempre aparezcan ordenados por el número
+        $consultaBungalows = $conexion->query("SELECT * FROM ALOJAMIENTO ORDER BY CAST(SUBSTRING_INDEX(tipo, ' ', -1) AS UNSIGNED)");
+
 
         while ($bungalow = $consultaBungalows->fetch(PDO::FETCH_ASSOC)) {
             echo "<option value='" . htmlspecialchars($bungalow['idAlojamiento']) . "'>" . htmlspecialchars($bungalow['tipo']) . "</option>";

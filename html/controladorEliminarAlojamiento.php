@@ -1,7 +1,10 @@
 <?php
 require_once 'Conexion.php';
 require_once 'funcionesValidacion.php';
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "eliminarAlojamiento")) {
     $id = filter_input(INPUT_POST, "id", FILTER_VALIDATE_INT);
@@ -28,8 +31,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "eliminar
             } else {
                 setFlash("error", "No se encontró el alojamiento.");
             }
-        } catch (PDOException $ex) {
-            setFlash('error', "❌ Error de conexión: " . $ex->getMessage());
+        }catch (PDOException $ex) {
+            if (str_contains($ex->getMessage(), '1451')) {
+                setFlash('error', "No se puede eliminar este alojamiento porque tiene reservas asociadas.");
+            } else {
+                setFlash('error', "❌ Error inesperado: " . $ex->getMessage());
+            }
         }
     } else {
         foreach ($errores as $error) {

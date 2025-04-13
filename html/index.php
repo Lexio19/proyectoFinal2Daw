@@ -48,7 +48,7 @@ if (isset($_SESSION['usuario'])) {
     <h2>ALOJAMIENTOS</h2>
     <?php 
 
-$consultaBungalows= $conexion->query("SELECT * FROM ALOJAMIENTO"); 
+$consultaBungalows = $conexion->query("SELECT * FROM ALOJAMIENTO ORDER BY CAST(SUBSTRING_INDEX(tipo, ' ', -1) AS UNSIGNED)");
 
 while ($bungalow = $consultaBungalows->fetch(PDO::FETCH_ASSOC)) {
 
@@ -64,7 +64,15 @@ while ($servicio = $consultaServicios->fetch(PDO::FETCH_ASSOC)) {
     $nombreArchivo = strtolower(str_replace(' ', '_', $servicio['nombre'])) . ".html"; 
     echo "<a href='$nombreArchivo'>" . htmlspecialchars($servicio['descripcion']) . "</a><br>";
 }
+
+if (!empty($errores)) {
+    foreach ($errores as $error) {
+        echo "<p style='color:red;'>$error</p>";
+    }
+}
 ?>
+
+
 
 </body>
 </html>
