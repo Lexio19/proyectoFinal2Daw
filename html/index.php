@@ -24,6 +24,8 @@ if (isset($_SESSION['usuario'])) {
 
     <h1>Bienvenidos a VisiTahal</h1>
 
+    <img src="img/castilloTahal.jpg" alt="Castillo de Tahal">
+
     <div class="formulario">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
             <label>Introduzca su email</label><br>
