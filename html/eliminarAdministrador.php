@@ -42,7 +42,14 @@ if ($mensaje = getFlash('error')) {
 }
 
 
+// Mostrar mensajes flash
+if ($mensaje = getFlash('success')) {
+    echo "<div style='color: green; font-weight: bold;'>$mensaje</div>";
+}
 
+if ($mensaje = getFlash('error')) {
+    echo "<div style='color: red; font-weight: bold;'>$mensaje</div>";
+}
 ?>
 
 
@@ -51,29 +58,31 @@ if ($mensaje = getFlash('error')) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eliminar alojamientos</title>
+    <title>Eliminar administradores</title>
 </head>
 <body>
-    <h1>Eliminar un alojamiento</h1>
-    <form action="controladorEliminarAlojamiento.php" method="POST">
-        <label>Alojamiento:</label><br>
+    <h1>Eliminar un administrador</h1>
+    <form action="controladorEliminarAdministrador.php" method="POST">
+        <label>Usuarios administradores</label><br>
         <select name="id" required>
     <?php
     try {
-        //Para que los bungalós siempre aparezcan ordenados por el número
-        $consultaBungalows = $conexion->query("SELECT * FROM ALOJAMIENTO ORDER BY CAST(SUBSTRING_INDEX(tipo, ' ', -1) AS UNSIGNED)");
+        $consultaAdministradores = $conexion->query("SELECT * FROM USUARIO WHERE idRol = 1");
+        while ($administrador = $consultaAdministradores->fetch(PDO::FETCH_ASSOC)) {
+            echo "<option value='" . htmlspecialchars($administrador['idUsuario']) . "'>" . htmlspecialchars($administrador['nombre']) . "</option>";
+        }
 
 
-        while ($bungalow = $consultaBungalows->fetch(PDO::FETCH_ASSOC)) {
-            echo "<option value='" . htmlspecialchars($bungalow['idAlojamiento']) . "'>" . htmlspecialchars($bungalow['tipo']) . "</option>";
+        while ($administrador = $consultaAdministradores->fetch(PDO::FETCH_ASSOC)) {
+            echo "<option value='" . htmlspecialchars($administrador['idUsuario']) . "'>" . htmlspecialchars($administrador['nombre']) . "</option>";
         }
     } catch (PDOException $e) {
-        echo "<option value=''>Error al cargar alojamientos</option>";
+        echo "<option value=''>Error al cargar usuarios administradores</option>";
     }
     ?>
 </select>
         <br><br>
-        <button type="submit" name="eliminarAlojamiento">Eliminar alojamiento</button>
+        <button type="submit" name="eliminarAdministrador">Eliminar administrador</button>
         
     </form>
     <br><br>
@@ -85,3 +94,4 @@ if ($mensaje = getFlash('error')) {
 
 </body>
 </html>
+
