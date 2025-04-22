@@ -49,6 +49,10 @@ if(filter_has_var(INPUT_POST, "contratar")){
     exit; // Detener la ejecución después de redirigir
 }
 
+if(filter_has_var(INPUT_POST, "darDeBajaUsuario")){
+    header('Location: darDeBajaUsuario.php');
+    exit; // Detener la ejecución después de redirigir
+}
 
 
 
@@ -90,6 +94,12 @@ $consultaServicios=$conexion->query("SELECT * FROM SERVICIO");
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 
 <button type="submit" name="contratar">Contratar un servicio</button>
+
+</form>
+<br><br>
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+
+<button type="submit" name="darDeBajaUsuario">Darse de baja</button>
 
 </form>
 
