@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once 'Conexion.php'; // Asegúrate de incluir el archivo de conexión
-
+require_once 'funcionesValidacion.php'; // Asegúrate de incluir las funciones de validación
 if (!isset($_SESSION['usuario'])) {
     die("Debes iniciar sesión para realizar una reserva.");
 }
@@ -14,21 +14,30 @@ $fechaSalida = filter_input(INPUT_POST, 'fechaFin', FILTER_SANITIZE_SPECIAL_CHAR
 
 $fechaActual= date('Y-m-d'); // Obtener la fecha actual
 if ($fechaEntrada < $fechaActual) {
-    die("La fecha de entrada debe ser posterior a la fecha actual.");
+    setFlash("error", "La fecha de entrada debe ser posterior a la fecha actual.");
+    header("Location: reservar.php");
+    exit;
 }
 // Comprobar que las fechas son válidas
 if ($fechaEntrada >= $fechaSalida) {
-    die("La fecha de entrada debe ser anterior a la fecha de salida.");
+    setFlash("error", "La fecha de entrada debe ser anterior a la fecha de salida.");
+    header("Location: reservar.php");
+    exit;
 }
 
 try{
     $db = new Conexion(); // Asegúrate de crear una instancia de la clase Conexion
     $conexion = $db->conectar(); // Establecer la conexión correctamente
 } catch (PDOException $ex) {
-    die("Error de conexión: " . $ex->getMessage());
+    setFlash("error", "Error de conexión: " . $ex->getMessage());
+    header("Location: reservar.php");
+    exit;
 } catch (Exception $ex) {
-    die("Error inesperado: " . $ex->getMessage());
+    setFlash("error", "Error inesperado: " . $ex->getMessage());
+    header("Location: reservar.php");
+    exit;
 }
+
 
 
 // Verificar si hay alguna reserva que se solape con las fechas seleccionadas
@@ -46,8 +55,11 @@ $comprobarReservas->execute([$idAlojamiento, $fechaEntrada, $fechaEntrada, $fech
 $reservaExistente = $comprobarReservas->fetch(); 
 
 if ($reservaExistente) {
-    die("Este bungalow ya está reservado entre las fechas seleccionadas.");
+    setFlash("error", "Este bungalow ya está reservado entre las fechas seleccionadas.");
+    header("Location: reservar.php");
+    exit;
 }
+
 
 // Si no hay conflictos, insertar la nueva reserva
 $insertarReserva = $conexion->prepare("
@@ -56,7 +68,9 @@ $insertarReserva = $conexion->prepare("
 ");
 $insertarReserva->execute([$idUsuario, $idAlojamiento, $fechaEntrada, $fechaSalida]);
 
-echo "¡Reserva confirmada del $fechaEntrada al $fechaSalida!";
+setFlash("success", "¡Reserva confirmada del $fechaEntrada al $fechaSalida!");
+header("Location: reservar.php");
+exit;
 
 
 ?>

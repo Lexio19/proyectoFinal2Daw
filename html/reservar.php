@@ -1,25 +1,31 @@
 <?php
+// Mostrar los servicios disponibles
 session_start();
-require 'Conexion.php';
+require_once 'Conexion.php';
+require_once 'funcionesValidacion.php';
 $db = new Conexion();
 $conexion = $db->conectar();
 
 if (!isset($_SESSION['usuario'])) {
     header('Location: index.php');
-    exit;
+    exit; // Detener la ejecución después de redirigir
 }
 
-if (filter_has_var(INPUT_POST, "cerrarSesion")) {
-    session_unset();
+if(filter_has_var(INPUT_POST, "cerrarSesion")){
+    session_unset(); // Destruir todas las variables de sesión
     session_destroy();
     header('Location: index.php');
-    exit;
+    exit; // Detener la ejecución después de redirigir
 }
 
-if (filter_has_var(INPUT_POST, "inicio")) {
+if(filter_has_var(INPUT_POST, "inicio")){
     header('Location: bienvenidaCliente.php');
-    exit;
+    exit; // Detener la ejecución después de redirigir
 }
+
+$mensajeExito = getFlash("success");
+$mensajeError = getFlash("error");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,6 +58,12 @@ if (filter_has_var(INPUT_POST, "inicio")) {
     </script>
 </head>
 <body>
+<?php if ($mensajeExito){?>
+    <p style="color: green;"><?php echo htmlspecialchars($mensajeExito); ?></p>
+<?php };
+if ($mensajeError){ ?>
+    <p style="color: red;"><?php echo htmlspecialchars($mensajeError); ?></p>
+<?php }; ?>
     <form action="controladorReserva.php" method="POST">
         <br><br>
         <label for="fechaInicio">Fecha de entrada:</label>

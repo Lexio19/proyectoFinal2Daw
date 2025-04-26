@@ -2,6 +2,7 @@
 // Mostrar los servicios disponibles
 session_start();
 require_once 'Conexion.php';
+require_once 'funcionesValidacion.php';
 $db = new Conexion();
 $conexion = $db->conectar();
 
@@ -21,16 +22,28 @@ if(filter_has_var(INPUT_POST, "inicio")){
     header('Location: bienvenidaCliente.php');
     exit; // Detener la ejecución después de redirigir
 }
+
+$mensajeExito = getFlash("success");
+$mensajeError = getFlash("error");
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Contratar un servicio</title>
 </head>
 <body>
+<?php if ($mensajeExito){?>
+    <p style="color: green;"><?php echo htmlspecialchars($mensajeExito); ?></p>
+<?php };
+if ($mensajeError){ ?>
+    <p style="color: red;"><?php echo htmlspecialchars($mensajeError); ?></p>
+<?php }; ?>
+
 <form action="controladorContrata.php" method="POST">
     <label for="servicio">Selecciona un servicio:</label>
     <select name="servicio" id="servicio" required onchange="actualizarDiasServicio()">
@@ -60,8 +73,6 @@ if(filter_has_var(INPUT_POST, "inicio")){
 <div>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
         <button type="submit" name="cerrarSesion">Cerrar sesión</button>
-        <br><br>
-        <button type="submit" name="inicio">Inicio</button>
     </form>
 </div>
 

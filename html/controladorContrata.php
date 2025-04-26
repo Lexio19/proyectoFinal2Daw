@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'Conexion.php';
+require_once 'funcionesValidacion.php';
 
 if (!isset($_SESSION['usuario'])) {
     die("Debes iniciar sesión para realizar una reserva.");
@@ -13,7 +14,9 @@ $fechaContrata = filter_input(INPUT_POST, 'fechaContrata', FILTER_SANITIZE_SPECI
 
 $fechaActual = date('Y-m-d');
 if ($fechaContrata < $fechaActual) {
-    die("La fecha de contratación debe ser posterior a la fecha actual.");
+    setFlash("error", "La fecha de contratación debe ser posterior a la fecha actual.");
+    header('Location: contratar.php');
+    exit;
 }
 
 try {
@@ -31,7 +34,9 @@ $consultaTablaServicio->execute([$idServicio]);
 $servicio = $consultaTablaServicio->fetch(PDO::FETCH_ASSOC);
 
 if (!$servicio) {
-    die("Error: Servicio no encontrado.");
+    setFlash("error", "Error: Servicio no encontrado.");
+    header('Location: contratar.php');
+    exit;
 }
 
 $diaDisponible = explode(",", strtolower($servicio['diasServicio']));
@@ -43,7 +48,9 @@ $consultaContrataciones->execute([$idServicio, $fechaContrata]);
 $numeroContrataciones = $consultaContrataciones->fetchColumn();
 
 if ($numeroContrataciones >= $aforo) {
-    die("No hay disponibilidad para el servicio seleccionado en la fecha indicada.");
+    setFlash("error", "No hay disponibilidad para el servicio seleccionado en la fecha indicada.");
+    header('Location: contratar.php');
+    exit;
 }
 
 // Obtener el día de la semana de la fecha seleccionada en inglés y en minúsculas
@@ -63,7 +70,9 @@ $traduccionDias = [
 $diaSeleccionadoEspanol = $traduccionDias[$diaSeleccionadoIngles] ?? $diaSeleccionadoIngles;
 
 if (!in_array($diaSeleccionadoEspanol, $diaDisponible)) {
-    die("Error: Solo puedes reservar este servicio los días: " . implode(", ", $diaDisponible));
+    setFlash("error", "Error: Solo puedes reservar este servicio los días: " . implode(", ", $diaDisponible));
+    header('Location: contratar.php');
+    exit;
 }
 
 // Si no hay conflictos, insertar la nueva reserva
@@ -72,8 +81,11 @@ $insertarContratacion = $conexion->prepare("
     VALUES (?, ?, ?)
 ");
 $insertarContratacion->execute([$idServicio, $idUsuario, $fechaContrata]);
+setFlash("success", "¡Reserva confirmada el $fechaContrata!");
+header('Location: contratar.php');
+exit;
 
-echo "¡Reserva confirmada el $fechaContrata!";
+
 
 ?>
 <div>

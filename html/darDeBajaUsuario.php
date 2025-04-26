@@ -55,7 +55,6 @@ if ($mensajeError) {
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
         <button type="submit" name="cerrarSesion">Cerrar sesión</button>
         <br><br>
-        <button type="submit" name="inicio">Inicio</button>
     </form>
 </div>
 

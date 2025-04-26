@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             SELECT R.idAlojamiento
             FROM RESERVA R
             WHERE :fechaInicio <= R.fechaSalida AND :fechaFin >= R.fechaEntrada
-        )";
+        ) ORDER BY A.tipo";
 
     $bungalowsNoReservados = $conexion->prepare($consultaBungalowsNoReservados);
     $bungalowsNoReservados->bindParam(':fechaInicio', $fechaInicio);
