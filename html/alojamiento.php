@@ -9,21 +9,7 @@ try {
     die("Error de conexión: " . $ex->getMessage());
 }
 
-// Verificar si hay un ID en la URL
-if (filter_has_var(INPUT_GET, 'id') && filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT)) {
-    $idAlojamiento = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-    // Obtener los datos del bungalow desde la base de datos
-    $consulta = $conexion->prepare("SELECT * FROM ALOJAMIENTO WHERE idAlojamiento = ?");
-    $consulta->bindParam(1, $idAlojamiento, PDO::PARAM_INT);
-    $consulta->execute();
-    $bungalow = $consulta->fetch(PDO::FETCH_ASSOC);
 
-    if (!$bungalow) {
-        die("El alojamiento no existe.");
-    }
-} else {
-    die("ID de alojamiento no válido.");
-}
 ?>
 
 <!DOCTYPE html>
