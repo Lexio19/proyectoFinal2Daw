@@ -32,11 +32,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearAdm
         }
 
         if (empty($errores)) {
+            $passwordCifrada = password_hash($password, PASSWORD_DEFAULT);
             $insertarUsuarioAdministrador = $conexion->prepare("INSERT INTO USUARIO (DNI, correoElectronico, contrasenna, nombre, apellidos, CP, idRol) VALUES (?,?, ?, ?, ?, ?, ?)");
             $idRol = 1; // Asignar el rol de administrador (1)
             $insertarUsuarioAdministrador->bindParam(1, $dni);
             $insertarUsuarioAdministrador->bindParam(2, $correoElectronico);
-            $insertarUsuarioAdministrador->bindParam(3, $password);
+            $insertarUsuarioAdministrador->bindParam(3, $passwordCifrada);
             $insertarUsuarioAdministrador->bindParam(4, $nombre);
             $insertarUsuarioAdministrador->bindParam(5, $apellidos);
             $insertarUsuarioAdministrador->bindParam(6, $codigoPostal);

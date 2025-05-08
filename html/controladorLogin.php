@@ -54,8 +54,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
                         $consultaDatosUsuario= $conexion->query("SELECT * FROM USUARIO WHERE correoElectronico = '$email'");
                         $datosUsuario = $consultaDatosUsuario->fetch(PDO::FETCH_ASSOC);
                         $tipo = strtolower(trim($fila['tipo']));
+                        var_dump($tipo);
+                        
                         // Redirigir según el tipo de rol usando un switch
                         switch ($tipo) {
+                            case 'superadministrador':
+                                $_SESSION['rol'] = $tipo;
+                                $_SESSION['email'] = $email;
+                                $_SESSION['DNI']= $datosUsuario['DNI'];
+                                $_SESSION['usuario'] = $datosUsuario['nombre'];
+                                $_SESSION['idUsuario'] = $datosUsuario['idUsuario'];
+                                $dni= $datosUsuario['DNI'];
+                                header('Location: areaAdmin.php');
+                                exit();
+                                break;
                             case 'administrador':
                                 $_SESSION['rol'] = $tipo;
                                 $_SESSION['email'] = $email;
@@ -63,8 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
                                 $_SESSION['usuario'] = $datosUsuario['nombre'];
                                 $_SESSION['idUsuario'] = $datosUsuario['idUsuario'];
                                 $dni= $datosUsuario['DNI'];
-
-                                header('Location: areaAdmin.php?usuario=' . $dni);
+                                header('Location: areaAdmin.php');
                                 exit();
                                 break;
                             case 'cliente':
@@ -78,6 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
                                 break;
                                 exit();
                             default:
+                                // Destruir la sesión si el rol no es válido
                                 $errores[] = "Rol no encontrado.";
                                 break;
                         }
@@ -108,7 +120,4 @@ if (!empty($errores)) {
         echo "<p style='color:red;'>$error</p>";
     }
 }
-
 ob_end_flush();//Vaciar el buffer de salida
-
-

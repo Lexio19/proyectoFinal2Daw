@@ -5,11 +5,10 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: index.php');
     exit; // Detener la ejecución después de redirigir
 }
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') {
+if ((!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') && (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'superadministrador')) {
     header('Location: index.php');
     exit; // Detener la ejecución después de redirigir
 }
-
 if(filter_has_var(INPUT_POST, "areaAdmin")) {
     header('Location: areaAdmin.php');
     exit; // Detener la ejecución después de redirigir

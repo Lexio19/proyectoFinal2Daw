@@ -1,4 +1,5 @@
 <?php 
+
 require_once 'Conexion.php';
 require_once 'controladorLogin.php';
 try {
@@ -7,7 +8,8 @@ try {
 } catch (PDOException $ex) {
     $error = $ex->getMessage();
 }
-
+//Si la sesión está iniciada, directamente va a la página de bienvenidaCliente.php
+//tenemos session_start() en controladorLogin.php
 if (isset($_SESSION['usuario'])) {
     header('Location: bienvenidaCliente.php');
     exit;
@@ -17,54 +19,7 @@ if (isset($_SESSION['usuario'])) {
 <html lang="es">
 <head>
     <link rel="stylesheet" href="styles.css">
-    <style>
-    /*No entiendo por qué no me funciona desde styles.css*/
-    body {
-      margin: 0;
-      font-family: sans-serif;
-    }
-
-    .carrusel-contenedor {
-      width: 100%;
-      overflow: hidden;
-      position: relative;
-      background-color: #f0f0f0;
-      padding: 20px 0;
-    }
-
-    .carrusel-track {
-      display: flex;
-      width: max-content;
-      gap: 20px;
-      animation: scroll-left 30s linear infinite;
-    }
-
-    .carrusel-track:hover {
-      animation-play-state: paused;
-    }
-
-    .carrusel-track img {
-      width: 300px;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      transition: transform 0.3s ease;
-    }
-
-    .carrusel-track img:hover {
-      transform: scale(1.05);
-    }
-
-    @keyframes scroll-left {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(-50%);
-      }
-    }
-  </style>
+   
     <title>VisiTahal</title>
 </head>
 <body>
@@ -98,40 +53,50 @@ if (isset($_SESSION['usuario'])) {
 
 <div class="carrusel-contenedor">
     <div class="carrusel-track">
-        <a href="alojamiento.php"><img src="img/bungalo1.jpg" alt="bungalo"></a>
-        <a href="alojamiento.php"><img src="img/bungalo4.jpg" alt="bungalo"></a>
-        <a href="alojamiento.php"><img src="img/bungalo2.jpg" alt="bungalo"></a>
-        <a href="alojamiento.php"><img src="img/bungalo6.jpg" alt="bungalo"></a>
-        <a href="alojamiento.php"><img src="img/bungalo3.jpg" alt="bungalo"></a>
-        <a href="alojamiento.php"><img src="img/bungalo5.jpg" alt="bungalo"></a>
-        <a href="alojamiento.php"><img src="img/bungalo1.jpg" alt="bungalo"></a>
-        <a href="alojamiento.php"><img src="img/bungalo4.jpg" alt="bungalo"></a>
-        <a href="alojamiento.php"><img src="img/bungalo2.jpg" alt="bungalo"></a>
-        <a href="alojamiento.php"><img src="img/bungalo6.jpg" alt="bungalo"></a>
-        <a href="alojamiento.php"><img src="img/bungalo3.jpg" alt="bungalo"></a>
-        <a href="alojamiento.php"><img src="img/bungalo5.jpg" alt="bungalo"></a>
-
-      
+        <a href="alojamiento.html"><img src="img/bungalo1.jpg" alt="bungalo"></a>
+        <a href="alojamiento.html"><img src="img/bungalo4.jpg" alt="bungalo"></a>
+        <a href="alojamiento.html"><img src="img/bungalo2.jpg" alt="bungalo"></a>
+        <a href="alojamiento.html"><img src="img/bungalo6.jpg" alt="bungalo"></a>
+        <a href="alojamiento.html"><img src="img/bungalo3.jpg" alt="bungalo"></a>
+        <a href="alojamiento.html"><img src="img/bungalo5.jpg" alt="bungalo"></a>
+        <a href="alojamiento.html"><img src="img/bungalo1.jpg" alt="bungalo"></a>
+        <a href="alojamiento.html"><img src="img/bungalo4.jpg" alt="bungalo"></a>
+        <a href="alojamiento.html"><img src="img/bungalo2.jpg" alt="bungalo"></a>
+        <a href="alojamiento.html"><img src="img/bungalo6.jpg" alt="bungalo"></a>
+        <a href="alojamiento.html"><img src="img/bungalo3.jpg" alt="bungalo"></a>
+        <a href="alojamiento.html"><img src="img/bungalo5.jpg" alt="bungalo"></a> 
     </div>
 </div>
 
 
     <br><br>
     <h2>SERVICIOS</h2>
-    <?php 
-    $consultaServicios = $conexion->query("SELECT * FROM SERVICIO");
 
-    while ($servicio = $consultaServicios->fetch(PDO::FETCH_ASSOC)) {
-        $nombreArchivo = strtolower(str_replace(' ', '_', $servicio['nombre'])) . ".html"; 
-        echo "<a href='$nombreArchivo'>" . htmlspecialchars($servicio['descripcion']) . "</a><br>";
-    }
-
-    if (!empty($errores)) {
-        foreach ($errores as $error) {
-            echo "<p style='color:red;'>$error</p>";
-        }
-    }
-    ?>
+<div class="carrusel-contenedor">
+    <div class="carrusel-track">
+        <a href="servicios.html"><img src="img/almendros1.jpg" alt="servicio"></a>
+        <a href="servicios.html"><img src="img/merendero2.jpg" alt="servicio"></a>
+        <a href="servicios.html"><img src="img/muñecoNieve.jpg" alt="servicio"></a>
+        <a href="servicios.html"><img src="img/castillo4.jpg" alt="servicio"></a>
+        <a href="servicios.html"><img src="img/nieve6.jpg" alt="servicio"></a>
+        <a href="servicios.html"><img src="img/pueblo1.jpg" alt="servicio"></a>
+        <a href="servicios.html"><img src="img/tahal4.jpg" alt="servicio"></a>
+        <a href="servicios.html"><img src="img/campo1.jpg" alt="servicio"></a>
+        <a href="servicios.html"><img src="img/castillo3.jpg" alt="servicio"></a>
+        <a href="servicios.html"><img src="img/tahal1.jpg" alt="servicio"></a>
+        <a href="servicios.html"><img src="img/setas.webp" alt="servicio"></a>
+        <a href="servicios.html"><img src="img/nieve4.jpg" alt="servicio"></a> 
+        <a href="servicios.html"><img src="img/tahal3.jpg" alt="servicio"></a> 
+        <a href="servicios.html"><img src="img/campo5.jpg" alt="servicio"></a> 
+        <a href="servicios.html"><img src="img/almendros2.jpg" alt="servicio"></a>
+        <a href="servicios.html"><img src="img/merendero5.jpg" alt="servicio"></a> 
+        <a href="servicios.html"><img src="img/castillo5.jpg" alt="servicio"></a> 
+        <a href="servicios.html"><img src="img/nieve6.jpg" alt="servicio"></a> 
+        <a href="servicios.html"><img src="img/tahal3.jpg" alt="servicio"></a> 
+        <a href="servicios.html"><img src="img/nieve2.jpg" alt="servicio"></a> 
+        <a href="servicios.html"><img src="img/tahal5.jpg" alt="servicio"></a>  
+    </div>
+</div>
 
 </body>
 </html>

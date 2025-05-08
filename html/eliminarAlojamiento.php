@@ -15,7 +15,7 @@ if (!isset($_SESSION['usuario'])) {
     exit; // Detener la ejecución después de redirigir
 }
 
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') {
+if ((!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') && (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'superadministrador')) {
     header('Location: index.php');
     exit; // Detener la ejecución después de redirigir
 }

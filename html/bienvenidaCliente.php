@@ -1,4 +1,5 @@
 <?php 
+session_start(); // Iniciar la sesión al principio del script
 ob_start(); // Iniciar el buffer de salida
 //session_start(); La comento porque me salta el siguiente error:
 //Notice: session_start(): Ignoring session_start() 
@@ -6,7 +7,6 @@ ob_start(); // Iniciar el buffer de salida
 //Pero no lo entiendo porque me dijeron que había que ponerlo en todas las páginas
 //porque es lo que habilita la sesión
 require_once 'Conexion.php';
-require_once 'controladorLogin.php';
 $nombreUsuario= $_SESSION['usuario'];
 $idUsuario= $_SESSION['idUsuario'];
 try{
@@ -15,6 +15,11 @@ try{
 } catch (PDOException $ex) {
     $error = $ex->getMessage();
 };
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'cliente') {
+    header('Location: index.php');
+    exit;
+}
+
 if(filter_has_var(INPUT_POST, "cerrarSesion")){
     session_unset(); // Destruir todas las variables de sesión
     session_destroy();

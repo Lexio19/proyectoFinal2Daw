@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Bungalós disponibles</title>
+  <style>
+    /*Estilo de alojamiento.html*/
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .foto {
+    background: white;
+    padding: 0.5rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  
+  .foto img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  
+  .foto p {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    color: #444;
+  }
+  .foto img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 4px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .foto img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  
+
+  /*Lo hacemos responsivo*/
+  @media (max-width: 1024px) {
+    .galeria {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .galeria {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Nuestros bungalós</h1>
+    <p>Te invitamos a conocer nuestros alojamientos rodeados de naturaleza. Disfruta de tranquilidad, comodidad y paisajes únicos.</p>
+  </header>
+
+  <main class="galeria">
+    <div class="foto">
+      <img src="img/bungalo3.jpg" alt="Bungaló junto al lago">
+      
+    </div>
+    <div class="foto">
+      <img src="img/bungalo2.jpg" alt="Bungaló entre árboles">
+      
+    </div>
+    <div class="foto">
+      <img src="img/merendero6.jpg" alt="Bungaló con vista a la montaña">
+      
+    </div>
+    <div class="foto">
+      <img src="img/bungalo4.jpg" alt="Bungaló aislado para dos">
+      
+    </div>
+    <div class="foto">
+        <img src="img/bungalo5.jpg" alt="Bungaló aislado para dos">
+        
+      </div>
+      <div class="foto">
+        <img src="img/bungalo10.jpg" alt="Bungaló aislado para dos">
+        
+      </div>
+      <div class="foto">
+        <img src="img/castillo3.jpg" alt="Bungaló aislado para dos">
+        
+      </div>
+      <div class="foto">
+        <img src="img/bungalo9.jpg" alt="Bungaló aislado para dos">
+        
+      </div>
+    <!-- Agrega más fotos según necesites -->
+  </main>
+
+  <footer>
+    <p><a href="index.php">Inicia sesión</a> para reservar · <a href="index.php">Volver al inicio</a></p>
+  </footer>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
