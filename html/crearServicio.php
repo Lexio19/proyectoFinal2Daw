@@ -44,7 +44,7 @@ if ($mensaje = getFlash('error')) {
 </head>
 <body>
     <h1>Crear nuevo servicio</h1>
-    <form action="controladorCrearServicio.php" method="POST">
+    <form action="controladorCrearServicio.php" method="POST" enctype="multipart/form-data">
         <label for="nombre">Nombre</label><br>
         <input type="text" name="nombre" required><br><br>
         <label for="descripcion">Descripción</label><br>
@@ -53,6 +53,8 @@ if ($mensaje = getFlash('error')) {
         <input type="number" name="aforo" required><br><br>
         <label for="diaServicio">Día del servicio</label><br>
         <input type="text" name="diaServicio" required><br><br>
+        <label for="imagen">Imagen del servicio</label><br>
+    <input type="file" name="imagen" accept="image/*" required><br><br>
 
         <button type="submit" name="crearServicio">Crear servicio</button>
     </form>

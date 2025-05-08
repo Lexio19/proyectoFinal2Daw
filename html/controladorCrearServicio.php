@@ -11,8 +11,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearSer
     
     $errores = [];
 
-    if (empty($nombre)||empty($descripcion)) {
-        $errores[] = "❌ Servicio no válido.";
+    if (empty($nombre)||empty($descripcion)||empty($aforo)||empty($diaServicio)) {
+        $errores[] = "❌ Todos los campos son obligatorios.";
+       
+    }
+
+    // Verificar imagen
+    if (!isset($_FILES['imagen']) || $_FILES['imagen']['error'] != UPLOAD_ERR_OK) {
+        $errores[] = "❌ Error al subir la imagen.";
+    } else {
+        $imagenTmp = $_FILES['imagen']['tmp_name'];
+        $imagenNombre = basename($_FILES['imagen']['name']);
+        $ext = strtolower(pathinfo($imagenNombre, PATHINFO_EXTENSION));
+        $nuevaRuta = 'img/servicios/' . uniqid() . '.' . $ext;
+
+        // Validar extensión
+        $extensionesPermitidas = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+        if (!in_array($ext, $extensionesPermitidas)) {
+            $errores[] = "❌ Formato de imagen no permitido.";
+        }
     }
 
     try {
@@ -28,12 +45,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearSer
             $errores[] = "❌ El servicio ya existe.";
         }
 
+        
+
+        
+
         if (empty($errores)) {
-            $insertarServicio = $conexion->prepare("INSERT INTO SERVICIO (nombre, descripcion, aforo, diasServicio) VALUES (?,?,?,?)");
+            if (!move_uploaded_file($imagenTmp, $nuevaRuta)) {
+                throw new Exception("Error al guardar la imagen.");
+            }
+            $insertarServicio = $conexion->prepare("INSERT INTO SERVICIO (nombre, descripcion, aforo, diasServicio, imagenRuta) VALUES (?,?,?,?,?)");
             $insertarServicio->bindParam(1, $nombre);
             $insertarServicio->bindParam(2, $descripcion);
             $insertarServicio->bindParam(3, $aforo);
             $insertarServicio->bindParam(4, $diaServicio);
+            $insertarServicio->bindParam(5, $nuevaRuta);
             $insertarServicio->execute();
 
             setFlash("success", "✅ Servicio creado con éxito.");

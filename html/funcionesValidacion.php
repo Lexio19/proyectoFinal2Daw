@@ -17,16 +17,17 @@ function validarEmail($email) {
     
     return $emailSaneado;
 }
-
+//Sirve para DNI y NIE
 function validarDNI($dni) {
     $dniSaneado = sanearTexto($dni);
     
-    if (!preg_match('/^[0-9]{8}[A-Z]$/', $dniSaneado)) {
+    if (!preg_match('/^([0-9]{8}[A-Z]|[XYZ][0-9]{7}[A-Z])$/', $dniSaneado)) {
         $dniSaneado = false;
     }
     
     return $dniSaneado;
 }
+
 
 
 
@@ -42,16 +43,17 @@ function validarPassword($password){
 
 function validarUsuario($usuario){
     $usuarioSaneado = sanearTexto($usuario);
-    if (!preg_match('/^[A-Z][a-zA-Z]{1,19}$/', $usuarioSaneado)) {
+    if (!preg_match('/^[a-z][a-z]{1,30}$/i', $usuarioSaneado)) {
         $usuarioSaneado = false;
     }
     
     return $usuarioSaneado;
 }
 
+//1 ó 2 apellidos, separados, no sensitivo a mayúsculas ni minúsculas
 function validarApellidos($apellidos){
     $apellidosSaneado = sanearTexto($apellidos);
-    if (!preg_match("/^[A-Za-zÁÉÍÓÚáéíóúÑñ]+ [A-Za-zÁÉÍÓÚáéíóúÑñ]+$/", $apellidosSaneado)) {
+    if (!preg_match("/^[a-záéíóúñ]+( [a-záéíóúñ]+)?$/iu", $apellidosSaneado)) {
         $apellidosSaneado = false;
     }
     
