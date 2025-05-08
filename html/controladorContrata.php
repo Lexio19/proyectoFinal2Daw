@@ -56,7 +56,7 @@ if ($numeroContrataciones >= $aforo) {
 // Obtener el día de la semana de la fecha seleccionada en inglés y en minúsculas
 $diaSeleccionadoIngles = strtolower(date('l', strtotime($fechaContrata)));
 
-// Aquí podrías añadir un array para traducir los días si en tu BD están en español
+//Traducimos los días al español, que es como están en mi BBDD.
 $traduccionDias = [
     'monday' => 'lunes',
     'tuesday' => 'martes',
