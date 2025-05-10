@@ -2,7 +2,9 @@
 
 session_start();
 require_once 'controladorRegistro.php';
-
+require_once 'funcionesValidacion.php';
+$mensajeExito = getFlash("success");
+$mensajeError = getFlash("error");
 ?>
 
 <!DOCTYPE html>
@@ -13,11 +15,17 @@ require_once 'controladorRegistro.php';
     <title>Registro</title>
 </head>
 <body>
+    <?php if ($mensajeExito){?>
+    <p style="color: green;"><?php echo htmlspecialchars($mensajeExito); ?></p>
+<?php };
+if ($mensajeError){ ?>
+    <p style="color: red;"><?php echo htmlspecialchars($mensajeError); ?></p>
+<?php }; ?>
     <h1>Bienvenido a la web de registro de VisiTahal</h1>
 
     <div class="formulario">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-        <label>Introduzca su DNI</label><br>
+        <label>Introduzca su DNI o NIE</label><br>
         <input type="text" name="dni" value="<?php if (filter_has_var(INPUT_POST, "dni")) echo filter_input(INPUT_POST, "dni"); ?>"><br><br>
             <label>Introduzca su email</label><br>
             <input type="text" name="email" value="<?php if (filter_has_var(INPUT_POST, "email")) echo filter_input(INPUT_POST, "email"); ?>"><br><br>

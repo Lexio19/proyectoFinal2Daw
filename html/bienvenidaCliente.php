@@ -44,6 +44,18 @@ if (filter_has_var(INPUT_POST, "eliminarReserva")) {
     }
 }
 
+if (filter_has_var(INPUT_POST, "eliminarServicio")) {
+    $idContrata = intval($_POST['idContrata']);
+    $eliminar = $conexion->prepare("DELETE FROM CONTRATA WHERE idContrata = ?");
+    $eliminar->bindParam(1, $idContrata, PDO::PARAM_INT);
+    $eliminar->execute();
+    if ($eliminar->execute()) {
+        $mensajes[]= "Contratación eliminada con éxito.";
+    } else {
+        $mensajes[]= "Error al eliminar la reserva.";
+    }
+}
+
 if(filter_has_var(INPUT_POST, "reservar")){
     header('Location: reservar.php');
     exit; // Detener la ejecución después de redirigir
@@ -138,6 +150,44 @@ $consultaServicios=$conexion->query("SELECT * FROM SERVICIO");
     }
     ?>
 </div>
+
+<br><br>
+
+<div>
+    <br><br>
+    <h2>Mis servicios contratados</h2>
+    <?php 
+    // Asegúrate de que $idUsuario esté definido correctamente antes de esta consulta
+   $consultaServicios = $conexion->query("
+    SELECT C.idContrata, S.nombre AS nombreServicio, S.descripcion AS descripcionServicio 
+    FROM SERVICIO S, CONTRATA C 
+    WHERE S.idServicio = C.idServicio AND C.idUsuario = $idUsuario
+");
+
+
+    if ($consultaServicios->rowCount() > 0) {
+        echo "<ul>";
+        while ($servicio = $consultaServicios->fetch(PDO::FETCH_ASSOC)) {
+            echo "<li>";
+            echo "<strong>{$servicio['nombreServicio']}</strong><br>";
+            echo "{$servicio['descripcionServicio']}<br>";
+
+            // Si vas a permitir eliminar el contrato, deberías tener el ID necesario (por ejemplo, idContrato o similar)
+            echo "
+                <form action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST' style='display:inline; margin-top:5px;'>
+                    <input type='hidden' name='idContrata' value='{$servicio['idContrata']}'>
+                    <button type='submit' name='eliminarServicio'>Eliminar</button>
+                </form>
+            ";
+            echo "</li><br>";
+        }
+        echo "</ul>";
+    } else {
+        echo "<p>No tienes servicios contratados en este momento.</p>";
+    }
+    ?>
+</div>
+
 
 <?php if (isset($mensajes)) {
     foreach ($mensajes as $mensaje) {

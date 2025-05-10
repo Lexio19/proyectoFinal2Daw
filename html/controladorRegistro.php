@@ -19,27 +19,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "registra
 
 
     if(!validarDNI($dni)){
-        $errores[] = "El DNI no es válido" . "<br>";
+        $errores[] = "El DNI no es válido";
     }
 
     if (!validarEmail($email)) {
-        $errores[] = "Email no válido" . "<br>";
+        $errores[] = "Email no válido";
     }
 
     if (!validarUsuario($usuario)) {
-        $errores[] = "Usuario no válido" . "<br>";
+        $errores[] = "Usuario no válido";
     }
 
     if (!validarApellidos($apellidos)) {
-        $errores[] = "Apellidos no válidos" . "<br>";
+        $errores[] = "Apellidos no válidos";
     }
 
     if (!validarPassword($password)) {
-        $errores[] = "Contraseña no válida" . "<br>";
+        $errores[] = "Contraseña no válida";
     }
 
     if (!validarCodigoPostal($codigoPostal)) {
-        $errores[] = "Código postal no válido" . "<br>";
+        $errores[] = "Código postal no válido";
     }
 
     if (empty($errores)) {
@@ -54,12 +54,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "registra
         $consulta->bindParam(6, $codigoPostal, PDO::PARAM_STR);
         $consulta->bindParam(7, $idRol, PDO::PARAM_INT);
         $consulta->execute();
-
+        setFlash("success", "¡Registro confirmado!");
         header('Location: index.php');
-    } else {
-        foreach ($errores as $error) {
-            echo $error;
-        }
+        exit;
+    } else {  
+    setFlash("error", "Errores:\n - " . implode("\n - ", $errores));   
     }
 
 

@@ -42,13 +42,18 @@ function validarPassword($password){
 }
 
 function validarUsuario($usuario){
+    // Sanear texto para prevenir posibles inyecciones o caracteres no deseados
     $usuarioSaneado = sanearTexto($usuario);
-    if (!preg_match('/^[a-z][a-z]{1,30}$/i', $usuarioSaneado)) {
+    
+    // Expresión regular actualizada para aceptar letras, tildes, ñ y espacios
+    if (!preg_match('/^[A-Za-zÁÉÍÓÚáéíóúÑñ]+(?:\s[A-Za-zÁÉÍÓÚáéíóúÑñ]+)*$/', $usuarioSaneado)) {
+        // Si no pasa la validación, se asigna false
         $usuarioSaneado = false;
     }
     
     return $usuarioSaneado;
 }
+
 
 //1 ó 2 apellidos, separados, no sensitivo a mayúsculas ni minúsculas
 function validarApellidos($apellidos){

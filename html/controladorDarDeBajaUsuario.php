@@ -1,10 +1,10 @@
 <?php
+session_start();
 require_once 'Conexion.php';
 require_once 'funcionesValidacion.php';
-session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "darDeBajaUsuario")) {
-    $idUsuario= $_SESSION['idUsuario'];
+    $idUsuario = $_SESSION['idUsuario'] ?? null;
 
     $errores = [];
 
@@ -16,7 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "darDeBaj
         $db = new Conexion();
         $conexion = $db->conectar();
 
-        // Comprobar duplicado
         $consultaUsuario = $conexion->prepare("SELECT * FROM USUARIO WHERE idUsuario = :idUsuario");
         $consultaUsuario->bindParam(':idUsuario', $idUsuario);
         $consultaUsuario->execute();
@@ -25,20 +24,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "darDeBaj
             $eliminarUsuario = $conexion->prepare("DELETE FROM USUARIO WHERE idUsuario = :idUsuario");
             $eliminarUsuario->bindParam(':idUsuario', $idUsuario);
             $eliminarUsuario->execute();
-          
-
 
             setFlash("success", "✅ Usuario dado de baja con éxito.");
-            session_destroy(); // Destruir la sesión del usuario dado de baja
+            session_unset(); // Conserva $_SESSION['flash']
+            header("Location: index.php");
+            exit;
         } else {
             $errores[] = "❌ El usuario no existe o ya ha sido dado de baja.";
-            
         }
 
-        
-        // Redirigir a la vista de nuevo
-        header("Location: index.php");
-        exit;
+        // Si hubo errores:
+        if (!empty($errores)) {
+            setFlash("error", "Errores:\n - " . implode("\n - ", $errores));
+            header("Location: darDeBajaUsuario.php");
+            exit;
+        }
 
     } catch (PDOException $ex) {
         setFlash("error", "❌ Error de conexión: " . $ex->getMessage());

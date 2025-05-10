@@ -28,7 +28,6 @@ $mensajeError = getFlash("error");
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,11 +53,14 @@ if ($mensajeError){ ?>
         while ($servicio = $consultaServicios->fetch(PDO::FETCH_ASSOC)) {
             // Recuperamos los días disponibles como una cadena de texto
             $diasServicio = $servicio['diasServicio']; // Ejemplo: "Lunes, Miércoles, Viernes"
-            echo "<option value='" . $servicio['idServicio'] . "' data-dias='" . htmlspecialchars($diasServicio) . "'>"
-            . htmlspecialchars($servicio['descripcion']) . " (" . htmlspecialchars($diasServicio) . ")</option>";
-        
+            $imagenRuta = $servicio['imagenRuta']; // Ruta de la imagen
+
+            // Mostrar el servicio con su imagen
+            echo "<option value='" . $servicio['idServicio'] . "' data-dias='" . htmlspecialchars($diasServicio) . "'>";
+            echo htmlspecialchars($servicio['descripcion']) . " (" . htmlspecialchars($diasServicio) . ")</option>";
+            // Mostrar la imagen en la lista desplegable o en alguna parte de la interfaz
+            echo "<div><img src='" . htmlspecialchars($imagenRuta) . "' alt='Imagen del servicio' style='width: 100px; height: 100px;'></div>";
         }
-        
         ?>
     </select>
 
@@ -121,14 +123,9 @@ function diaSemana(fecha) {
 }
 </script>
 
-
-
-
-
 <div>   
     <a href="index.php">Volver a la página de inicio</a>
 </div>
  
 </body>
 </html>
-

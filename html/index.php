@@ -1,7 +1,7 @@
 <?php 
-
-require_once 'Conexion.php';
 require_once 'controladorLogin.php';
+require_once 'Conexion.php';
+require_once 'funcionesValidacion.php';
 try {
     $db = new Conexion;
     $conexion = $db->conectar();
@@ -14,6 +14,14 @@ if (isset($_SESSION['usuario'])) {
     header('Location: bienvenidaCliente.php');
     exit;
 }
+
+$mensajeExito = getFlash("success");
+$mensajeError = getFlash("error");
+
+if (isset($_SESSION['usuario']) && !$mensajeExito && !$mensajeError) {
+    header('Location: bienvenidaCliente.php');
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -23,6 +31,13 @@ if (isset($_SESSION['usuario'])) {
     <title>VisiTahal</title>
 </head>
 <body>
+<!--Mensajes de éxito o error de setFlash()-->
+    <?php if ($mensajeExito){?>
+    <p style="color: green;"><?php echo htmlspecialchars($mensajeExito); ?></p>
+<?php };
+if ($mensajeError){ ?>
+    <p style="color: red;"><?php echo htmlspecialchars($mensajeError); ?></p>
+<?php }; ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <h1>Bienvenidos a VisiTahal</h1>
