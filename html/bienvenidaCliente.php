@@ -92,7 +92,7 @@ if(filter_has_var(INPUT_POST, "darDeBajaUsuario")){
     
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 
-    <button type="submit" name="reservar">Reservar</button>
+    <button type="submit" name="reservar">Reservar un alojamiento</button>
 
 </form>
 
