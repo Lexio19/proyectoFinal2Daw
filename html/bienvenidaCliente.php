@@ -78,6 +78,7 @@ if(filter_has_var(INPUT_POST, "darDeBajaUsuario")){
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=, initial-scale=1.0">
     <title>Página principal de cliente</title>
@@ -89,6 +90,22 @@ if(filter_has_var(INPUT_POST, "darDeBajaUsuario")){
     
 
     <h2>RESERVA DE ALOJAMIENTOS</h2>
+    <div class="carrusel-contenedor">
+    <div class="carrusel-track">
+        <img src="img/bungalo1.jpg" alt="bungalo"></a>
+        <img src="img/bungalo4.jpg" alt="bungalo"></a>
+        <img src="img/bungalo2.jpg" alt="bungalo"></a>
+        <img src="img/bungalo6.jpg" alt="bungalo"></a>
+        <img src="img/bungalo3.jpg" alt="bungalo"></a>
+        <img src="img/bungalo5.jpg" alt="bungalo"></a>
+        <img src="img/bungalo1.jpg" alt="bungalo"></a>
+        <img src="img/bungalo4.jpg" alt="bungalo"></a>
+        <img src="img/bungalo2.jpg" alt="bungalo"></a>
+        <img src="img/bungalo6.jpg" alt="bungalo"></a>
+        <img src="img/bungalo3.jpg" alt="bungalo"></a>
+        <img src="img/bungalo5.jpg" alt="bungalo"></a> 
+    </div>
+</div>
     
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 
@@ -98,14 +115,32 @@ if(filter_has_var(INPUT_POST, "darDeBajaUsuario")){
 
 
 <br><br>
-<h2>SERVICIOS</h2>
-<?php 
-
-$consultaServicios=$conexion->query("SELECT * FROM SERVICIO");
- while ($servicio = $consultaServicios->fetch(PDO::FETCH_ASSOC)) {
-    echo $servicio['descripcion'] . "<br>";
- } 
- ?>
+<h2> CONTRATACIÓN DE SERVICIOS</h2>
+<div class="carrusel-contenedor">
+    <div class="carrusel-track">
+        <img src="img/almendros1.jpg" alt="servicio"></a>
+        <img src="img/merendero2.jpg" alt="servicio"></a>
+        <img src="img/muñecoNieve.jpg" alt="servicio"></a>
+        <img src="img/castillo4.jpg" alt="servicio"></a>
+        <img src="img/nieve6.jpg" alt="servicio"></a>
+        <img src="img/pueblo1.jpg" alt="servicio"></a>
+        <img src="img/tahal4.jpg" alt="servicio"></a>
+        <img src="img/campo1.jpg" alt="servicio"></a>
+        <img src="img/castillo3.jpg" alt="servicio"></a>
+        <img src="img/tahal1.jpg" alt="servicio"></a>
+        <img src="img/setas.webp" alt="servicio"></a>
+        <img src="img/nieve4.jpg" alt="servicio"></a> 
+        <img src="img/tahal3.jpg" alt="servicio"></a> 
+        <img src="img/campo5.jpg" alt="servicio"></a> 
+        <img src="img/almendros2.jpg" alt="servicio"></a>
+        <img src="img/merendero5.jpg" alt="servicio"></a> 
+        <img src="img/castillo5.jpg" alt="servicio"></a> 
+        <img src="img/nieve6.jpg" alt="servicio"></a> 
+        <img src="img/tahal3.jpg" alt="servicio"></a> 
+        <img src="img/nieve2.jpg" alt="servicio"></a> 
+        <img src="img/tahal5.jpg" alt="servicio"></a>  
+    </div>
+</div>
  <br><br>
 
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
