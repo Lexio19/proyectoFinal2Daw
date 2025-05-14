@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'Conexion.php';
+require_once 'conexion/Conexion.php';
 require_once 'funcionesValidacion.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "darDeBajaUsuario")) {

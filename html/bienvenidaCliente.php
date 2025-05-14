@@ -6,7 +6,7 @@ ob_start(); // Iniciar el buffer de salida
 //because a session is already active in /var/www/html/controladorLogin.php on line 3
 //Pero no lo entiendo porque me dijeron que había que ponerlo en todas las páginas
 //porque es lo que habilita la sesión
-require_once 'Conexion.php';
+require_once 'conexion/Conexion.php';
 $nombreUsuario= $_SESSION['usuario'];
 $idUsuario= $_SESSION['idUsuario'];
 try{
@@ -78,12 +78,16 @@ if(filter_has_var(INPUT_POST, "darDeBajaUsuario")){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="styles.css">
+    <!-- Bootstrap 5.3 CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=, initial-scale=1.0">
     <title>Página principal de cliente</title>
 </head>
 <body>
+    <div class="container py-4">
+
     <h1>HOLA, CLIENTE <?php echo $nombreUsuario ?></h1>
 
    
@@ -106,10 +110,11 @@ if(filter_has_var(INPUT_POST, "darDeBajaUsuario")){
         <img src="img/bungalo5.jpg" alt="bungalo"></a> 
     </div>
 </div>
-    
+    <br><br>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 
-    <button type="submit" name="reservar">Reservar un alojamiento</button>
+    <button type="submit" name="reservar" class="btn btn-purple">Reservar un alojamiento</button>
+
 
 </form>
 
@@ -145,13 +150,15 @@ if(filter_has_var(INPUT_POST, "darDeBajaUsuario")){
 
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 
-<button type="submit" name="contratar">Contratar un servicio</button>
+<button type="submit" name="contratar" class="btn btn-purple">Contratar un servicio</button>
+
 
 </form>
 <br><br>
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 
-<button type="submit" name="darDeBajaUsuario">Darse de baja</button>
+<button type="submit" name="contratar" class="btn btn-purple">Contratar un servicio</button>
+
 
 </form>
 
@@ -233,10 +240,13 @@ if(filter_has_var(INPUT_POST, "darDeBajaUsuario")){
 <div>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 
-    <button type="submit" name="cerrarSesion">Cerrar sesión</button>
+    <button type="submit" name="cerrarSesion" class="btn btn-purple">Cerrar sesión</button>
+
 
     </form>
     </div>
 
+    
+</div>
 </body>
 </html>

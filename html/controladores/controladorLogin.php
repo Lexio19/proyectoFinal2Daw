@@ -1,7 +1,7 @@
 <?php
 ob_start();//Activar el buffer de salida
 session_start();
-require_once 'Conexion.php';
+require_once 'conexion/Conexion.php';
 require_once 'funcionesValidacion.php';
 $db = new Conexion;
 $conexion = $db->conectar();

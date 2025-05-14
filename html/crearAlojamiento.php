@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require_once 'Conexion.php';
+require_once 'conexion/Conexion.php';
 require_once 'funcionesValidacion.php';
 if (!isset($_SESSION['usuario'])) {
     header('Location: index.php');
@@ -44,7 +44,7 @@ if ($mensaje = getFlash('error')) {
 </head>
 <body>
     <h1>Crear nuevo alojamiento</h1>
-    <form action="controladorCrearAlojamiento.php" method="POST">
+    <form action="controladores/controladorCrearAlojamiento.php" method="POST">
         <label for="nombre">Tipo de alojamiento:</label><br>
         <input type="text" name="tipo" required><br><br>
 

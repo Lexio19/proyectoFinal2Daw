@@ -1,5 +1,5 @@
 <?php
-require_once 'Conexion.php';
+require_once 'conexion/Conexion.php';
 
 if (!isset($_GET['idServicio']) || !isset($_GET['fecha'])) {
     http_response_code(400);

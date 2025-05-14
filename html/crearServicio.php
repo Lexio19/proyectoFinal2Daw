@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require_once 'Conexion.php';
+require_once 'conexion/Conexion.php';
 require_once 'funcionesValidacion.php';
 if (!isset($_SESSION['usuario'])) {
     header('Location: index.php');
@@ -44,7 +44,7 @@ if ($mensaje = getFlash('error')) {
 </head>
 <body>
     <h1>Crear nuevo servicio</h1>
-    <form action="controladorCrearServicio.php" method="POST" enctype="multipart/form-data">
+    <form action="controladores/controladorCrearServicio.php" method="POST" enctype="multipart/form-data">
         <label for="nombre">Nombre</label><br>
         <input type="text" name="nombre" required><br><br>
         <label for="descripcion">Descripción</label><br>

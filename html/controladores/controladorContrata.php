@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'Conexion.php';
+require_once 'conexion/Conexion.php';
 require_once 'funcionesValidacion.php';
 
 if (!isset($_SESSION['usuario'])) {

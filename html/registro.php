@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require_once 'controladorRegistro.php';
+require_once 'controladores/controladorRegistro.php';
 require_once 'funcionesValidacion.php';
 $mensajeExito = getFlash("success");
 $mensajeError = getFlash("error");

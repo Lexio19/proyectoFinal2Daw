@@ -1,7 +1,7 @@
 <?php
 // Mostrar los servicios disponibles
 session_start();
-require_once 'Conexion.php';
+require_once 'conexion/Conexion.php';
 require_once 'funcionesValidacion.php';
 $db = new Conexion();
 $conexion = $db->conectar();
@@ -43,7 +43,7 @@ if ($mensajeError){ ?>
     <p style="color: red;"><?php echo htmlspecialchars($mensajeError); ?></p>
 <?php }; ?>
 
-<form action="controladorContrata.php" method="POST">
+<form action="controladores/controladorContrata.php" method="POST">
     <label for="servicio">Selecciona un servicio:</label>
     <style>
 .carrusel {

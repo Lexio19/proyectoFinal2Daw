@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'Conexion.php';
+require_once 'conexion/Conexion.php';
 require_once 'funcionesValidacion.php';
 $db = new Conexion();
 $conexion = $db->conectar();
@@ -44,7 +44,7 @@ if ($mensajeError) {
     <title>Dar de baja un usuario</title>
 </head>
 <body>
-<form action="controladorDarDeBajaUsuario.php" method="POST">
+<form action="controladores/controladorDarDeBajaUsuario.php" method="POST">
 <h1>Dar de baja un usuario</h1>
     <p>¿Estás seguro de que deseas dar de baja a este usuario?</p>
     <button type="submit" name="darDeBajaUsuario">Dar de baja</button>

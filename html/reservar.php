@@ -1,7 +1,7 @@
 <?php
 // Mostrar los servicios disponibles
 session_start();
-require_once 'Conexion.php';
+require_once 'conexion/Conexion.php';
 require_once 'funcionesValidacion.php';
 $db = new Conexion();
 $conexion = $db->conectar();
@@ -64,7 +64,7 @@ $mensajeError = getFlash("error");
 if ($mensajeError){ ?>
     <p style="color: red;"><?php echo htmlspecialchars($mensajeError); ?></p>
 <?php }; ?>
-    <form action="controladorReserva.php" method="POST">
+    <form action="controladores/controladorReserva.php" method="POST">
         <br><br>
         <label for="fechaInicio">Fecha de entrada:</label>
         <input type="date" name="fechaInicio" required>

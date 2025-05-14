@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once 'Conexion.php';
+require_once 'conexion/Conexion.php';
 require_once 'funcionesValidacion.php';
-require_once 'controladorEliminarAlojamiento.php';
+require_once 'controladores/controladorEliminarAlojamiento.php';
 try {
     $db = new Conexion;
     $conexion = $db->conectar();
@@ -55,7 +55,7 @@ if ($mensaje = getFlash('error')) {
 </head>
 <body>
     <h1>Eliminar un alojamiento</h1>
-    <form action="controladorEliminarAlojamiento.php" method="POST">
+    <form action="controladores/controladorEliminarAlojamiento.php" method="POST">
         <label>Alojamiento:</label><br>
         <select name="id" required>
     <?php

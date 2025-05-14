@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'Conexion.php';
+require_once 'conexion/Conexion.php';
 if (!isset($_SESSION['usuario'])) {
     header('Location: index.php');
     exit; // Detener la ejecución después de redirigir
@@ -41,7 +41,7 @@ if (isset($_SESSION['flash'])) {
 ?>
 
 <br><br>
-<form action="controladorCrearNuevoAdministrador.php" method="POST">
+<form action="controladores/controladorCrearNuevoAdministrador.php" method="POST">
     <h2>Crear nuevo administrador</h2>
 
     <label for="dni">DNI</label><br>

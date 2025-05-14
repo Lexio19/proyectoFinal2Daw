@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once 'Conexion.php';
+require_once 'conexion/Conexion.php';
 require_once 'funcionesValidacion.php';
-require_once 'controladorEliminarAlojamiento.php';
+require_once 'controladores/controladorEliminarAlojamiento.php';
 try {
     $db = new Conexion;
     $conexion = $db->conectar();
@@ -61,7 +61,7 @@ if ($mensaje = getFlash('error')) {
 </head>
 <body>
     <h1>Eliminar un administrador</h1>
-    <form action="controladorEliminarAdministrador.php" method="POST">
+    <form action="controladores/controladorEliminarAdministrador.php" method="POST">
         <label>Usuarios administradores</label><br>
         <select name="id" required>
     <?php

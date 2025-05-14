@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'Conexion.php'; // Asegúrate de incluir el archivo de conexión
+require_once 'conexion/Conexion.php'; // Asegúrate de incluir el archivo de conexión
 require_once 'funcionesValidacion.php'; // Asegúrate de incluir las funciones de validación
 if (!isset($_SESSION['usuario'])) {
     die("Debes iniciar sesión para realizar una reserva.");

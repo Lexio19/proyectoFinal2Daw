@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'Conexion.php';
+require_once 'conexion/Conexion.php';
 if (!isset($_SESSION['usuario'])) {
     header('Location: index.php');
     exit; // Detener la ejecución después de redirigir

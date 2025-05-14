@@ -1,5 +1,5 @@
 <?php
-require_once 'Conexion.php';
+require_once 'conexion/Conexion.php';
 require_once 'funcionesValidacion.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
