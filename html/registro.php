@@ -13,8 +13,10 @@ $mensajeError = getFlash("error");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="container mt-4">
     <?php if ($mensajeExito){?>
     <p style="color: green;"><?php echo htmlspecialchars($mensajeExito); ?></p>
 <?php };
@@ -51,5 +53,6 @@ if ($mensajeError){ ?>
     <div>   
         <a href="index.php">Volver a la página de inicio</a>
     </div>
+</div>
 </body>
 </html>

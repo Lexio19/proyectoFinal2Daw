@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once 'conexion/Conexion.php';
-require_once 'funcionesValidacion.php';
+require_once '../conexion/Conexion.php';
+require_once '../funcionesValidacion.php';
 
 if (!isset($_SESSION['usuario'])) {
     die("Debes iniciar sesión para realizar una reserva.");

@@ -1,7 +1,9 @@
 
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
         body {
             background-color: #f4f4f8;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Poppins', sans-serif;
+
         }
 
         h1, h2 {
@@ -74,3 +76,61 @@
                 transform: translateX(-50%);
             }
         }
+
+        /*Estilo de alojamiento.html*/
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .foto {
+    background: white;
+    padding: 0.5rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  
+  .foto img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  
+  .foto p {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    color: #444;
+  }
+  .foto img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 4px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .foto img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  
+
+  /*Lo hacemos responsivo*/
+  @media (max-width: 1024px) {
+    .galeria {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .galeria {
+      grid-template-columns: 1fr;
+    }
+  }

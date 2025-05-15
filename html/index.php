@@ -32,7 +32,6 @@ if (isset($_SESSION['usuario']) && !$mensajeExito && !$mensajeError) {
     <title>VisiTahal</title>
 </head>
 <body>
-
 <div class="container mt-4">
     <?php if ($mensajeExito): ?>
         <div class="alert alert-success text-center"><?php echo htmlspecialchars($mensajeExito); ?></div>
@@ -116,5 +115,44 @@ if (isset($_SESSION['usuario']) && !$mensajeExito && !$mensajeError) {
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<footer class="bg-dark text-white text-center text-lg-start mt-5">
+    <div class="container p-4">
+        <div class="row">
+            <!-- Información general -->
+            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Redes sociales</h5>
+                <p>
+                   <a href="https://www.instagram.com/ayuntamientotahal/" class="text-white">Instagram</a><br>
+                   <a href="https://www.tiktok.com/search?q=ayuntamientotahal&t=1747319630493" class="text-white">TikTok</a><br>
+                   <a href="https://www.facebook.com/ayuntamientotahal/" class="text-white">Facebook</a><br>
+
+                </p>
+            </div>
+
+            
+            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Contacto</h5>
+                <ul class="list-unstyled mb-0">
+                    <li><i class="bi bi-envelope"></i> contacto@visitahal.es</li>
+                    <li><i class="bi bi-telephone"></i> +34 123 456 789</li>
+                    <li><i class="bi bi-geo-alt"></i> Tahal, Almería, España</li>
+                </ul>
+            </div>
+
+            
+            <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Ayuntamiento de Tahal</h5>
+                   <a href="https://www.tahal.es/" class="text-white">Web del ayuntamiento</a><br>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center p-3 bg-secondary">
+        © <?php echo date("Y"); ?> VisiTahal. Todos los derechos reservados.
+    </div>
+</footer>
+
 </body>
 </html>

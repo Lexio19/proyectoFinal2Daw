@@ -33,9 +33,12 @@ $mensajeError = getFlash("error");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <title>Contratar un servicio</title>
 </head>
 <body>
+    <div class="container mt-4">
 <?php if ($mensajeExito){?>
     <p style="color: green;"><?php echo htmlspecialchars($mensajeExito); ?></p>
 <?php };
@@ -102,7 +105,7 @@ if ($mensajeError){ ?>
     <input type="date" name="fechaContrata" id="fechaContrata" required>
     <br><br>
     <p id="aforoDisponible" style="font-weight: bold;"></p>
-    <button type="submit" name="reservar">Reservar</button>
+    <button type="submit" name="contratar">Contratar servicio</button>
 </form>
 
 <div>
@@ -203,5 +206,6 @@ inputFecha.addEventListener("change", () => {
     <a href="index.php">Volver a la página de inicio</a>
 </div>
  
+</div>
 </body>
 </html>

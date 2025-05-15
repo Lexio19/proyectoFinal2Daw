@@ -155,15 +155,6 @@ if(filter_has_var(INPUT_POST, "darDeBajaUsuario")){
 
 </form>
 <br><br>
-<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-
-<button type="submit" name="contratar" class="btn btn-purple">Contratar un servicio</button>
-
-
-</form>
-
-<br><br>
-
 
     <div>
     <br><br>
@@ -213,8 +204,7 @@ if(filter_has_var(INPUT_POST, "darDeBajaUsuario")){
             echo "<li>";
             echo "<strong>{$servicio['nombreServicio']}</strong><br>";
             echo "{$servicio['descripcionServicio']}<br>";
-
-            // Si vas a permitir eliminar el contrato, deberías tener el ID necesario (por ejemplo, idContrato o similar)
+            echo "<strong>Fecha de contratación:</strong> " . $servicio['fechaContrata'] . "<br>";
             echo "
                 <form action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST' style='display:inline; margin-top:5px;'>
                     <input type='hidden' name='idContrata' value='{$servicio['idContrata']}'>

@@ -32,6 +32,8 @@ $mensajeError = getFlash("error");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <title>Reserva de Bungalow</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -57,6 +59,7 @@ $mensajeError = getFlash("error");
         });
     </script>
 </head>
+<div class="container mt-4">
 <body>
 <?php if ($mensajeExito){?>
     <p style="color: green;"><?php echo htmlspecialchars($mensajeExito); ?></p>
@@ -64,7 +67,7 @@ $mensajeError = getFlash("error");
 if ($mensajeError){ ?>
     <p style="color: red;"><?php echo htmlspecialchars($mensajeError); ?></p>
 <?php }; ?>
-    <form action="controladores/controladorReserva.php" method="POST">
+    <form action="controladorReserva.php" method="POST">
         <br><br>
         <label for="fechaInicio">Fecha de entrada:</label>
         <input type="date" name="fechaInicio" required>
@@ -90,4 +93,5 @@ if ($mensajeError){ ?>
         </form>
     </div>
 </body>
+</div>
 </html>
