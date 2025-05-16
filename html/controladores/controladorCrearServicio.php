@@ -1,6 +1,6 @@
 <?php
-require_once 'conexion/Conexion.php';
-require_once 'funcionesValidacion.php';
+require_once __DIR__ . '/../conexion/Conexion.php';
+require_once __DIR__ . '/../funcionesValidacion.php';
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearServicio")) {
@@ -10,6 +10,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearSer
     $diaServicio = filter_input(INPUT_POST, "diaServicio");
     
     $errores = [];
+    if (!validarDiaSemana($diaServicio)) {
+        $errores[] = "❌ Día de servicio no válido.";
+    }
+
 
     if (empty($nombre)||empty($descripcion)||empty($aforo)||empty($diaServicio)) {
         $errores[] = "❌ Todos los campos son obligatorios.";
@@ -23,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearSer
         $imagenTmp = $_FILES['imagen']['tmp_name'];
         $imagenNombre = basename($_FILES['imagen']['name']);
         $ext = strtolower(pathinfo($imagenNombre, PATHINFO_EXTENSION));
-        $nuevaRuta = 'img/servicios/' . uniqid() . '.' . $ext;
+        $nuevaRuta = '../img/servicios/' . uniqid() . '.' . $ext;
 
         // Validar extensión
         $extensionesPermitidas = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
@@ -44,11 +48,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearSer
         if ($consultaServicio->rowCount() > 0) {
             $errores[] = "❌ El servicio ya existe.";
         }
-
-        
-
-        
-
         if (empty($errores)) {
             if (!move_uploaded_file($imagenTmp, $nuevaRuta)) {
                 throw new Exception("Error al guardar la imagen.");
@@ -67,12 +66,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearSer
         }
 
         // Redirigir a la vista de nuevo
-        header("Location: crearServicio.php");
+        header("Location: ../crearServicio.php");
         exit;
 
     } catch (PDOException $ex) {
         setFlash("error", "❌ Error de conexión: " . $ex->getMessage());
-        header("Location: crearServicio.php");
+        header("Location: ../crearServicio.php");
         exit;
     }
 }

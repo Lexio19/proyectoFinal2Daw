@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once '../conexion/Conexion.php';
-require_once '../funcionesValidacion.php';
+require_once __DIR__ . '/../conexion/Conexion.php';
+require_once __DIR__ . '/../funcionesValidacion.php';
 
 if (!isset($_SESSION['usuario'])) {
     die("Debes iniciar sesión para realizar una reserva.");
@@ -35,7 +35,7 @@ $servicio = $consultaTablaServicio->fetch(PDO::FETCH_ASSOC);
 
 if (!$servicio) {
     setFlash("error", "Error: Servicio no encontrado.");
-    header('Location: contratar.php');
+    header('Location: ../contratar.php');
     exit;
 }
 
@@ -49,7 +49,7 @@ $numeroContrataciones = $consultaContrataciones->fetchColumn();
 
 if ($numeroContrataciones >= $aforo) {
     setFlash("error", "No hay disponibilidad para el servicio seleccionado en la fecha indicada.");
-    header('Location: contratar.php');
+    header('Location: ../contratar.php');
     exit;
 }
 
@@ -82,12 +82,7 @@ $insertarContratacion = $conexion->prepare("
 ");
 $insertarContratacion->execute([$idServicio, $idUsuario, $fechaContrata]);
 setFlash("success", "¡Reserva confirmada el $fechaContrata!");
-header('Location: contratar.php');
+header('Location: ../contratar.php');
 exit;
 
-
-
 ?>
-<div>
-    <a href="index.php">Volver a la página de inicio</a>
-</div>

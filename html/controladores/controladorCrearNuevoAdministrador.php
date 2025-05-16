@@ -1,6 +1,6 @@
 <?php
-require_once 'conexion/Conexion.php';
-require_once 'funcionesValidacion.php';
+require_once __DIR__ . '/../conexion/Conexion.php';
+require_once __DIR__ . '/../funcionesValidacion.php';
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearAdministrador")) {
@@ -50,12 +50,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearAdm
         }
 
         // Redirigir a la vista de nuevo
-        header("Location: crearNuevoAdministrador.php");
+        header("Location: ../crearNuevoAdministrador.php");
         exit;
 
     } catch (PDOException $ex) {
         setFlash("error", "❌ Error de conexión: " . $ex->getMessage());
-        header("Location: crearNuevoAdministrador.php");
+        header("Location: ../crearNuevoAdministrador.php");
         exit;
     }
 }

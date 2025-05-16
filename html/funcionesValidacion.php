@@ -74,6 +74,33 @@ function validarCodigoPostal($codigoPostal){
     return $codigoPostalSaneado;
 }
 
+//Función para validar el día
+
+function validarDiaSemana($dia) {
+    // Sanear el texto
+    $diaSaneado = trim(mb_strtolower(sanearTexto($dia), 'UTF-8'));
+
+    // Lista de días válidos estandarizados
+    $diasEstandarizados = [
+        'lunes' => 'Lunes',
+        'martes' => 'Martes',
+        'miércoles' => 'Miércoles',
+        'miercoles' => 'Miércoles',
+        'jueves' => 'Jueves',
+        'viernes' => 'Viernes',
+        'sábado' => 'Sábado',
+        'sabado' => 'Sábado',
+        'domingo' => 'Domingo'
+    ];
+
+    // Estandarizar el día o devolver false si no es válido
+    $diaSaneado = $diasEstandarizados[$diaSaneado] ?? false;
+
+    return $diaSaneado;
+}
+
+
+
 //Funciones de mensajes Flash. Evito mostrar los mensajes en 
 //la página del controlador.
 

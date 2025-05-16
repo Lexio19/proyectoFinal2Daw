@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once 'conexion/Conexion.php';
-require_once 'funcionesValidacion.php';
+require_once __DIR__ . '/../conexion/Conexion.php';
+require_once __DIR__ . '/../funcionesValidacion.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "darDeBajaUsuario")) {
     $idUsuario = $_SESSION['idUsuario'] ?? null;
@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "darDeBaj
 
             setFlash("success", "✅ Usuario dado de baja con éxito.");
             session_unset(); // Conserva $_SESSION['flash']
-            header("Location: index.php");
+            header("Location: ../index.php");
             exit;
         } else {
             $errores[] = "❌ El usuario no existe o ya ha sido dado de baja.";
@@ -36,13 +36,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "darDeBaj
         // Si hubo errores:
         if (!empty($errores)) {
             setFlash("error", "Errores:\n - " . implode("\n - ", $errores));
-            header("Location: darDeBajaUsuario.php");
+            header("Location: ../darDeBajaUsuario.php");
             exit;
         }
 
     } catch (PDOException $ex) {
         setFlash("error", "❌ Error de conexión: " . $ex->getMessage());
-        header("Location: darDeBajaUsuario.php");
+        header("Location: ../darDeBajaUsuario.php");
         exit;
     }
 }

@@ -192,7 +192,7 @@ if(filter_has_var(INPUT_POST, "darDeBajaUsuario")){
     <?php 
     // Asegúrate de que $idUsuario esté definido correctamente antes de esta consulta
    $consultaServicios = $conexion->query("
-    SELECT C.idContrata, S.nombre AS nombreServicio, S.descripcion AS descripcionServicio 
+    SELECT C.idContrata,C.fechaContrata, S.nombre AS nombreServicio, S.descripcion AS descripcionServicio, S.diasServicio 
     FROM SERVICIO S, CONTRATA C 
     WHERE S.idServicio = C.idServicio AND C.idUsuario = $idUsuario
 ");
@@ -204,7 +204,8 @@ if(filter_has_var(INPUT_POST, "darDeBajaUsuario")){
             echo "<li>";
             echo "<strong>{$servicio['nombreServicio']}</strong><br>";
             echo "{$servicio['descripcionServicio']}<br>";
-            echo "<strong>Fecha de contratación:</strong> " . $servicio['fechaContrata'] . "<br>";
+            echo "<strong>Fecha contratada:</strong> {$servicio['fechaContrata']}<br>";
+            echo "<strong>Día:</strong> {$servicio['diasServicio']}<br>";
             echo "
                 <form action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST' style='display:inline; margin-top:5px;'>
                     <input type='hidden' name='idContrata' value='{$servicio['idContrata']}'>

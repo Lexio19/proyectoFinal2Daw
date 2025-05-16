@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once 'conexion/Conexion.php';
-require_once 'funcionesValidacion.php';
-require_once 'controladores/controladorEliminarAlojamiento.php';
+require_once __DIR__. '/conexion/Conexion.php';
+require_once __DIR__. '/funcionesValidacion.php';
+require_once __DIR__. '/controladores/controladorEliminarServicio.php';
 try {
     $db = new Conexion;
     $conexion = $db->conectar();

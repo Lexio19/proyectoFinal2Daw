@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once 'conexion/Conexion.php'; // Asegúrate de incluir el archivo de conexión
-require_once 'funcionesValidacion.php'; // Asegúrate de incluir las funciones de validación
+require_once __DIR__ . '/../conexion/Conexion.php'; 
+require_once __DIR__ . '/../funcionesValidacion.php'; 
 if (!isset($_SESSION['usuario'])) {
     die("Debes iniciar sesión para realizar una reserva.");
 }
@@ -15,13 +15,13 @@ $fechaSalida = filter_input(INPUT_POST, 'fechaFin', FILTER_SANITIZE_SPECIAL_CHAR
 $fechaActual= date('Y-m-d'); // Obtener la fecha actual
 if ($fechaEntrada < $fechaActual) {
     setFlash("error", "La fecha de entrada debe ser posterior a la fecha actual.");
-    header("Location: reservar.php");
+    header("Location: ../reservar.php");
     exit;
 }
 // Comprobar que las fechas son válidas
 if ($fechaEntrada >= $fechaSalida) {
     setFlash("error", "La fecha de entrada debe ser anterior a la fecha de salida.");
-    header("Location: reservar.php");
+    header("Location: ../reservar.php");
     exit;
 }
 
@@ -30,11 +30,11 @@ try{
     $conexion = $db->conectar(); // Establecer la conexión correctamente
 } catch (PDOException $ex) {
     setFlash("error", "Error de conexión: " . $ex->getMessage());
-    header("Location: reservar.php");
+    header("Location: ../reservar.php");
     exit;
 } catch (Exception $ex) {
     setFlash("error", "Error inesperado: " . $ex->getMessage());
-    header("Location: reservar.php");
+    header("Location: ../reservar.php");
     exit;
 }
 
@@ -56,7 +56,7 @@ $reservaExistente = $comprobarReservas->fetch();
 
 if ($reservaExistente) {
     setFlash("error", "Este bungalow ya está reservado entre las fechas seleccionadas.");
-    header("Location: reservar.php");
+    header("Location: ../reservar.php");
     exit;
 }
 
@@ -69,7 +69,7 @@ $insertarReserva = $conexion->prepare("
 $insertarReserva->execute([$idUsuario, $idAlojamiento, $fechaEntrada, $fechaSalida]);
 
 setFlash("success", "¡Reserva confirmada del $fechaEntrada al $fechaSalida!");
-header("Location: reservar.php");
+header("Location: ../reservar.php");
 exit;
 
 

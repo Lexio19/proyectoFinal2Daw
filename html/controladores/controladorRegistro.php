@@ -1,8 +1,7 @@
 <?php 
-
 try{
-require_once 'conexion/Conexion.php';
-require_once 'funcionesValidacion.php';
+require_once __DIR__ . '/../conexion/Conexion.php';
+require_once __DIR__ . '/../funcionesValidacion.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "registrarse")) {
 
     $db= new Conexion;
@@ -55,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "registra
         $consulta->bindParam(7, $idRol, PDO::PARAM_INT);
         $consulta->execute();
         setFlash("success", "¡Registro confirmado!");
-        header('Location: index.php');
+        header('Location: ../index.php');
         exit;
     } else {  
     setFlash("error", "Errores:\n - " . implode("\n - ", $errores));   
