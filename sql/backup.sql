@@ -28,7 +28,7 @@ CREATE TABLE `ALOJAMIENTO` (
   `idAlojamiento` int NOT NULL AUTO_INCREMENT,
   `tipo` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`idAlojamiento`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `ALOJAMIENTO` (
 
 LOCK TABLES `ALOJAMIENTO` WRITE;
 /*!40000 ALTER TABLE `ALOJAMIENTO` DISABLE KEYS */;
-INSERT INTO `ALOJAMIENTO` VALUES (4,'Bungalow 4'),(6,'Bungalow 6'),(21,'Bungalow 1'),(22,'Bungalow 2');
+INSERT INTO `ALOJAMIENTO` VALUES (4,'Bungalow 4'),(6,'Bungalow 6'),(21,'Bungalow 1'),(22,'Bungalow 2'),(24,'Bungalow 5');
 /*!40000 ALTER TABLE `ALOJAMIENTO` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,7 +58,7 @@ CREATE TABLE `CONTRATA` (
   KEY `CONTRATA_ibfk_1` (`idServicio`),
   CONSTRAINT `CONTRATA_ibfk_1` FOREIGN KEY (`idServicio`) REFERENCES `SERVICIO` (`idServicio`),
   CONSTRAINT `CONTRATA_ibfk_2` FOREIGN KEY (`idUsuario`) REFERENCES `USUARIO` (`idUsuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +67,6 @@ CREATE TABLE `CONTRATA` (
 
 LOCK TABLES `CONTRATA` WRITE;
 /*!40000 ALTER TABLE `CONTRATA` DISABLE KEYS */;
-INSERT INTO `CONTRATA` VALUES (1,1,7,'2025-04-06'),(2,1,7,'2025-04-13'),(3,3,7,'2025-04-12'),(4,4,7,'2025-04-24'),(5,1,7,'2025-04-06'),(6,1,7,'2025-04-06'),(7,1,7,'2025-04-06'),(8,1,7,'2025-04-06'),(9,1,7,'2025-04-06'),(10,1,7,'2025-04-06'),(11,1,7,'2025-04-06'),(12,1,7,'2025-04-06'),(13,1,7,'2025-04-06'),(14,3,9,'2025-04-19');
 /*!40000 ALTER TABLE `CONTRATA` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,7 +88,7 @@ CREATE TABLE `RESERVA` (
   KEY `idUsuario` (`idUsuario`),
   CONSTRAINT `RESERVA_ibfk_1` FOREIGN KEY (`idAlojamiento`) REFERENCES `ALOJAMIENTO` (`idAlojamiento`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `RESERVA_ibfk_2` FOREIGN KEY (`idUsuario`) REFERENCES `USUARIO` (`idUsuario`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +97,7 @@ CREATE TABLE `RESERVA` (
 
 LOCK TABLES `RESERVA` WRITE;
 /*!40000 ALTER TABLE `RESERVA` DISABLE KEYS */;
-INSERT INTO `RESERVA` VALUES (3,7,6,'2025-04-11','2025-04-13'),(4,7,4,'2025-04-03','2025-04-06'),(5,9,21,'2025-04-12','2025-04-17');
+INSERT INTO `RESERVA` VALUES (3,7,6,'2025-04-11','2025-04-13'),(5,9,21,'2025-04-12','2025-04-17'),(6,7,21,'2025-05-15','2025-05-18'),(7,7,22,'2025-05-16','2025-05-18'),(8,7,4,'2025-05-17','2025-05-18');
 /*!40000 ALTER TABLE `RESERVA` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,7 +112,7 @@ CREATE TABLE `ROL` (
   `idRol` int NOT NULL AUTO_INCREMENT,
   `tipo` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`idRol`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +121,7 @@ CREATE TABLE `ROL` (
 
 LOCK TABLES `ROL` WRITE;
 /*!40000 ALTER TABLE `ROL` DISABLE KEYS */;
-INSERT INTO `ROL` VALUES (1,'administrador'),(2,'cliente');
+INSERT INTO `ROL` VALUES (1,'administrador'),(2,'cliente'),(3,'superadministrador');
 /*!40000 ALTER TABLE `ROL` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -139,8 +138,9 @@ CREATE TABLE `SERVICIO` (
   `descripcion` varchar(100) DEFAULT NULL,
   `aforo` int NOT NULL DEFAULT '20',
   `diasServicio` varchar(255) NOT NULL,
+  `imagenRuta` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idServicio`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,7 +149,7 @@ CREATE TABLE `SERVICIO` (
 
 LOCK TABLES `SERVICIO` WRITE;
 /*!40000 ALTER TABLE `SERVICIO` DISABLE KEYS */;
-INSERT INTO `SERVICIO` VALUES (1,'castillo','Visita al castillo de Tahal',10,'domingo'),(2,'sendero','Ruta por los parajes rurales del pueblo',20,'sábado'),(3,'pueblo','Visita guiada por el pueblo y sus rincones más bonitos',20,'sábado'),(4,'setas','Recogida de setas por los montes del pueblo',20,'domingo'),(5,'fiesta','Fiesta popular con arroz y charanga',20,'domingo'),(6,'almendros','Ruta de los almendros en flor',20,'martes'),(7,'leyendas','Visita guiada nocturna donde se narran las leyendas del pueblo',20,'jueves');
+INSERT INTO `SERVICIO` VALUES (10,'Visita al castillo','Visita guiada al castillo de Tahal y los alrededores para conocer su historia y legado.',20,'Sábado','img/servicios/681f23a0444c0.jpg'),(11,'Visita guiada por el pueblo','Visita guiada por los rincones más bonitos e históricos del pueblo.',20,'Domingo','img/servicios/681f32fb2815b.jpg'),(12,'Recogida de setas','Recogida de setas por los montes de Tahal.',50,'Sábado','img/servicios/681f33194f38d.webp'),(13,'Fiesta popular','Fiesta popular con arroz y charanga',100,'Sábado','img/servicios/681f33a256193.webp'),(14,'Ruta de los almendros','Ruta por los senderos del pueblo para ver los almendros en flor',30,'Domingo','img/servicios/681f33c01e09e.jpg'),(15,'Leyendas nocturnas','Paseo nocturno por los lugares más enigmáticos del pueblo.',20,'Sábado','img/servicios/681f33f1874db.jpg'),(16,'Carrera de montaña','Carrera por los bonitos parajes de la sierra de Tahal.',200,'Domingo','img/servicios/681f347b8d2ee.jpeg');
 /*!40000 ALTER TABLE `SERVICIO` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -174,7 +174,7 @@ CREATE TABLE `USUARIO` (
   UNIQUE KEY `correoElectronico` (`correoElectronico`),
   KEY `idRol` (`idRol`),
   CONSTRAINT `USUARIO_ibfk_1` FOREIGN KEY (`idRol`) REFERENCES `ROL` (`idRol`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -183,7 +183,7 @@ CREATE TABLE `USUARIO` (
 
 LOCK TABLES `USUARIO` WRITE;
 /*!40000 ALTER TABLE `USUARIO` DISABLE KEYS */;
-INSERT INTO `USUARIO` VALUES (1,'85878545C','llll@gmail.com','loco','Lex','Luthor','28001',2),(6,'85178545C','llgfdsll@gmail.com','loco','Lex','Luthor','28001',2),(7,'56235623L','elloco@gmail.com','$2y$10$m0yAo7rvQ2dTVaI0xqZJT.DK8Wg/KEGPDGxG9AapMqI1NuSFpXzl2','Lexio','Georgin Marlos','23568',2),(8,'01010101A','admin@gmail.com','$2y$10$5we9vVTcbChYOY.bV0U41uETWbYsAWQB.HvbK0lapFTGNgt.3u.uy','Administrador','admin admin','00000',1),(9,'22222222A','patri@gmail.com','$2y$10$cOtgkPHoR7sDSyOIUCy0xeHpAKcbAaBsxCzdyQve3Deed.LyWGvzS','Patri','Abrantes Enriquez','04055',2);
+INSERT INTO `USUARIO` VALUES (7,'56235623L','elloco@gmail.com','$2y$10$m0yAo7rvQ2dTVaI0xqZJT.DK8Wg/KEGPDGxG9AapMqI1NuSFpXzl2','Lexio','Georgin Marlos','23568',2),(9,'22222222A','patri@gmail.com','$2y$10$cOtgkPHoR7sDSyOIUCy0xeHpAKcbAaBsxCzdyQve3Deed.LyWGvzS','Patri','Abrantes Enriquez','04055',2),(15,'11111111A','admin@gmail.com','$2y$10$KD/iqlwWlML6MrEKcRfSs.1F5Wsfv57o2gzf/kydWv0BuMm6Wa8Qq','Admin','admin admin','11111',1),(17,'00000000A','superadministrador@gmail.com','$2y$10$tfBI/iI6M2zF2lX5SWkxBOc7r7wF0MTiKUAwNUS8UH0L1Gb2vjjiG','Admin','Admin Admin','00000',3);
 /*!40000 ALTER TABLE `USUARIO` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,4 +200,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-14 22:35:53
+-- Dump completed on 2025-05-17 11:47:10

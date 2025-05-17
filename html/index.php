@@ -32,6 +32,7 @@ if (isset($_SESSION['usuario']) && !$mensajeExito && !$mensajeError) {
     <title>VisiTahal</title>
 </head>
 <body>
+    
 <div class="container mt-4">
     <?php if ($mensajeExito): ?>
         <div class="alert alert-success text-center"><?php echo htmlspecialchars($mensajeExito); ?></div>

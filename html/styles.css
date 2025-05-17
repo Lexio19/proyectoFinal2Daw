@@ -1,8 +1,31 @@
 
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+        * {
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+      }
+
+     
+      .contenedor-global {
+  max-width: 1200px;       
+  margin: 0 auto;          
+  padding: 20px;           
+  background-color: white; 
+  box-shadow: 0 0 20px rgba(0,0,0,0.1); 
+  border-radius: 10px;     
+}
+
+
+      html, body {
+  overflow-x: hidden;
+}
+
+        
         body {
             background-color: #f4f4f8;
             font-family: 'Poppins', sans-serif;
+            
 
         }
 
@@ -68,6 +91,20 @@
             transform: scale(1.05);
         }
 
+        .carrusel-contenedor {
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0 auto;
+    padding: 0 1rem; /* opcional, mejora espacio lateral */
+    position: relative;
+}
+        .carrusel-track {
+            display: flex;
+            gap: 20px;
+            animation: scroll-left 40s linear infinite;
+            width: max-content;
+        }
+
         @keyframes scroll-left {
             0% {
                 transform: translateX(0);
@@ -119,6 +156,38 @@
     transform: scale(1.05);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
+
+
+  /* Estilo de contratar.php */
+
+.carrusel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    padding: 1rem;
+}
+.servicio-card {
+    min-width: 250px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    scroll-snap-align: start;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+}
+.servicio-card img {
+    max-width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.servicio-card.selected {
+    border-color: green;
+    transform: scale(1.05);
+}
+
   
   
 

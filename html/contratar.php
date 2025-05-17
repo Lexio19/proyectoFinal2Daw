@@ -38,6 +38,7 @@ $mensajeError = getFlash("error");
     <title>Contratar un servicio</title>
 </head>
 <body>
+    <div class="contenedor-global">
     <div class="container mt-4">
 <?php if ($mensajeExito){?>
     <p style="color: green;"><?php echo htmlspecialchars($mensajeExito); ?></p>
@@ -48,35 +49,7 @@ if ($mensajeError){ ?>
 
 <form action="controladores/controladorContrata.php" method="POST">
     <label for="servicio">Selecciona un servicio:</label>
-    <style>
-.carrusel {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    gap: 1rem;
-    padding: 1rem;
-}
-.servicio-card {
-    min-width: 250px;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    padding: 1rem;
-    text-align: center;
-    scroll-snap-align: start;
-    cursor: pointer;
-    transition: transform 0.2s, border-color 0.2s;
-}
-.servicio-card img {
-    max-width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
-}
-.servicio-card.selected {
-    border-color: green;
-    transform: scale(1.05);
-}
-</style>
+  
 
 <div class="carrusel" id="carruselServicios">
     <?php
@@ -109,10 +82,12 @@ if ($mensajeError){ ?>
 </form>
 
 <div>
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-        <button type="submit" name="cerrarSesion">Cerrar sesión</button>
-    </form>
-</div>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+            <button type="submit" name="cerrarSesion">Cerrar sesión</button>
+            <br><br>
+            <button type="submit" name="inicio">Inicio</button>
+        </form>
+    </div>
 
 <script>
 const tarjetas = document.querySelectorAll(".servicio-card");
@@ -201,11 +176,42 @@ inputFecha.addEventListener("change", () => {
 });
 </script>
 
-
-<div>   
-    <a href="index.php">Volver a la página de inicio</a>
-</div>
- 
 </div>
 </body>
+<footer class="bg-dark text-white text-center text-lg-start mt-5">
+    <div class="container p-4">
+        <div class="row">
+            <!-- Información general -->
+            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Redes sociales</h5>
+                <p>
+                   <a href="https://www.instagram.com/ayuntamientotahal/" class="text-white">Instagram</a><br>
+                   <a href="https://www.tiktok.com/search?q=ayuntamientotahal&t=1747319630493" class="text-white">TikTok</a><br>
+                   <a href="https://www.facebook.com/ayuntamientotahal/" class="text-white">Facebook</a><br>
+
+                </p>
+            </div>
+
+            
+            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Contacto</h5>
+                <ul class="list-unstyled mb-0">
+                    <li><i class="bi bi-envelope"></i> contacto@visitahal.es</li>
+                    <li><i class="bi bi-telephone"></i> +34 123 456 789</li>
+                    <li><i class="bi bi-geo-alt"></i> Tahal, Almería, España</li>
+                </ul>
+            </div>
+
+            
+            <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Ayuntamiento de Tahal</h5>
+                   <a href="https://www.tahal.es/" class="text-white">Web del ayuntamiento</a><br>
+                
+            </div>
+        </div>
+    </div>
+    <div class="text-center p-3 bg-secondary">
+        © <?php echo date("Y"); ?> VisiTahal. Todos los derechos reservados.
+    </div>
+</footer>
 </html>

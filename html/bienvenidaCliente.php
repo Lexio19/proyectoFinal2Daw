@@ -70,11 +70,7 @@ if(filter_has_var(INPUT_POST, "darDeBajaUsuario")){
     header('Location: darDeBajaUsuario.php');
     exit; // Detener la ejecución después de redirigir
 }
-
-
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,13 +82,9 @@ if(filter_has_var(INPUT_POST, "darDeBajaUsuario")){
     <title>Página principal de cliente</title>
 </head>
 <body>
+    <div class="contenedor-global">
     <div class="container py-4">
-
     <h1>HOLA, CLIENTE <?php echo $nombreUsuario ?></h1>
-
-   
-    
-
     <h2>RESERVA DE ALOJAMIENTOS</h2>
     <div class="carrusel-contenedor">
     <div class="carrusel-track">
@@ -232,12 +224,49 @@ if(filter_has_var(INPUT_POST, "darDeBajaUsuario")){
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 
     <button type="submit" name="cerrarSesion" class="btn btn-purple">Cerrar sesión</button>
+    <button type="submit" name="darDeBajaUsuario" class="btn btn-purple">Darme de baja</button>
 
 
     </form>
     </div>
+</div>
+<footer class="bg-dark text-white text-center text-lg-start mt-5">
+    <div class="container p-4">
+        <div class="row">
+            <!-- Información general -->
+            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Redes sociales</h5>
+                <p>
+                   <a href="https://www.instagram.com/ayuntamientotahal/" class="text-white">Instagram</a><br>
+                   <a href="https://www.tiktok.com/search?q=ayuntamientotahal&t=1747319630493" class="text-white">TikTok</a><br>
+                   <a href="https://www.facebook.com/ayuntamientotahal/" class="text-white">Facebook</a><br>
 
-    
+                </p>
+            </div>
+
+            
+            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Contacto</h5>
+                <ul class="list-unstyled mb-0">
+                    <li><i class="bi bi-envelope"></i> contacto@visitahal.es</li>
+                    <li><i class="bi bi-telephone"></i> +34 123 456 789</li>
+                    <li><i class="bi bi-geo-alt"></i> Tahal, Almería, España</li>
+                </ul>
+            </div>
+
+            
+            <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Ayuntamiento de Tahal</h5>
+                   <a href="https://www.tahal.es/" class="text-white">Web del ayuntamiento</a><br>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center p-3 bg-secondary">
+        © <?php echo date("Y"); ?> VisiTahal. Todos los derechos reservados.
+    </div>
+</footer>
 </div>
 </body>
 </html>

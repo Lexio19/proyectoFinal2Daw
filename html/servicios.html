@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css"> 
 </head>
 <body>
+    <div class="contenedor-global">
 
   <header>
     <h1>Nuestros servicios</h1>
@@ -62,7 +63,7 @@
         <img src="img/castillo7.jpg" alt="Bungaló aislado para dos">
         
     </div>
-    <p><a href="index.php">Inicia sesión</a> para reservar <a href="index.php">Volver al inicio</a></p>
+    <p><a href="index.php">Inicia sesión</a> para reservar </p>
 
     
   </main>
@@ -101,8 +102,12 @@
     </div>
 
     <div class="text-center p-3 bg-secondary">
-        © <?php echo date("Y"); ?> VisiTahal. Todos los derechos reservados.
-    </div>
+    © <span id="year"></span> VisiTahal. Todos los derechos reservados.
+</div>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 </footer>
 
 </body>

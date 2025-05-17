@@ -59,14 +59,51 @@ $mensajeError = getFlash("error");
         });
     </script>
 </head>
-<div class="container mt-4">
+
 <body>
+    <div class="contenedor-global">
+        <div class="container mt-4">
 <?php if ($mensajeExito){?>
     <p style="color: green;"><?php echo htmlspecialchars($mensajeExito); ?></p>
 <?php };
 if ($mensajeError){ ?>
     <p style="color: red;"><?php echo htmlspecialchars($mensajeError); ?></p>
 <?php }; ?>
+<h1>RESERVA DE BUNGALÓS</h1>
+<main class="galeria">
+    <div class="foto">
+      <img src="img/bungalo3.jpg" alt="Bungaló junto al lago">
+      
+    </div>
+    <div class="foto">
+      <img src="img/bungalo2.jpg" alt="Bungaló entre árboles">
+      
+    </div>
+    <div class="foto">
+      <img src="img/merendero6.jpg" alt="Bungaló con vista a la montaña">
+      
+    </div>
+    <div class="foto">
+      <img src="img/bungalo4.jpg" alt="Bungaló aislado para dos">
+      
+    </div>
+    <div class="foto">
+        <img src="img/bungalo5.jpg" alt="Bungaló aislado para dos">
+        
+      </div>
+      <div class="foto">
+        <img src="img/bungalo10.jpg" alt="Bungaló aislado para dos">
+        
+      </div>
+      <div class="foto">
+        <img src="img/castillo3.jpg" alt="Bungaló aislado para dos">
+        
+      </div>
+      <div class="foto">
+        <img src="img/bungalo9.jpg" alt="Bungaló aislado para dos">
+        
+      </div>
+  </main>
     <form action="controladores/controladorReserva.php" method="POST">
         <br><br>
         <label for="fechaInicio">Fecha de entrada:</label>
@@ -94,4 +131,41 @@ if ($mensajeError){ ?>
     </div>
 </body>
 </div>
+<footer class="bg-dark text-white text-center text-lg-start mt-5">
+    <div class="container p-4">
+        <div class="row">
+            <!-- Información general -->
+            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Redes sociales</h5>
+                <p>
+                   <a href="https://www.instagram.com/ayuntamientotahal/" class="text-white">Instagram</a><br>
+                   <a href="https://www.tiktok.com/search?q=ayuntamientotahal&t=1747319630493" class="text-white">TikTok</a><br>
+                   <a href="https://www.facebook.com/ayuntamientotahal/" class="text-white">Facebook</a><br>
+
+                </p>
+            </div>
+
+            
+            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Contacto</h5>
+                <ul class="list-unstyled mb-0">
+                    <li><i class="bi bi-envelope"></i> contacto@visitahal.es</li>
+                    <li><i class="bi bi-telephone"></i> +34 123 456 789</li>
+                    <li><i class="bi bi-geo-alt"></i> Tahal, Almería, España</li>
+                </ul>
+            </div>
+
+            
+            <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Ayuntamiento de Tahal</h5>
+                   <a href="https://www.tahal.es/" class="text-white">Web del ayuntamiento</a><br>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center p-3 bg-secondary">
+        © <?php echo date("Y"); ?> VisiTahal. Todos los derechos reservados.
+    </div>
+</footer>
 </html>

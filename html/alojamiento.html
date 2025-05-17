@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
+    <div class="contenedor-global">
   <header>
     <h1>Nuestros bungalós</h1>
     <p>Te invitamos a conocer nuestros alojamientos rodeados de naturaleza. Disfruta de tranquilidad, comodidad y paisajes únicos.</p>
@@ -47,13 +47,13 @@
         
       </div>
   </main>
-    <p><a href="index.php">Inicia sesión</a> para reservar <a href="index.php">Volver al inicio</a></p>
+    <p><a href="index.php">Inicia sesión</a> para reservar</p>
 
 
  <footer class="bg-dark text-white text-center text-lg-start mt-5">
     <div class="container p-4">
         <div class="row">
-            <!-- Información general -->
+            
             <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
                 <h5 class="text-uppercase">Redes sociales</h5>
                 <p>
@@ -83,11 +83,14 @@
         </div>
     </div>
 
-    <div class="text-center p-3 bg-secondary">
-        © <?php echo date("Y"); ?> VisiTahal. Todos los derechos reservados.
-    </div>
-</footer>
+  <div class="text-center p-3 bg-secondary">
+    © <span id="year"></span> VisiTahal. Todos los derechos reservados.
+</div>
 
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</footer>
 </body>
 </html>
 
