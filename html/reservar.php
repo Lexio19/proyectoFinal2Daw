@@ -1,16 +1,23 @@
 <?php
-// Mostrar los servicios disponibles
+// Página que muestra los bungalós disponibles para reservar
+// y permite al usuario seleccionar fechas y bungalós para realizar una reserva.
 session_start();
 require_once 'conexion/Conexion.php';
 require_once 'funcionesValidacion.php';
+try{
 $db = new Conexion();
 $conexion = $db->conectar();
+}catch (PDOException $ex) {
+    $error = $ex->getMessage();
+}
 
+
+// Verifica si el usuario ha iniciado sesión; si no, lo redirige al inicio
 if (!isset($_SESSION['usuario'])) {
     header('Location: index.php');
     exit; // Detener la ejecución después de redirigir
 }
-
+//Botonos de cerrar sesión e ir al inicio
 if(filter_has_var(INPUT_POST, "cerrarSesion")){
     session_unset(); // Destruir todas las variables de sesión
     session_destroy();
@@ -32,10 +39,13 @@ $mensajeError = getFlash("error");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Estilos de Bootstrap y CSS propio -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <title>Reserva de Bungalow</title>
+     <!-- jQuery para AJAX -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Script para actualizar automáticamente los bungalós disponibles -->
     <script>
         $(document).ready(function () {
             $("input[name='fechaInicio'], input[name='fechaFin']").on("change", function () {

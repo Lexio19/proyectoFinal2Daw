@@ -2,6 +2,7 @@
 session_start();
 require_once __DIR__ . '/../conexion/Conexion.php'; 
 require_once __DIR__ . '/../funcionesValidacion.php'; 
+// Verifica si el usuario ha iniciado sesión; si no, termina la ejecución con un mensaje
 if (!isset($_SESSION['usuario'])) {
     die("Debes iniciar sesión para realizar una reserva.");
 }
@@ -9,8 +10,8 @@ if (!isset($_SESSION['usuario'])) {
 // Recoger los datos enviados por el formulario
 $idUsuario = $_SESSION['idUsuario']; // ID del usuario desde la sesión
 $idAlojamiento = filter_input(INPUT_POST, 'bungalow', FILTER_SANITIZE_NUMBER_INT);
-$fechaEntrada = filter_input(INPUT_POST, 'fechaInicio', FILTER_SANITIZE_SPECIAL_CHARS); // Reemplazado FILTER_SANITIZE_STRING
-$fechaSalida = filter_input(INPUT_POST, 'fechaFin', FILTER_SANITIZE_SPECIAL_CHARS); // Reemplazado FILTER_SANITIZE_STRING
+$fechaEntrada = filter_input(INPUT_POST, 'fechaInicio', FILTER_SANITIZE_SPECIAL_CHARS); 
+$fechaSalida = filter_input(INPUT_POST, 'fechaFin', FILTER_SANITIZE_SPECIAL_CHARS);
 
 $fechaActual= date('Y-m-d'); // Obtener la fecha actual
 if ($fechaEntrada < $fechaActual) {
@@ -18,7 +19,7 @@ if ($fechaEntrada < $fechaActual) {
     header("Location: ../reservar.php");
     exit;
 }
-// Comprobar que las fechas son válidas
+// Se valida que no se pueda reservar en el pasado y que la fecha de salida sea después de la de entrada.
 if ($fechaEntrada >= $fechaSalida) {
     setFlash("error", "La fecha de entrada debe ser anterior a la fecha de salida.");
     header("Location: ../reservar.php");
@@ -26,8 +27,8 @@ if ($fechaEntrada >= $fechaSalida) {
 }
 
 try{
-    $db = new Conexion(); // Asegúrate de crear una instancia de la clase Conexion
-    $conexion = $db->conectar(); // Establecer la conexión correctamente
+    $db = new Conexion(); 
+    $conexion = $db->conectar();
 } catch (PDOException $ex) {
     setFlash("error", "Error de conexión: " . $ex->getMessage());
     header("Location: ../reservar.php");

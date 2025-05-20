@@ -6,17 +6,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "registra
 
     $db= new Conexion;
     $conexion = $db->conectar();
-
+    //Sanemos los datos que recibimos del formulario
     $dni = validarDNI(filter_input(INPUT_POST, "dni"));
     $email = validarEmail(filter_input(INPUT_POST, "email"));
     $usuario = validarUsuario(filter_input(INPUT_POST, "usuario"));
     $apellidos = validarApellidos(filter_input(INPUT_POST, "apellidos"));
     $password = validarPassword(filter_input(INPUT_POST, "password"));
     $codigoPostal = validarCodigoPostal(filter_input(INPUT_POST, "codigoPostal"));
-
+    //Este array contendrá los errores que se vayan produciendo
     $errores = [];
 
-
+    //Validamos los datos
     if(!validarDNI($dni)){
         $errores[] = "El DNI no es válido";
     }
@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "registra
     if (!validarCodigoPostal($codigoPostal)) {
         $errores[] = "Código postal no válido";
     }
-
+    //Si no hay errores, procedemos a insertar el usuario en la base de datos
     if (empty($errores)) {
         $passwordCifrada = password_hash($password, PASSWORD_DEFAULT);
         $idRol=2;

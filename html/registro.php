@@ -1,6 +1,8 @@
 <?php
 
 session_start();
+// Incluye los controladores que contienen la lógica del registro de usuario
+// y las funciones de validación
 require_once 'controladores/controladorRegistro.php';
 require_once 'funcionesValidacion.php';
 $mensajeExito = getFlash("success");

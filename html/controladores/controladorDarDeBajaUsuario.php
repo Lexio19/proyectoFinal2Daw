@@ -2,7 +2,7 @@
 session_start();
 require_once __DIR__ . '/../conexion/Conexion.php';
 require_once __DIR__ . '/../funcionesValidacion.php';
-
+// Verifica si se ha enviado el formulario con el botón 'darDeBajaUsuario'
 if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "darDeBajaUsuario")) {
     $idUsuario = $_SESSION['idUsuario'] ?? null;
 
@@ -15,11 +15,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "darDeBaj
     try {
         $db = new Conexion();
         $conexion = $db->conectar();
-
+        // Consulta para comprobar si el usuario existe en la base de datos
         $consultaUsuario = $conexion->prepare("SELECT * FROM USUARIO WHERE idUsuario = :idUsuario");
         $consultaUsuario->bindParam(':idUsuario', $idUsuario);
         $consultaUsuario->execute();
-
+        // Si el usuario existe y no hay errores, lo damos de baja
         if ($consultaUsuario->rowCount() > 0 && empty($errores)) {
             $eliminarUsuario = $conexion->prepare("DELETE FROM USUARIO WHERE idUsuario = :idUsuario");
             $eliminarUsuario->bindParam(':idUsuario', $idUsuario);

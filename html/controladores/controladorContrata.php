@@ -38,9 +38,9 @@ if (!$servicio) {
     header('Location: ../contratar.php');
     exit;
 }
-
+// Convertir los días disponibles (string separado por comas) en un array en minúsculas
 $diaDisponible = explode(",", strtolower($servicio['diasServicio']));
-$aforo = $servicio['aforo'];
+$aforo = $servicio['aforo']; // Obtener aforo máximo del servicio
 
 // Contamos las reservas que hay para el servicio y la fecha seleccionada
 $consultaContrataciones = $conexion->prepare("SELECT COUNT(*) FROM CONTRATA WHERE idServicio = ? AND fechaContrata = ?");

@@ -1,16 +1,21 @@
 <?php
-// Mostrar los servicios disponibles
+// Página que muestra los servicios disponibles
 session_start();
 require_once 'conexion/Conexion.php';
 require_once 'funcionesValidacion.php';
+try{
 $db = new Conexion();
 $conexion = $db->conectar();
+}catch (PDOException $ex) {
+    $error = $ex->getMessage();
+}
 
+//Si el usuario no ha iniciado sesión, lo redirigimos al inicio
 if (!isset($_SESSION['usuario'])) {
     header('Location: index.php');
     exit; // Detener la ejecución después de redirigir
 }
-
+//Botones de cerrar sesión e ir al inicio
 if(filter_has_var(INPUT_POST, "cerrarSesion")){
     session_unset(); // Destruir todas las variables de sesión
     session_destroy();
@@ -90,91 +95,112 @@ if ($mensajeError){ ?>
     </div>
 
 <script>
-const tarjetas = document.querySelectorAll(".servicio-card");
-const inputServicio = document.getElementById("inputServicio");
-const inputFecha = document.getElementById("fechaContrata");
+    // Seleccionamos todas las tarjetas que representan servicios
+    const tarjetas = document.querySelectorAll(".servicio-card");
+    // Input oculto donde se guarda el id del servicio seleccionado para enviar en el formulario
+    const inputServicio = document.getElementById("inputServicio");
+    // Input de tipo fecha donde el usuario selecciona la fecha del servicio
+    const inputFecha = document.getElementById("fechaContrata");
 
-let diasPermitidos = [];
+    // Array donde almacenaremos los días permitidos para el servicio seleccionado (ej: ["lunes", "martes"])
+    let diasPermitidos = [];
 
-tarjetas.forEach(card => {
-    card.addEventListener("click", () => {
-        // Quitar selección anterior
-        tarjetas.forEach(c => c.classList.remove("selected"));
-        // Añadir clase seleccionada
-        card.classList.add("selected");
+    // Para cada tarjeta de servicio añadimos un evento que detecta el clic
+    tarjetas.forEach(card => {
+        card.addEventListener("click", () => {
+            // Primero quitamos la clase "selected" a todas para que solo una quede seleccionada
+            tarjetas.forEach(c => c.classList.remove("selected"));
+            // Añadimos la clase "selected" a la tarjeta clicada para destacarla visualmente
+            card.classList.add("selected");
 
-        // Establecer el valor oculto del input
-        const idServicio = card.getAttribute("data-id");
-        inputServicio.value = idServicio;
+            // Obtenemos el ID del servicio de un atributo data-id y lo guardamos en el input oculto
+            const idServicio = card.getAttribute("data-id");
+            inputServicio.value = idServicio;
 
-        // Actualizar días disponibles
-        const dias = card.getAttribute("data-dias");
-        diasPermitidos = dias.split(",").map(d => d.trim().toLowerCase());
+            // Obtenemos los días permitidos (string) y lo convertimos en array en minúsculas
+            const dias = card.getAttribute("data-dias");
+            diasPermitidos = dias.split(",").map(d => d.trim().toLowerCase());
 
-        inputFecha.disabled = false;
-        inputFecha.value = "";
+            // Habilitamos el selector de fecha y limpiamos cualquier valor anterior
+            inputFecha.disabled = false;
+            inputFecha.value = "";
 
-        // Calcular próxima fecha válida
-        let hoy = new Date();
-        let proxima = new Date(hoy);
-        while (!diasPermitidos.includes(diaSemana(proxima))) {
-            proxima.setDate(proxima.getDate() + 1);
-        }
-        inputFecha.setAttribute("min", proxima.toISOString().split("T")[0]);
-if (inputServicio.value && inputFecha.value) {
-    actualizarAforo(inputServicio.value, inputFecha.value);
-}
+            // Calculamos la próxima fecha válida (desde hoy en adelante) según los días permitidos
+            let hoy = new Date();
+            let proxima = new Date(hoy);
+            // Avanzamos la fecha hasta encontrar un día permitido
+            while (!diasPermitidos.includes(diaSemana(proxima))) {
+                proxima.setDate(proxima.getDate() + 1);
+            }
+            // Establecemos la fecha mínima seleccionable en el input de fecha
+            inputFecha.setAttribute("min", proxima.toISOString().split("T")[0]);
 
-
+            // Si ya hay servicio y fecha seleccionados, actualizamos el aforo mostrado
+            if (inputServicio.value && inputFecha.value) {
+                actualizarAforo(inputServicio.value, inputFecha.value);
+            }
+        });
     });
-});
 
-inputFecha.addEventListener("change", function () {
-    const fecha = new Date(this.value);
-    const dia = diaSemana(fecha);
-    if (!diasPermitidos.includes(dia)) {
-        alert("Solo puedes seleccionar los siguientes días: " + diasPermitidos.join(", "));
-        this.value = "";
+    // Validamos que la fecha seleccionada pertenezca a los días permitidos
+    inputFecha.addEventListener("change", function () {
+        const fecha = new Date(this.value);
+        const dia = diaSemana(fecha);
+        // Si el día no está en los permitidos, mostramos alerta y limpiamos la fecha
+        if (!diasPermitidos.includes(dia)) {
+            alert("Solo puedes seleccionar los siguientes días: " + diasPermitidos.join(", "));
+            this.value = "";
+        } else {
+            // Si es válido, actualizamos el aforo para ese servicio y fecha
+            actualizarAforo(inputServicio.value, this.value);
+        }
+    });
+
+    // Función que devuelve el nombre del día de la semana en minúsculas para una fecha dada
+    function diaSemana(fecha) {
+        const dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+        return dias[fecha.getDay()].toLowerCase();
     }
-});
-
-function diaSemana(fecha) {
-    const dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
-    return dias[fecha.getDay()].toLowerCase();
-}
 </script>
 
 <script>
-function actualizarAforo(idServicio, fecha) {
-    if (!idServicio || !fecha) {
-        document.getElementById("aforoDisponible").innerText = "";
-        return;
+    // Función para consultar y mostrar el aforo disponible para un servicio en una fecha
+    function actualizarAforo(idServicio, fecha) {
+        // Si falta id o fecha, limpiamos el texto y salimos
+        if (!idServicio || !fecha) {
+            document.getElementById("aforoDisponible").innerText = "";
+            return;
+        }
+
+        // Realizamos una petición fetch al backend que devuelve el aforo en JSON
+        fetch(`aforoDisponibleServicios.php?idServicio=${idServicio}&fecha=${fecha}`)
+            .then(res => res.json()) // Convertimos la respuesta a JSON
+            .then(data => {
+                if (data.error) {
+                    // Si hay error, mostramos mensaje correspondiente
+                    document.getElementById("aforoDisponible").innerText = "Error al obtener aforo.";
+                } else {
+                    // Mostramos el número de plazas disponibles
+                    document.getElementById("aforoDisponible").innerText = 
+                        `Plazas disponibles: ${data.disponibles}`;
+                }
+            })
+            .catch(() => {
+                // En caso de fallo en la conexión o respuesta, mostramos error genérico
+                document.getElementById("aforoDisponible").innerText = "Error al consultar aforo.";
+            });
     }
 
-    fetch(`aforoDisponibleServicios.php?idServicio=${idServicio}&fecha=${fecha}`)
-        .then(res => res.json())
-        .then(data => {
-            if (data.error) {
-                document.getElementById("aforoDisponible").innerText = "Error al obtener aforo.";
-            } else {
-                document.getElementById("aforoDisponible").innerText = 
-                    `Plazas disponibles: ${data.disponibles}`;
-            }
-        })
-        .catch(() => {
-            document.getElementById("aforoDisponible").innerText = "Error al consultar aforo.";
-        });
-}
-
-// Actualizar aforo cuando cambies de servicio o fecha
-inputFecha.addEventListener("change", () => {
-    const id = inputServicio.value;
-    const fecha = inputFecha.value;
-    if (id && fecha) {
-        actualizarAforo(id, fecha);
-    }
-});
+    // Cada vez que se cambie la fecha, si hay servicio y fecha válidos, actualizamos el aforo
+    inputFecha.addEventListener("change", () => {
+        const id = inputServicio.value;
+        const fecha = inputFecha.value;
+        if (id && fecha) {
+            actualizarAforo(id, fecha);
+        }
+    });
 </script>
+
 
 </div>
 </body>

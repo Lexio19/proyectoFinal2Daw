@@ -1,23 +1,26 @@
 <?php 
+//Se incluyen los archivos necesarios para la conexión a la base de datos, las funciones de validación
+//y el controlador de inicio de sesión.
 require_once 'controladores/controladorLogin.php';
 require_once 'conexion/Conexion.php';
 require_once 'funcionesValidacion.php';
+//La conexión a la BBDD siempre la enmarcamos en un try-catch para evitar errores de conexión.
 try {
     $db = new Conexion;
     $conexion = $db->conectar();
 } catch (PDOException $ex) {
     $error = $ex->getMessage();
 }
-//Si la sesión está iniciada, directamente va a la página de bienvenidaCliente.php
-//tenemos session_start() en controladorLogin.php
+//Si la sesión está iniciada, directamente va a la página de bienvenidaCliente.php.
+//Tenemos session_start() en controladorLogin.php, por eso no es necesario aquí.
 if (isset($_SESSION['usuario'])) {
     header('Location: bienvenidaCliente.php');
     exit;
 }
-
+//Declaramos los mensajes que mostrará getFlash tanto si es de éxito como de error.
 $mensajeExito = getFlash("success");
 $mensajeError = getFlash("error");
-
+// Si hay sesión iniciada y no hay mensajes flash, redirige también a bienvenidaCliente.php
 if (isset($_SESSION['usuario']) && !$mensajeExito && !$mensajeError) {
     header('Location: bienvenidaCliente.php');
     exit;
@@ -34,9 +37,11 @@ if (isset($_SESSION['usuario']) && !$mensajeExito && !$mensajeError) {
 <body>
     
 <div class="container mt-4">
+    <!-- Muestra mensaje de éxito si existe -->
     <?php if ($mensajeExito): ?>
         <div class="alert alert-success text-center"><?php echo htmlspecialchars($mensajeExito); ?></div>
     <?php endif; ?>
+    <!-- Muestra mensaje de error si existe -->
     <?php if ($mensajeError): ?>
         <div class="alert alert-danger text-center"><?php echo htmlspecialchars($mensajeError); ?></div>
     <?php endif; ?>
@@ -47,6 +52,7 @@ if (isset($_SESSION['usuario']) && !$mensajeExito && !$mensajeError) {
     <img src="img/castilloTahal.jpg" class="img-fluid rounded shadow-sm mt-3" alt="Castillo de Tahal" style="max-height: 400px;">
 </div>
 
+<!-- Formulario de inicio de sesión -->
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6 formulario">
@@ -70,7 +76,7 @@ if (isset($_SESSION['usuario']) && !$mensajeExito && !$mensajeError) {
         </div>
     </div>
 </div>
-
+<!-- Enlace para registrarse si no se tiene cuenta -->
 <div class="container registro">
     <h2>¿No tienes cuenta?</h2>
     <a href="registro.php" class="btn btn-outline-dark mt-2">Regístrate</a>
@@ -113,7 +119,7 @@ if (isset($_SESSION['usuario']) && !$mensajeExito && !$mensajeError) {
     </div>
 </div>
 
-<!-- Bootstrap JS -->
+<!-- Inclusión de JavaScript de Bootstrap y jQuery -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
