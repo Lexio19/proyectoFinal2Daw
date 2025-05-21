@@ -6,7 +6,7 @@ ob_start(); // Iniciar el buffer de salida
 //because a session is already active in /var/www/html/controladorLogin.php on line 3
 //Pero no lo entiendo porque me dijeron que había que ponerlo en todas las páginas
 //porque es lo que habilita la sesión
-require_once 'conexion/Conexion.php';
+require_once __DIR__ . '/../conexion/Conexion.php';
 $nombreUsuario= $_SESSION['usuario'];
 $idUsuario= $_SESSION['idUsuario'];
 try{
@@ -16,19 +16,19 @@ try{
     $error = $ex->getMessage();
 };
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'cliente') {
-    header('Location: index.php');
+    header('Location: /../index.php');
     exit;
 }
 
 if(filter_has_var(INPUT_POST, "cerrarSesion")){
     session_unset(); // Destruir todas las variables de sesión
     session_destroy();
-    header('Location: index.php');
+    header('Location: /../index.php');
     exit; // Detener la ejecución después de redirigir
 }
 
 if (!isset($_SESSION['usuario'])) {
-    header('Location: index.php');
+    header('Location: /../index.php');
     exit; // Detener la ejecución después de redirigir
 }
 
@@ -76,7 +76,7 @@ if(filter_has_var(INPUT_POST, "darDeBajaUsuario")){
 <head>
     <!-- Bootstrap 5.3 CDN -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="/../styles/styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=, initial-scale=1.0">
     <title>Página principal de cliente</title>
@@ -88,18 +88,18 @@ if(filter_has_var(INPUT_POST, "darDeBajaUsuario")){
     <h2>RESERVA DE ALOJAMIENTOS</h2>
     <div class="carrusel-contenedor">
     <div class="carrusel-track">
-        <img src="img/bungalo1.jpg" alt="bungalo"></a>
-        <img src="img/bungalo4.jpg" alt="bungalo"></a>
-        <img src="img/bungalo2.jpg" alt="bungalo"></a>
-        <img src="img/bungalo6.jpg" alt="bungalo"></a>
-        <img src="img/bungalo3.jpg" alt="bungalo"></a>
-        <img src="img/bungalo5.jpg" alt="bungalo"></a>
-        <img src="img/bungalo1.jpg" alt="bungalo"></a>
-        <img src="img/bungalo4.jpg" alt="bungalo"></a>
-        <img src="img/bungalo2.jpg" alt="bungalo"></a>
-        <img src="img/bungalo6.jpg" alt="bungalo"></a>
-        <img src="img/bungalo3.jpg" alt="bungalo"></a>
-        <img src="img/bungalo5.jpg" alt="bungalo"></a> 
+        <img src="/../img/bungalo1.jpg" alt="bungalo"></a>
+        <img src="/../img/bungalo4.jpg" alt="bungalo"></a>
+        <img src="/../img/bungalo2.jpg" alt="bungalo"></a>
+        <img src="/../img/bungalo6.jpg" alt="bungalo"></a>
+        <img src="/../img/bungalo3.jpg" alt="bungalo"></a>
+        <img src="/../img/bungalo5.jpg" alt="bungalo"></a>
+        <img src="/../img/bungalo1.jpg" alt="bungalo"></a>
+        <img src="/../img/bungalo4.jpg" alt="bungalo"></a>
+        <img src="/../img/bungalo2.jpg" alt="bungalo"></a>
+        <img src="/../img/bungalo6.jpg" alt="bungalo"></a>
+        <img src="/../img/bungalo3.jpg" alt="bungalo"></a>
+        <img src="/../img/bungalo5.jpg" alt="bungalo"></a> 
     </div>
 </div>
     <br><br>
@@ -115,27 +115,27 @@ if(filter_has_var(INPUT_POST, "darDeBajaUsuario")){
 <h2> CONTRATACIÓN DE SERVICIOS</h2>
 <div class="carrusel-contenedor">
     <div class="carrusel-track">
-        <img src="img/almendros1.jpg" alt="servicio"></a>
-        <img src="img/merendero2.jpg" alt="servicio"></a>
-        <img src="img/muñecoNieve.jpg" alt="servicio"></a>
-        <img src="img/castillo4.jpg" alt="servicio"></a>
-        <img src="img/nieve6.jpg" alt="servicio"></a>
-        <img src="img/pueblo1.jpg" alt="servicio"></a>
-        <img src="img/tahal4.jpg" alt="servicio"></a>
-        <img src="img/campo1.jpg" alt="servicio"></a>
-        <img src="img/castillo3.jpg" alt="servicio"></a>
-        <img src="img/tahal1.jpg" alt="servicio"></a>
-        <img src="img/setas.webp" alt="servicio"></a>
-        <img src="img/nieve4.jpg" alt="servicio"></a> 
-        <img src="img/tahal3.jpg" alt="servicio"></a> 
-        <img src="img/campo5.jpg" alt="servicio"></a> 
-        <img src="img/almendros2.jpg" alt="servicio"></a>
-        <img src="img/merendero5.jpg" alt="servicio"></a> 
-        <img src="img/castillo5.jpg" alt="servicio"></a> 
-        <img src="img/nieve6.jpg" alt="servicio"></a> 
-        <img src="img/tahal3.jpg" alt="servicio"></a> 
-        <img src="img/nieve2.jpg" alt="servicio"></a> 
-        <img src="img/tahal5.jpg" alt="servicio"></a>  
+        <img src="/../img/almendros1.jpg" alt="servicio"></a>
+        <img src="/../img/merendero2.jpg" alt="servicio"></a>
+        <img src="/../img/muñecoNieve.jpg" alt="servicio"></a>
+        <img src="/../img/castillo4.jpg" alt="servicio"></a>
+        <img src="/../img/nieve6.jpg" alt="servicio"></a>
+        <img src="/../img/pueblo1.jpg" alt="servicio"></a>
+        <img src="/../img/tahal4.jpg" alt="servicio"></a>
+        <img src="/../img/campo1.jpg" alt="servicio"></a>
+        <img src="/../img/castillo3.jpg" alt="servicio"></a>
+        <img src="/../img/tahal1.jpg" alt="servicio"></a>
+        <img src="/../img/setas.webp" alt="servicio"></a>
+        <img src="/../img/nieve4.jpg" alt="servicio"></a> 
+        <img src="/../img/tahal3.jpg" alt="servicio"></a> 
+        <img src="/../img/campo5.jpg" alt="servicio"></a> 
+        <img src="/../img/almendros2.jpg" alt="servicio"></a>
+        <img src="/../img/merendero5.jpg" alt="servicio"></a> 
+        <img src="/../img/castillo5.jpg" alt="servicio"></a> 
+        <img src="/../img/nieve6.jpg" alt="servicio"></a> 
+        <img src="/../img/tahal3.jpg" alt="servicio"></a> 
+        <img src="/../img/nieve2.jpg" alt="servicio"></a> 
+        <img src="/../img/tahal5.jpg" alt="servicio"></a>  
     </div>
 </div>
  <br><br>

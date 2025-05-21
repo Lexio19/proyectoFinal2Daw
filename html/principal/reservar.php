@@ -2,8 +2,8 @@
 // Página que muestra los bungalós disponibles para reservar
 // y permite al usuario seleccionar fechas y bungalós para realizar una reserva.
 session_start();
-require_once 'conexion/Conexion.php';
-require_once 'funcionesValidacion.php';
+require_once __DIR__ . '/../conexion/Conexion.php';
+require_once __DIR__ . '/../funcionesValidacion/funcionesValidacion.php';
 try{
 $db = new Conexion();
 $conexion = $db->conectar();
@@ -14,14 +14,14 @@ $conexion = $db->conectar();
 
 // Verifica si el usuario ha iniciado sesión; si no, lo redirige al inicio
 if (!isset($_SESSION['usuario'])) {
-    header('Location: index.php');
+    header('Location: /../index.php');
     exit; // Detener la ejecución después de redirigir
 }
 //Botonos de cerrar sesión e ir al inicio
 if(filter_has_var(INPUT_POST, "cerrarSesion")){
     session_unset(); // Destruir todas las variables de sesión
     session_destroy();
-    header('Location: index.php');
+    header('Location: /../index.php');
     exit; // Detener la ejecución después de redirigir
 }
 
@@ -41,7 +41,7 @@ $mensajeError = getFlash("error");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Estilos de Bootstrap y CSS propio -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/../styles/styles.css">
     <title>Reserva de Bungalow</title>
      <!-- jQuery para AJAX -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -82,39 +82,39 @@ if ($mensajeError){ ?>
 <h1>RESERVA DE BUNGALÓS</h1>
 <main class="galeria">
     <div class="foto">
-      <img src="img/bungalo3.jpg" alt="Bungaló junto al lago">
+      <img src="/../img/bungalo3.jpg" alt="Bungaló junto al lago">
       
     </div>
     <div class="foto">
-      <img src="img/bungalo2.jpg" alt="Bungaló entre árboles">
+      <img src="/../img/bungalo2.jpg" alt="Bungaló entre árboles">
       
     </div>
     <div class="foto">
-      <img src="img/merendero6.jpg" alt="Bungaló con vista a la montaña">
+      <img src="/../img/merendero6.jpg" alt="Bungaló con vista a la montaña">
       
     </div>
     <div class="foto">
-      <img src="img/bungalo4.jpg" alt="Bungaló aislado para dos">
+      <img src="/../img/bungalo4.jpg" alt="Bungaló aislado para dos">
       
     </div>
     <div class="foto">
-        <img src="img/bungalo5.jpg" alt="Bungaló aislado para dos">
+        <img src="/../img/bungalo5.jpg" alt="Bungaló aislado para dos">
         
       </div>
       <div class="foto">
-        <img src="img/bungalo10.jpg" alt="Bungaló aislado para dos">
+        <img src="/../img/bungalo10.jpg" alt="Bungaló aislado para dos">
         
       </div>
       <div class="foto">
-        <img src="img/castillo3.jpg" alt="Bungaló aislado para dos">
+        <img src="/../img/castillo3.jpg" alt="Bungaló aislado para dos">
         
       </div>
       <div class="foto">
-        <img src="img/bungalo9.jpg" alt="Bungaló aislado para dos">
+        <img src="/../img/bungalo9.jpg" alt="Bungaló aislado para dos">
         
       </div>
   </main>
-    <form action="controladores/controladorReserva.php" method="POST">
+    <form action="/../controladores/controladorReserva.php" method="POST">
         <br><br>
         <label for="fechaInicio">Fecha de entrada:</label>
         <input type="date" name="fechaInicio" required>

@@ -1,5 +1,6 @@
 <?php
-require_once 'conexion/Conexion.php';
+header('Content-Type: application/json');
+require_once __DIR__ . '/../conexion/Conexion.php';
 
 if (!isset($_GET['idServicio']) || !isset($_GET['fecha'])) {
     http_response_code(400);
@@ -35,4 +36,3 @@ try {
 } catch (Exception $e) {
     echo json_encode(["error" => "Error: " . $e->getMessage()]);
 }
-?>

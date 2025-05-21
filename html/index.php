@@ -1,9 +1,8 @@
 <?php 
-//Se incluyen los archivos necesarios para la conexión a la base de datos, las funciones de validación
-//y el controlador de inicio de sesión.
-require_once 'controladores/controladorLogin.php';
-require_once 'conexion/Conexion.php';
-require_once 'funcionesValidacion.php';
+//Se incluyen los archivos necesarios para la conexión a la base de datos
+//y las funciones de validación.
+require_once __DIR__ . '/conexion/Conexion.php';
+require_once __DIR__ . '/funcionesValidacion/funcionesValidacion.php';
 //La conexión a la BBDD siempre la enmarcamos en un try-catch para evitar errores de conexión.
 try {
     $db = new Conexion;
@@ -14,7 +13,7 @@ try {
 //Si la sesión está iniciada, directamente va a la página de bienvenidaCliente.php.
 //Tenemos session_start() en controladorLogin.php, por eso no es necesario aquí.
 if (isset($_SESSION['usuario'])) {
-    header('Location: bienvenidaCliente.php');
+    header('Location: principal/bienvenidaCliente.php');
     exit;
 }
 //Declaramos los mensajes que mostrará getFlash tanto si es de éxito como de error.
@@ -22,7 +21,7 @@ $mensajeExito = getFlash("success");
 $mensajeError = getFlash("error");
 // Si hay sesión iniciada y no hay mensajes flash, redirige también a bienvenidaCliente.php
 if (isset($_SESSION['usuario']) && !$mensajeExito && !$mensajeError) {
-    header('Location: bienvenidaCliente.php');
+    header('Location: principal/bienvenidaCliente.php');
     exit;
 }
 ?>
@@ -31,7 +30,7 @@ if (isset($_SESSION['usuario']) && !$mensajeExito && !$mensajeError) {
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles/styles.css">
     <title>VisiTahal</title>
 </head>
 <body>
@@ -56,7 +55,7 @@ if (isset($_SESSION['usuario']) && !$mensajeExito && !$mensajeError) {
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6 formulario">
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+            <form action="controladores/controladorLogin.php" method="POST">
                 <div class="mb-3">
                     <label for="email" class="form-label">Introduzca su email</label>
                     <input type="email" class="form-control" id="email" name="email"
@@ -79,7 +78,7 @@ if (isset($_SESSION['usuario']) && !$mensajeExito && !$mensajeError) {
 <!-- Enlace para registrarse si no se tiene cuenta -->
 <div class="container registro">
     <h2>¿No tienes cuenta?</h2>
-    <a href="registro.php" class="btn btn-outline-dark mt-2">Regístrate</a>
+    <a href="/principal/registro.php" class="btn btn-outline-dark mt-2">Regístrate</a>
 </div>
 
 <div class="container mt-5">
@@ -92,7 +91,7 @@ if (isset($_SESSION['usuario']) && !$mensajeExito && !$mensajeError) {
             ];
             for ($i = 0; $i < 2; $i++) {
                 foreach ($imagenesAlojamiento as $img) {
-                    echo '<a href="alojamiento.html"><img src="img/' . $img . '" alt="bungalo"></a>';
+                    echo '<a href="html/alojamiento.html"><img src="img/' . $img . '" alt="bungalo"></a>';
                 }
             }
             ?>
@@ -112,7 +111,7 @@ if (isset($_SESSION['usuario']) && !$mensajeExito && !$mensajeError) {
                 "tahal3.jpg", "nieve2.jpg", "tahal5.jpg"
             ];
             foreach ($imagenesServicios as $img) {
-                echo '<a href="servicios.html"><img src="img/' . $img . '" alt="servicio"></a>';
+                echo '<a href="html/servicios.html"><img src="img/' . $img . '" alt="servicio"></a>';
             }
             ?>
         </div>

@@ -3,8 +3,8 @@
 ob_start();
 //Habilitamos la sesión
 session_start();
-require_once 'conexion/Conexion.php';
-require_once 'funcionesValidacion.php';
+require_once __DIR__ . '/../conexion/Conexion.php';
+require_once __DIR__ . '/../funcionesValidacion/funcionesValidacion.php';
 try {
 $db = new Conexion;
 $conexion = $db->conectar();
@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
                                 $_SESSION['usuario'] = $datosUsuario['nombre'];
                                 $_SESSION['idUsuario'] = $datosUsuario['idUsuario'];
                                 $dni= $datosUsuario['DNI'];
-                                header('Location: areaAdmin.php');
+                                header('Location: ../principal/areaAdmin.php');
                                 exit();
                                 break;
                             case 'cliente':
@@ -84,9 +84,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
                                 $_SESSION['usuario'] = $datosUsuario['nombre'];
                                 $_SESSION['idUsuario'] = $datosUsuario['idUsuario'];
                                 $nombreUsuario= $datosUsuario['nombre'];
-                                header('Location: bienvenidaCliente.php');
-                                break;
+                                header('Location: ../principal/bienvenidaCliente.php');
                                 exit();
+                                break;
+                
                             default:
                                 // Destruir la sesión si el rol no es válido
                                 $errores[] = "Rol no encontrado.";

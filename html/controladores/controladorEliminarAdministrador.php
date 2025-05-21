@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../conexion/Conexion.php';
-require_once __DIR__ . '/../funcionesValidacion.php';
+require_once __DIR__ . '/../funcionesValidacion/funcionesValidacion.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "eliminar
     }
 
     // Redirigir de nuevo a la página de eliminación
-    header('Location: ../eliminarAdministrador.php');
+    header('Location: ../principal/eliminarAdministrador.php');
     exit; // Detener la ejecución después de redirigir
 }
 ?>

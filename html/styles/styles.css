@@ -58,6 +58,7 @@
     box-shadow: 0 4px 6px rgba(0,0,0,0.2);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     border: none;
+    cursor: pointer;
 }
 
 .btn-purple:hover {
@@ -188,7 +189,16 @@
     transform: scale(1.05);
 }
 
-  
+  /*Estilo de los botones del área de administrador*/
+
+  .botones-container {
+    display: flex;
+    flex-wrap: wrap; /* Esto permite que pasen a la siguiente línea si no caben */
+    justify-content: center;
+    gap: 15px; /* Espacio entre botones */
+    margin-top: 20px;
+}
+
   
 
   /*Lo hacemos responsivo*/

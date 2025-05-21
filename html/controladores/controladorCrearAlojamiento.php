@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../conexion/Conexion.php';
-require_once __DIR__ . '/../funcionesValidacion.php';
+require_once __DIR__ . '/../funcionesValidacion/funcionesValidacion.php';
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearAlojamiento")) {
@@ -36,12 +36,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearAlo
         }
 
         // Redirigir a la vista de nuevo
-        header("Location: ../crearAlojamiento.php");
+        header("Location: ../principal/crearAlojamiento.php");
         exit;
 
     } catch (PDOException $ex) {
         setFlash("error", "❌ Error de conexión: " . $ex->getMessage());
-        header("Location: ../crearAlojamiento.php");
+        header("Location: ../principal/crearAlojamiento.php");
         exit;
     }
 }

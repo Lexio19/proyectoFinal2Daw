@@ -3,8 +3,8 @@
 session_start();
 // Incluye los controladores que contienen la lógica del registro de usuario
 // y las funciones de validación
-require_once 'controladores/controladorRegistro.php';
-require_once 'funcionesValidacion.php';
+require_once __DIR__ . '/../controladores/controladorRegistro.php';
+require_once __DIR__ . '/../funcionesValidacion/funcionesValidacion.php';
 $mensajeExito = getFlash("success");
 $mensajeError = getFlash("error");
 ?>
@@ -15,7 +15,7 @@ $mensajeError = getFlash("error");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/../styles/styles.css">
 </head>
 <body>
     <div class="container mt-4">
@@ -53,7 +53,7 @@ if ($mensajeError){ ?>
     </div>
     <br><br>
     <div>   
-        <a href="index.php">Volver a la página de inicio</a>
+        <a href="/../index.php">Volver a la página de inicio</a>
     </div>
 </div>
 </body>

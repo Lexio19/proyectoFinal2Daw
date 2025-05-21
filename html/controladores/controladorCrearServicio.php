@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../conexion/Conexion.php';
-require_once __DIR__ . '/../funcionesValidacion.php';
+require_once __DIR__ . '/../funcionesValidacion/funcionesValidacion.php';
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearServicio")) {
@@ -66,12 +66,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearSer
         }
 
         // Redirigir a la vista de nuevo
-        header("Location: ../crearServicio.php");
+        header("Location: ../principal/crearServicio.php");
         exit;
 
     } catch (PDOException $ex) {
         setFlash("error", "❌ Error de conexión: " . $ex->getMessage());
-        header("Location: ../crearServicio.php");
+        header("Location: ../principal/crearServicio.php");
         exit;
     }
 }

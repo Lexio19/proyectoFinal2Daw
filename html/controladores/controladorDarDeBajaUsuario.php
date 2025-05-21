@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../conexion/Conexion.php';
-require_once __DIR__ . '/../funcionesValidacion.php';
+require_once __DIR__ . '/../funcionesValidacion/funcionesValidacion.php';
 // Verifica si se ha enviado el formulario con el botón 'darDeBajaUsuario'
 if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "darDeBajaUsuario")) {
     $idUsuario = $_SESSION['idUsuario'] ?? null;
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "darDeBaj
 
     } catch (PDOException $ex) {
         setFlash("error", "❌ Error de conexión: " . $ex->getMessage());
-        header("Location: ../darDeBajaUsuario.php");
+        header("Location: ../principal/darDeBajaUsuario.php");
         exit;
     }
 }

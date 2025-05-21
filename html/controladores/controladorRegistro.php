@@ -1,7 +1,7 @@
 <?php 
 try{
 require_once __DIR__ . '/../conexion/Conexion.php';
-require_once __DIR__ . '/../funcionesValidacion.php';
+require_once __DIR__ . '/../funcionesValidacion/funcionesValidacion.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "registrarse")) {
 
     $db= new Conexion;
@@ -66,7 +66,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "registra
 } finally {
     $conexion = null; // Cerrar la conexión a la base de datos
 }
-
-
 
 ?>

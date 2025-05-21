@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../conexion/Conexion.php';
-require_once __DIR__ . '/../funcionesValidacion.php';
+require_once __DIR__ . '/../funcionesValidacion/funcionesValidacion.php';
 
 if (!isset($_SESSION['usuario'])) {
     die("Debes iniciar sesión para realizar una reserva.");
@@ -15,7 +15,7 @@ $fechaContrata = filter_input(INPUT_POST, 'fechaContrata', FILTER_SANITIZE_SPECI
 $fechaActual = date('Y-m-d');
 if ($fechaContrata < $fechaActual) {
     setFlash("error", "La fecha de contratación debe ser posterior a la fecha actual.");
-    header('Location: contratar.php');
+    header('Location: ../principal/contratar.php');
     exit;
 }
 
@@ -35,7 +35,7 @@ $servicio = $consultaTablaServicio->fetch(PDO::FETCH_ASSOC);
 
 if (!$servicio) {
     setFlash("error", "Error: Servicio no encontrado.");
-    header('Location: ../contratar.php');
+    header('Location: ../principal/contratar.php');
     exit;
 }
 // Convertir los días disponibles (string separado por comas) en un array en minúsculas
@@ -49,7 +49,7 @@ $numeroContrataciones = $consultaContrataciones->fetchColumn();
 
 if ($numeroContrataciones >= $aforo) {
     setFlash("error", "No hay disponibilidad para el servicio seleccionado en la fecha indicada.");
-    header('Location: ../contratar.php');
+    header('Location: ../principal/contratar.php');
     exit;
 }
 
@@ -71,7 +71,7 @@ $diaSeleccionadoEspanol = $traduccionDias[$diaSeleccionadoIngles] ?? $diaSelecci
 
 if (!in_array($diaSeleccionadoEspanol, $diaDisponible)) {
     setFlash("error", "Error: Solo puedes reservar este servicio los días: " . implode(", ", $diaDisponible));
-    header('Location: contratar.php');
+    header('Location: ../principal/contratar.php');
     exit;
 }
 
@@ -82,7 +82,7 @@ $insertarContratacion = $conexion->prepare("
 ");
 $insertarContratacion->execute([$idServicio, $idUsuario, $fechaContrata]);
 setFlash("success", "¡Reserva confirmada el $fechaContrata!");
-header('Location: ../contratar.php');
+header('Location: ../principal/contratar.php');
 exit;
 
 ?>

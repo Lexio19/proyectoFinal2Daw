@@ -1,5 +1,5 @@
 <?php
-require 'conexion/Conexion.php';
+require_once __DIR__ . '/../conexion/Conexion.php';
 $db = new Conexion();
 $conexion = $db->conectar();
 

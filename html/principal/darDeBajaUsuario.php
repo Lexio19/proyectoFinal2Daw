@@ -1,19 +1,19 @@
 <?php
 session_start();
-require_once 'conexion/Conexion.php';
-require_once 'funcionesValidacion.php';
+require_once __DIR__ . '/../conexion/Conexion.php';
+require_once __DIR__ . '/../funcionesValidacion/funcionesValidacion.php';
 $db = new Conexion();
 $conexion = $db->conectar();
 
 if (!isset($_SESSION['usuario'])) {
-    header('Location: index.php');
+    header('Location: /../index.php');
     exit; // Detener la ejecución después de redirigir
 }
 
 if(filter_has_var(INPUT_POST, "cerrarSesion")){
     session_unset(); // Destruir todas las variables de sesión
     session_destroy();
-    header('Location: index.php');
+    header('Location: /../index.php');
     exit; // Detener la ejecución después de redirigir
 }
 
@@ -42,14 +42,14 @@ if ($mensajeError) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/../styles/styles.css">
     <title>Dar de baja un usuario</title>
 </head>
 <body>
         <div class="contenedor-global">
             <div class="container mt-4">
 
-<form action="controladores/controladorDarDeBajaUsuario.php" method="POST">
+<form action="/../controladores/controladorDarDeBajaUsuario.php" method="POST">
 <h1>Dar de baja un usuario</h1>
     <p>¿Estás seguro de que desea darse de baja?</p>
     <button type="submit" name="darDeBajaUsuario">Dar de baja</button>

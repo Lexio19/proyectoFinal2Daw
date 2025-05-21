@@ -1,8 +1,8 @@
 <?php
 // Página que muestra los servicios disponibles
 session_start();
-require_once 'conexion/Conexion.php';
-require_once 'funcionesValidacion.php';
+require_once __DIR__ . '/../conexion/Conexion.php';
+require_once __DIR__ . '/../funcionesValidacion/funcionesValidacion.php';
 try{
 $db = new Conexion();
 $conexion = $db->conectar();
@@ -12,14 +12,14 @@ $conexion = $db->conectar();
 
 //Si el usuario no ha iniciado sesión, lo redirigimos al inicio
 if (!isset($_SESSION['usuario'])) {
-    header('Location: index.php');
+    header('Location: /../index.php');
     exit; // Detener la ejecución después de redirigir
 }
 //Botones de cerrar sesión e ir al inicio
 if(filter_has_var(INPUT_POST, "cerrarSesion")){
     session_unset(); // Destruir todas las variables de sesión
     session_destroy();
-    header('Location: index.php');
+    header('Location: /../index.php');
     exit; // Detener la ejecución después de redirigir
 }
 
@@ -39,7 +39,7 @@ $mensajeError = getFlash("error");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/../styles/styles.css">
     <title>Contratar un servicio</title>
 </head>
 <body>
@@ -52,7 +52,7 @@ if ($mensajeError){ ?>
     <p style="color: red;"><?php echo htmlspecialchars($mensajeError); ?></p>
 <?php }; ?>
 
-<form action="controladores/controladorContrata.php" method="POST">
+<form action="/../controladores/controladorContrata.php" method="POST">
     <label for="servicio">Selecciona un servicio:</label>
   
 
@@ -61,7 +61,7 @@ if ($mensajeError){ ?>
     $consultaServicios = $conexion->query("SELECT * FROM SERVICIO");
     while ($servicio = $consultaServicios->fetch(PDO::FETCH_ASSOC)) {
         $diasServicio = $servicio['diasServicio'];
-        $imagenRuta = htmlspecialchars($servicio['imagenRuta']);
+        $imagenRuta = '/' . ltrim($servicio['imagenRuta'], '/');
         $descripcion = htmlspecialchars($servicio['descripcion']);
         $idServicio = htmlspecialchars($servicio['idServicio']);
         echo "
