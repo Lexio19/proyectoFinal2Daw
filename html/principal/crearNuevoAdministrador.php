@@ -2,10 +2,7 @@
 session_start();
 require_once __DIR__ . '/../conexion/Conexion.php';
 
-if (!isset($_SESSION['usuario'])) {
-    header('Location: /../index.php');
-    exit;
-}
+
 
 if ((!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') && (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'superadministrador')) {
     header('Location: /../index.php');

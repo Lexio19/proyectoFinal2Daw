@@ -1,12 +1,9 @@
 <?php
 session_start();
 require_once __DIR__ . '/../conexion/Conexion.php';
-if (!isset($_SESSION['usuario'])) {
-    header('Location: index.php');
-    exit;
-}
+
 if ((!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') && (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'superadministrador')) {
-    header('Location: index.php');
+    header('Location:/../index.php');
     exit;
 }
 
@@ -18,7 +15,7 @@ if (filter_has_var(INPUT_POST, "areaAdmin")) {
 if (filter_has_var(INPUT_POST, "cerrarSesion")) {
     session_unset();
     session_destroy();
-    header('Location: index.php');
+    header('Location: /../index.php');
     exit;
 }
 
