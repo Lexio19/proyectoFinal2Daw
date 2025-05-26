@@ -3,6 +3,7 @@ session_start();
 require_once __DIR__ . '/../conexion/Conexion.php';
 require_once __DIR__ . '/../funcionesValidacion/funcionesValidacion.php';
 require_once __DIR__ . '/../controladores/controladorEliminarAlojamiento.php';
+
 try {
     $db = new Conexion;
     $conexion = $db->conectar();
@@ -12,76 +13,84 @@ try {
 
 if (!isset($_SESSION['usuario'])) {
     header('Location: /../index.php');
-    exit; // Detener la ejecución después de redirigir
+    exit;
 }
 
-if ((!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') && (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'superadministrador')) {
+if ((!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') && ($_SESSION['rol'] !== 'superadministrador')) {
     header('Location: /../index.php');
-    exit; // Detener la ejecución después de redirigir
+    exit;
 }
 
 if (filter_has_var(INPUT_POST, "areaAdmin")) {
     header('Location: areaAdmin.php');
-    exit; // Detener la ejecución después de redirigir
+    exit;
+}
+
+
+if (filter_has_var(INPUT_POST, "areaAlojamientos")) {
+    header('Location: gestionarAlojamientos.php');
+    exit;
 }
 
 if (filter_has_var(INPUT_POST, "cerrarSesion")) {
-    session_unset(); // Destruir todas las variables de sesión
+    session_unset();
     session_destroy();
     header('Location: /../index.php');
-    exit; // Detener la ejecución después de redirigir
+    exit;
 }
 
-// Mostrar mensajes flash (de éxito o error)
-if ($mensaje = getFlash('success')) {
-    echo "<div style='color: green; font-weight: bold;'>$mensaje</div>";
-}
-
-if ($mensaje = getFlash('error')) {
-    echo "<div style='color: red; font-weight: bold;'>$mensaje</div>";
-}
-
-
-
+$mensajeSuccess = getFlash('success');
+$mensajeError = getFlash('error');
 ?>
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eliminar alojamientos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap + estilos -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/styles.css">
 </head>
 <body>
-    <h1>Eliminar un alojamiento</h1>
-    <form action="/../controladores/controladorEliminarAlojamiento.php" method="POST">
-        <label>Alojamiento:</label><br>
-        <select name="id" required>
-    <?php
-    try {
-        //Para que los bungalós siempre aparezcan ordenados por el número
-        $consultaBungalows = $conexion->query("SELECT * FROM ALOJAMIENTO ORDER BY CAST(SUBSTRING_INDEX(tipo, ' ', -1) AS UNSIGNED)");
+    <div class="container mt-5">
+        <h1 class="mb-4">Eliminar un alojamiento</h1>
 
+        <?php if ($mensajeSuccess): ?>
+            <div class="alert alert-success"><?php echo htmlspecialchars($mensajeSuccess); ?></div>
+        <?php endif; ?>
 
-        while ($bungalow = $consultaBungalows->fetch(PDO::FETCH_ASSOC)) {
-            echo "<option value='" . htmlspecialchars($bungalow['idAlojamiento']) . "'>" . htmlspecialchars($bungalow['tipo']) . "</option>";
-        }
-    } catch (PDOException $e) {
-        echo "<option value=''>Error al cargar alojamientos</option>";
-    }
-    ?>
-</select>
-        <br><br>
-        <button type="submit" name="eliminarAlojamiento">Eliminar alojamiento</button>
-        
-    </form>
-    <br><br>
+        <?php if ($mensajeError): ?>
+            <div class="alert alert-danger"><?php echo htmlspecialchars($mensajeError); ?></div>
+        <?php endif; ?>
 
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-        <button type="submit" name="areaAdmin">Volver al área principal de administrador</button>
-        <button type="submit" name="cerrarSesion">Cerrar sesión</button>
-    </form>
+        <form action="/../controladores/controladorEliminarAlojamiento.php" method="POST" class="mb-4">
+            <div class="mb-3">
+                <label for="id" class="form-label">Alojamiento:</label>
+                <select name="id" id="id" class="form-select" required>
+                    <?php
+                    try {
+                        $consultaBungalows = $conexion->query("SELECT * FROM ALOJAMIENTO ORDER BY CAST(SUBSTRING_INDEX(tipo, ' ', -1) AS UNSIGNED)");
+                        while ($bungalow = $consultaBungalows->fetch(PDO::FETCH_ASSOC)) {
+                            echo "<option value='" . htmlspecialchars($bungalow['idAlojamiento']) . "'>" . htmlspecialchars($bungalow['tipo']) . "</option>";
+                        }
+                    } catch (PDOException $e) {
+                        echo "<option value=''>Error al cargar alojamientos</option>";
+                    }
+                    ?>
+                </select>
+            </div>
 
+            <button type="submit" name="eliminarAlojamiento" class="btn btn-danger">Eliminar alojamiento</button>
+        </form>
+
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="d-flex gap-2">
+            <button type="submit" name="areaAlojamientos" class="btn btn-dark">Volver al área de alojamientos</button>
+            <button type="submit" name="areaAdmin" class="btn btn-secondary">Volver al área principal de administrador</button>
+            <button type="submit" name="cerrarSesion" class="btn btn-dark">Cerrar sesión</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -32,7 +32,7 @@ try {
 $consultaTablaServicio = $conexion->prepare("SELECT diasServicio, aforo FROM SERVICIO WHERE idServicio = ?");
 $consultaTablaServicio->execute([$idServicio]);
 $servicio = $consultaTablaServicio->fetch(PDO::FETCH_ASSOC);
-
+// Verificamos si el servicio existe
 if (!$servicio) {
     setFlash("error", "Error: Servicio no encontrado.");
     header('Location: ../principal/contratar.php');
@@ -46,7 +46,7 @@ $aforo = $servicio['aforo']; // Obtener aforo máximo del servicio
 $consultaContrataciones = $conexion->prepare("SELECT COUNT(*) FROM CONTRATA WHERE idServicio = ? AND fechaContrata = ?");
 $consultaContrataciones->execute([$idServicio, $fechaContrata]);
 $numeroContrataciones = $consultaContrataciones->fetchColumn();
-
+// Verificamos si el número de contrataciones supera el aforo
 if ($numeroContrataciones >= $aforo) {
     setFlash("error", "No hay disponibilidad para el servicio seleccionado en la fecha indicada.");
     header('Location: ../principal/contratar.php');
@@ -68,7 +68,7 @@ $traduccionDias = [
 ];
 
 $diaSeleccionadoEspanol = $traduccionDias[$diaSeleccionadoIngles] ?? $diaSeleccionadoIngles;
-
+// Verificamos si el día seleccionado está en los días disponibles
 if (!in_array($diaSeleccionadoEspanol, $diaDisponible)) {
     setFlash("error", "Error: Solo puedes reservar este servicio los días: " . implode(", ", $diaDisponible));
     header('Location: ../principal/contratar.php');

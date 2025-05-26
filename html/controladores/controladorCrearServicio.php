@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../conexion/Conexion.php';
 require_once __DIR__ . '/../funcionesValidacion/funcionesValidacion.php';
 session_start();
-
+// Verificar si el usuario ha iniciado sesión y tiene el rol de administrador
 if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearServicio")) {
     $nombre = filter_input(INPUT_POST, "nombre");
     $descripcion = filter_input(INPUT_POST, "descripcion");
@@ -24,12 +24,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearSer
     if (!isset($_FILES['imagen']) || $_FILES['imagen']['error'] != UPLOAD_ERR_OK) {
         $errores[] = "❌ Error al subir la imagen.";
     } else {
+        // Procesar imagen
         $imagenTmp = $_FILES['imagen']['tmp_name'];
+        // Obtener el nombre y la extensión de la imagen
         $imagenNombre = basename($_FILES['imagen']['name']);
+        // Comprobar si la imagen tiene un nombre válido
         $ext = strtolower(pathinfo($imagenNombre, PATHINFO_EXTENSION));
         $nuevaRuta = '../img/servicios/' . uniqid() . '.' . $ext;
 
-        // Validar extensión
+        // Validar extensión que puede tener la imagen
         $extensionesPermitidas = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
         if (!in_array($ext, $extensionesPermitidas)) {
             $errores[] = "❌ Formato de imagen no permitido.";

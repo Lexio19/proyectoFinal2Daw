@@ -24,11 +24,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
             $errores = []; // Inicializamos el array de errores
             // Validamos el email y la contraseña
             if (!validarEmail($email)) {
-                $errores[] = "Email no válido" . "<br>";
+                $errores[] = "Usuario o contraseñas incorrectos" . "<br>";
             }
 
             if (!validarPassword($password)) {
-                $errores[] = "Contraseña no válida" . "<br>";
+                $errores[] = "Usuario o contraseñas incorrectos" . "<br>";
             }
         } else {
             $errores[] = "No se han recibido los datos correctamente";
@@ -108,16 +108,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autentic
         }
 
     } catch (Exception $ex) {
-        echo "ERROR: $ex";
+        $errores[]= "ERROR: $ex";
     }
 
-  
-    
+    if (!empty($errores)) {
+    // Guardamos los errores en sesión para recuperarlos luego en index.php
+    $_SESSION['flash_error'] = $errores;
+    header('Location: ../index.php');
+    exit();
+}
 }
 
-if (!empty($errores)) {
-    foreach ($errores as $error) {
-        echo "<p style='color:red;'>$error</p>";
-    }
-}
+
+
 ob_end_flush();//Vaciar el buffer de salida

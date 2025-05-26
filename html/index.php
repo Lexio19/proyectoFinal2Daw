@@ -1,4 +1,5 @@
 <?php 
+session_start();
 //Se incluyen los archivos necesarios para la conexión a la base de datos
 //y las funciones de validación.
 require_once __DIR__ . '/conexion/Conexion.php';
@@ -19,9 +20,21 @@ if (isset($_SESSION['usuario'])) {
 //Declaramos los mensajes que mostrará getFlash tanto si es de éxito como de error.
 $mensajeExito = getFlash("success");
 $mensajeError = getFlash("error");
+$errores = [];
+// Si hay mensajes flash de éxito o error, los mostramos en la página
+
+if (isset($_SESSION['flash_error'])) {
+    $errores = $_SESSION['flash_error'];
+    unset($_SESSION['flash_error']); // Para que no persista al refrescar
+}
 // Si hay sesión iniciada y no hay mensajes flash, redirige también a bienvenidaCliente.php
 if (isset($_SESSION['usuario']) && !$mensajeExito && !$mensajeError) {
     header('Location: principal/bienvenidaCliente.php');
+    exit;
+}
+//Si el que inició sesión fue un administrador o superadministrador, redirige a areaAdmin.php.
+if ((isset($_SESSION['administrador']) || isset($_SESSION['superadministrador'])) && !$mensajeExito && !$mensajeError) {
+    header('Location: principal/areaAdmin.php');
     exit;
 }
 ?>
@@ -37,13 +50,11 @@ if (isset($_SESSION['usuario']) && !$mensajeExito && !$mensajeError) {
     
 <div class="container mt-4">
     <!-- Muestra mensaje de éxito si existe -->
-    <?php if ($mensajeExito): ?>
-        <div class="alert alert-success text-center"><?php echo htmlspecialchars($mensajeExito); ?></div>
-    <?php endif; ?>
-    <!-- Muestra mensaje de error si existe -->
-    <?php if ($mensajeError): ?>
-        <div class="alert alert-danger text-center"><?php echo htmlspecialchars($mensajeError); ?></div>
-    <?php endif; ?>
+    <?php if (!empty($errores)) {
+    foreach ($errores as $error) {
+        echo "<p style='color:red;'>$error</p>";
+    }
+}?>
 </div>
 
 <div class="container text-center my-5">
@@ -58,7 +69,7 @@ if (isset($_SESSION['usuario']) && !$mensajeExito && !$mensajeError) {
             <form action="controladores/controladorLogin.php" method="POST">
                 <div class="mb-3">
                     <label for="email" class="form-label">Introduzca su email</label>
-                    <input type="email" class="form-control" id="email" name="email"
+                    <input type="text" class="form-control" id="email" name="email"
                            value="<?php if (filter_has_var(INPUT_POST, 'email')) echo filter_input(INPUT_POST, 'email'); ?>">
                 </div>
 

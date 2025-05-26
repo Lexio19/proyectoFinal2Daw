@@ -20,11 +20,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearAlo
         $consultaAlojamiento = $conexion->prepare("SELECT * FROM ALOJAMIENTO WHERE tipo = :tipo");
         $consultaAlojamiento->bindParam(':tipo', $tipo);
         $consultaAlojamiento->execute();
-
+        // Verificar si ya existe un alojamiento con el mismo tipo
         if ($consultaAlojamiento->rowCount() > 0) {
             $errores[] = "❌ El tipo de alojamiento ya existe.";
         }
-
+        // Validar el tipo de alojamiento
         if (empty($errores)) {
             $insertarAlojamiento = $conexion->prepare("INSERT INTO ALOJAMIENTO (tipo) VALUES (:tipo)");
             $insertarAlojamiento->bindParam(':tipo', $tipo);

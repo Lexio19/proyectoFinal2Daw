@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../conexion/Conexion.php';
 require_once __DIR__ . '/../funcionesValidacion/funcionesValidacion.php';
 session_start();
-
+// Verificar si el usuario ha iniciado sesión y tiene el rol de administrador
 if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearAdministrador")) {
     $dni = filter_input(INPUT_POST, "dni");
     $correoElectronico = filter_input(INPUT_POST, "correoElectronico");
@@ -12,11 +12,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearAdm
     $codigoPostal = filter_input(INPUT_POST, "codigoPostal");
     
     $errores = [];
-
+    // Validar los campos
     if (empty($dni)||empty($correoElectronico)||empty($password)||empty($nombre)||empty($apellidos)||empty($codigoPostal)) {
         $errores[] = "❌ Todos los campos son obligatorios.";
     }
-
+    
     try {
         $db = new Conexion();
         $conexion = $db->conectar();
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "crearAdm
         if ($consultaUsuario->rowCount() > 0) {
             $errores[] = "❌ El usuario ya existe.";
         }
-
+        // Si el usuario no existe, insertamos el nuevo administrador
         if (empty($errores)) {
             $passwordCifrada = password_hash($password, PASSWORD_DEFAULT);
             $insertarUsuarioAdministrador = $conexion->prepare("INSERT INTO USUARIO (DNI, correoElectronico, contrasenna, nombre, apellidos, CP, idRol) VALUES (?,?, ?, ?, ?, ?, ?)");

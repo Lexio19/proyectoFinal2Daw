@@ -134,9 +134,11 @@ if ($mensajeError){ ?>
     <br><br>
     <div>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-            <button type="submit" name="cerrarSesion">Cerrar sesión</button>
-            <br><br>
             <button type="submit" name="inicio">Inicio</button>
+            
+            <br><br>
+        <button type="submit" name="cerrarSesion">Cerrar sesión</button>
+            
         </form>
     </div>
 </body>

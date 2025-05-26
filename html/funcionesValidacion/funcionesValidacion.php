@@ -1,5 +1,5 @@
 <?php
-
+// Sanear texto para prevenir posibles inyecciones o caracteres no deseados
 function sanearTexto($campo) {
     $campo = trim($campo);
     $campo = strip_tags($campo);
@@ -42,12 +42,12 @@ function validarPassword($password){
 }
 
 function validarUsuario($usuario){
-    // Sanear texto para prevenir posibles inyecciones o caracteres no deseados
+    
     $usuarioSaneado = sanearTexto($usuario);
     
     // Expresión regular actualizada para aceptar letras, tildes, ñ y espacios
     if (!preg_match('/^[A-Za-zÁÉÍÓÚáéíóúÑñ]+(?:\s[A-Za-zÁÉÍÓÚáéíóúÑñ]+)*$/', $usuarioSaneado)) {
-        // Si no pasa la validación, se asigna false
+        
         $usuarioSaneado = false;
     }
     

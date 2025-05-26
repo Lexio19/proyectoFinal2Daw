@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "eliminar
     if (empty($id)) {
         $errores[] = "ID de administrador no válido.";
     }
-
+    
     if (empty($errores)) {
         try {
             $db = new Conexion();

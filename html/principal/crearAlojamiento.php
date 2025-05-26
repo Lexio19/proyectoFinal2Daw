@@ -16,6 +16,11 @@ if(filter_has_var(INPUT_POST, "areaAdmin")) {
     header('Location: areaAdmin.php');
     exit;
 }
+
+if(filter_has_var(INPUT_POST, "areaAlojamientos")) {
+    header('Location: gestionarAlojamientos.php');
+    exit;
+}
 if(filter_has_var(INPUT_POST, "cerrarSesion")) {
     session_unset();
     session_destroy();
@@ -50,6 +55,7 @@ if ($mensaje = getFlash('error')) {
     </form>
 
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="botones-container">
+        <button type="submit" name="areaAlojamientos" class="btn-purple">Volver al área de alojamientos</button>
         <button type="submit" name="areaAdmin" class="btn-purple">Volver al área principal de administrador</button>
         <button type="submit" name="cerrarSesion" class="btn-purple">Cerrar sesión</button>
     </form>
