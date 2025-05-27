@@ -53,13 +53,16 @@ $mensajeError = getFlash('error');
     <div class="container mt-5">
         <h1 class="mb-4">Eliminar un alojamiento</h1>
 
-        <?php if ($mensajeSuccess): ?>
-            <div class="alert alert-success"><?php echo htmlspecialchars($mensajeSuccess); ?></div>
-        <?php endif; ?>
+        <?php
+if ($mensajeSuccess) {
+    echo '<div class="alert alert-success">' . htmlspecialchars($mensajeSuccess) . '</div>';
+}
 
-        <?php if ($mensajeError): ?>
-            <div class="alert alert-danger"><?php echo htmlspecialchars($mensajeError); ?></div>
-        <?php endif; ?>
+if ($mensajeError) {
+    echo '<div class="alert alert-danger">' . htmlspecialchars($mensajeError) . '</div>';
+}
+?>
+
 
         <form action="/../controladores/controladorEliminarAlojamiento.php" method="POST" class="mb-4">
             <div class="mb-3">

@@ -23,6 +23,11 @@ if(filter_has_var(INPUT_POST, "gestionarServicios")){
     exit;
 }
 
+if(filter_has_var(INPUT_POST, "gestionarUsuarios")){
+    header('Location: gestionarUsuarios.php');
+    exit;
+}
+
 if(filter_has_var(INPUT_POST, "gestionarAdministradores")){
     header('Location: gestionarAdministradores.php');
     exit;
@@ -45,10 +50,11 @@ if(filter_has_var(INPUT_POST, "gestionarAdministradores")){
         <div class="formulario" style="text-align:center;">
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                 
-                <div class="botones-container">
+<div class="botones-container">
     <button class="btn-purple" type="submit" name="gestionarAlojamientos">Gestionar alojamientos</button>
     <button class="btn-purple" type="submit" name="gestionarServicios">Gestionar servicios</button>
     <button class="btn-purple" type="submit" name="gestionarAdministradores">Gestionar administradores</button>
+    <button class="btn-purple" type="submit" name="gestionarUsuarios">Gestionar usuarios</button>
     <button class="btn-purple" type="submit" name="cerrarSesion">Cerrar sesión</button>
 </div>
 
