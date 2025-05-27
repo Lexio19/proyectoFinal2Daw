@@ -38,20 +38,22 @@ $mensajeError = getFlash('error');
 
 $usuarioSeleccionado = $_POST['idUsuario'] ?? null;
 
-$usuarios = [];
-$reservas = [];
-$servicios = [];
+$usuarios = [];   // Lista de usuarios
+$reservas = [];   // Reservas de alojamiento del usuario seleccionado
+$servicios = [];  // Servicios contratados por el usuario seleccionado
 
+// Consulta para obtener todos los usuarios con rol "cliente" (idRol = 2)
 try {
-    $usuariosStmt = $conexion->prepare("SELECT idUsuario, nombre FROM USUARIO WHERE idRol = 2");
-    $usuariosStmt->execute();
-    $usuarios = $usuariosStmt->fetchAll(PDO::FETCH_ASSOC);
+    $consultaUsuarios = $conexion->prepare("SELECT idUsuario, nombre FROM USUARIO WHERE idRol = 2");
+    $consultaUsuarios->execute();
+    $usuarios = $consultaUsuarios->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
+    // Si hay error, se deja la lista vacía
     $usuarios = [];
 }
 
 if ($usuarioSeleccionado) {
-    // RESERVAS ALOJAMIENTO
+    // Consulta para obtener las reservas de alojamiento del usuario
     $consultaReservas = $conexion->prepare("
         SELECT R.idReserva, R.fechaEntrada, R.fechaSalida, A.tipo 
         FROM RESERVA R
@@ -61,7 +63,7 @@ if ($usuarioSeleccionado) {
     $consultaReservas->execute(['idUsuario' => $usuarioSeleccionado]);
     $reservas = $consultaReservas->fetchAll(PDO::FETCH_ASSOC);
 
-    // CONTRATACIONES DE SERVICIO
+    // Consulta para obtener los servicios contratados por el usuario
     $consultaServicios = $conexion->prepare("
         SELECT C.idContrata, C.fechaContrata, S.nombre 
         FROM CONTRATA C

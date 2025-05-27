@@ -52,17 +52,16 @@ $flashError = getFlash('error');
     <div class="contenedor-global">
         <h1>Eliminar un usuario</h1>
 
-        <?php if ($flashSuccess): ?>
-            <div style="color: green; font-weight: bold; text-align:center; margin-bottom: 20px;">
-                <?= $flashSuccess ?>
-            </div>
-        <?php endif; ?>
+        <?php
+if ($flashSuccess) {
+    echo '<div style="color: green; font-weight: bold; text-align:center; margin-bottom: 20px;">' . htmlspecialchars($flashSuccess) . '</div>';
+}
 
-        <?php if ($flashError): ?>
-            <div style="color: red; font-weight: bold; text-align:center; margin-bottom: 20px;">
-                <?= $flashError ?>
-            </div>
-        <?php endif; ?>
+if ($flashError) {
+    echo '<div style="color: red; font-weight: bold; text-align:center; margin-bottom: 20px;">' . htmlspecialchars($flashError) . '</div>';
+}
+?>
+
 
         <form action="/../controladores/controladorEliminarUsuario.php" method="POST" class="formulario">
             <label>Usuarios clientes</label><br>

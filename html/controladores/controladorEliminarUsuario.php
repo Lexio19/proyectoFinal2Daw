@@ -31,14 +31,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "eliminar
             } else {
                 setFlash("error", "No se encontró el administrador.");
             }
-        }catch (PDOException $ex) {
-            $errores[] = "❌ Error inesperado: " . $ex->getMessage();
-        }
+        } catch (PDOException $ex) {
+    setFlash("error", "No se pudo eliminar el usuario. Puede tener reservas asociadas.");
+}
+
     } else {
-        foreach ($errores as $error) {
-            echo $error; // Muestra los errores si los hay
-        }
-    }
+    $mensajeErrores = implode(" ", $errores);
+    setFlash("error", $mensajeErrores);
+}
+
 
     // Redirigir de nuevo a la página de eliminación
     header('Location: ../principal/eliminarUsuario.php');
