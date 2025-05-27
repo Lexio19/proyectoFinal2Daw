@@ -18,6 +18,11 @@ if ((!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') && (!isse
     exit;
 }
 
+if (filter_has_var(INPUT_POST, "areaServicios")) {
+    header('Location: gestionarServicios.php');
+    exit;
+}
+
 if (filter_has_var(INPUT_POST, "areaAdmin")) {
     header('Location: areaAdmin.php');
     exit;
@@ -74,6 +79,7 @@ $flashError = getFlash('error');
         </form>
 
         <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="POST" class="botones-container">
+            <button type="submit" name="areaServicios" class="btn-purple">Volver al área de los servicios</button>
             <button type="submit" name="areaAdmin" class="btn-purple">Volver al área principal de administrador</button>
             <button type="submit" name="cerrarSesion" class="btn-purple">Cerrar sesión</button>
         </form>

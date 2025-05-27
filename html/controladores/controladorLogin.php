@@ -16,20 +16,18 @@ $conexion = $db->conectar();
 if ($_SERVER["REQUEST_METHOD"] == "POST" && filter_has_var(INPUT_POST, "autenticarse")) {
     try {
         // Verifica que se han recibido correctamente los campos email y password
-        if ((filter_input(INPUT_POST, "email") && (filter_input(INPUT_POST, "password") !== null))) {
+        if (((filter_input(INPUT_POST, "email") && (filter_input(INPUT_POST, "password"))) !== null)) {
             // Validación básica de los campos del formulario
             $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
             $password = filter_input(INPUT_POST, "password");
 
             $errores = []; // Inicializamos el array de errores
             // Validamos el email y la contraseña
-            if (!validarEmail($email)) {
+            if (empty($email) || empty($password) || !validarEmail($email) || !validarPassword($password)) {
                 $errores[] = "Usuario o contraseñas incorrectos" . "<br>";
             }
 
-            if (!validarPassword($password)) {
-                $errores[] = "Usuario o contraseñas incorrectos" . "<br>";
-            }
+            
         } else {
             $errores[] = "No se han recibido los datos correctamente";
         }
