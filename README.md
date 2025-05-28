@@ -1,4 +1,5 @@
 📦 Proyecto: VisiTahal
+
 Tahal es un bonito pueblo enclavado en el centro de la Sierra de los Filabres, en Almería. El año pasado, el ayuntamiento decidió construir unos bungalós justo a la entrada del pueblo para que los visitantes pudieran hacer noche y conocer mejor el sitio y las estupendas actividades que reunen a todos los vecinos del lugar.
 
 🚀 Tecnologías utilizadas
