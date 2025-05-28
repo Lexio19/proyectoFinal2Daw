@@ -38,16 +38,19 @@ README.md --> Información del proyecto
 🐳 Requisitos
 
 🔧 Instrucciones para ejecutar el proyecto
-1. Clona el repositorio:
+
+1. Instalar Docker.
+
+2. Clona el repositorio:
 
 git clone https://github.com/Lexio19/proyectoFinal2Daw.git
 cd proyectoFinal2Daw
 
-2. Levanta los contenedores con Docker:
+3. Levanta los contenedores con Docker:
 
 docker-compose up -d
 
-3. Accede al sitio web en tu navegador:
+4. Accede al sitio web en tu navegador:
 
 http://localhost
 
