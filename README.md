@@ -47,11 +47,11 @@ git clone https://github.com/Lexio19/proyectoFinal2Daw.git
 
 cd proyectoFinal2Daw
 
-3. Levanta los contenedores con Docker:
+3. Levantar los contenedores con Docker:
 
 docker-compose up -d
 
-4. Accede al sitio web en tu navegador:
+4. Acceder al sitio web en tu navegador:
 
 http://localhost
 
