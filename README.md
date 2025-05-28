@@ -39,13 +39,17 @@ README.md --> Información del proyecto
 
 🔧 Instrucciones para ejecutar el proyecto
 1. Clona el repositorio:
+
 `git clone https://github.com/tuusuario/tu-repo.git
+
 cd tu-repo´
 
 2. Levanta los contenedores con Docker:
+
 docker-compose up -d
 
 3. Accede al sitio web en tu navegador:
+
 http://localhost
 
 ✅ Usuarios de prueba
