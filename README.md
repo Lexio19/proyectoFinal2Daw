@@ -31,4 +31,19 @@ README.md --> Información del proyecto
 `git clone https://github.com/tuusuario/tu-repo.git
 cd tu-repo´
 
+2. Levanta los contenedores con Docker:
+docker-compose up -d
+
+3. Accede al sitio web en tu navegador:
+http://localhost
+
+✅ Usuarios de prueba
+
+Admin: admin@gmail.com / AdminWeb123
+
+Usuario: elloco@gmail.com / Alex123
+
+
+
+
 
