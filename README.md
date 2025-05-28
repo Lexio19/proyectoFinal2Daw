@@ -44,6 +44,7 @@ README.md --> Información del proyecto
 2. Clona el repositorio:
 
 git clone https://github.com/Lexio19/proyectoFinal2Daw.git
+
 cd proyectoFinal2Daw
 
 3. Levanta los contenedores con Docker:
