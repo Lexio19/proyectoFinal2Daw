@@ -15,14 +15,23 @@ JavaScript
 
 📁 Estructura del proyecto
 html/
+
     /principal --> Archivos principales de la web
+    
     /controladores --> Lógica del backend 
+    
     /conexion --> Contiene la clase que permite la conexión con la base de datos
+    
     /funcionesValidacion --> Contiene el archivo que valida todos los datos que introducen los usuarios
+    
 sql/ --> Contiene un backup de la base de datos
+
 docker-compose.yml --> Configuración del entorno Docker
+
 Dockerfile --> Instrucciones para construir el contenedor de Apache
+
 PROYECTO VISITAHAL.sql --> La base de datos del proyecto
+
 README.md --> Información del proyecto
 
 🐳 Requisitos
