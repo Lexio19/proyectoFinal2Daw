@@ -52,13 +52,16 @@ $flashError = getFlash('error');
     <div class="contenedor-global">
         <h1>Eliminar un servicio</h1>
 
-        <?php if ($flashSuccess): ?>
-            <div class="mensaje-exito"><?= $flashSuccess ?></div>
-        <?php endif; ?>
+        <?php
+if ($flashSuccess) {
+    echo '<div class="mensaje-exito">' . htmlspecialchars($flashSuccess) . '</div>';
+}
 
-        <?php if ($flashError): ?>
-            <div class="mensaje-error"><?= $flashError ?></div>
-        <?php endif; ?>
+if ($flashError) {
+    echo '<div class="mensaje-error">' . htmlspecialchars($flashError) . '</div>';
+}
+?>
+
 
         <form action="/../controladores/controladorEliminarServicio.php" method="POST" class="formulario">
             <label for="servicio">Servicio:</label><br>

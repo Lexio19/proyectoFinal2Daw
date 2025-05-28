@@ -41,17 +41,16 @@ $flashError = getFlash('error');
     <div class="contenedor-global">
         <h1>Crear nuevo servicio</h1>
 
-        <?php if ($flashSuccess): ?>
-            <div style="color: green; font-weight: bold; text-align:center; margin-bottom: 20px;">
-                <?= $flashSuccess ?>
-            </div>
-        <?php endif; ?>
+        <?php
+if ($flashSuccess) {
+    echo '<div style="color: green; font-weight: bold; text-align:center; margin-bottom: 20px;">' . htmlspecialchars($flashSuccess) . '</div>';
+}
 
-        <?php if ($flashError): ?>
-            <div style="color: red; font-weight: bold; text-align:center; margin-bottom: 20px;">
-                <?= $flashError ?>
-            </div>
-        <?php endif; ?>
+if ($flashError) {
+    echo '<div style="color: red; font-weight: bold; text-align:center; margin-bottom: 20px;">' . htmlspecialchars($flashError) . '</div>';
+}
+?>
+
 
         <form action="/../controladores/controladorCrearServicio.php" method="POST" enctype="multipart/form-data" class="formulario">
             <label for="nombre">Nombre</label><br>

@@ -52,17 +52,24 @@ $flashError = getFlash('error');
     <div class="contenedor-global">
         <h1>Eliminar un administrador</h1>
 
-        <?php if ($flashSuccess): ?>
-            <div style="color: green; font-weight: bold; text-align:center; margin-bottom: 20px;">
-                <?= $flashSuccess ?>
-            </div>
-        <?php endif; ?>
+      <?php
+if ($flashSuccess) {
+    ?>
+    <div style="color: green; font-weight: bold; text-align:center; margin-bottom: 20px;">
+        <?= $flashSuccess ?>
+    </div>
+    <?php
+}
 
-        <?php if ($flashError): ?>
-            <div style="color: red; font-weight: bold; text-align:center; margin-bottom: 20px;">
-                <?= $flashError ?>
-            </div>
-        <?php endif; ?>
+if ($flashError) {
+    ?>
+    <div style="color: red; font-weight: bold; text-align:center; margin-bottom: 20px;">
+        <?= $flashError ?>
+    </div>
+    <?php
+}
+?>
+
 
         <form action="/../controladores/controladorEliminarAdministrador.php" method="POST" class="formulario">
             <label>Usuarios administradores</label><br>
