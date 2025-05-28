@@ -14,6 +14,7 @@ HTML/CSS/Bootstrap
 JavaScript
 
 📁 Estructura del proyecto
+
 html/
 
     /principal --> Archivos principales de la web
