@@ -61,7 +61,7 @@ Para Linux 🐧
 
 1. Tener git instalado
 
-docker rm -f $(docker ps -aq)
+sudo apt update && sudo apt install git -y
 
 2. Clonar el repositorio en la carpeta donde lo queramos
 
