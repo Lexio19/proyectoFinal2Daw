@@ -1,5 +1,10 @@
 <?php
-// Sanear texto para prevenir posibles inyecciones o caracteres no deseados
+
+/**
+ * Sanea un texto eliminando etiquetas, espacios innecesarios y caracteres especiales peligrosos.
+ * @param string $campo El texto a sanear.
+ * @return string El texto saneado.
+ */
 function sanearTexto($campo) {
     $campo = trim($campo);
     $campo = strip_tags($campo);
@@ -8,79 +13,74 @@ function sanearTexto($campo) {
     return $campo;
 }
 
+/**
+ * Valida una dirección de correo electrónico.
+ * @param string $email La dirección de correo electrónico a validar.
+ * @return string|false El email validado o false si no es válido.
+ */
 function validarEmail($email) {
     $emailSaneado = sanearTexto($email); 
-    
-    if (!filter_var($emailSaneado, FILTER_VALIDATE_EMAIL)) {
-        $emailSaneado = false;
-    }
-    
-    return $emailSaneado;
+    return filter_var($emailSaneado, FILTER_VALIDATE_EMAIL) ? $emailSaneado : false;
 }
-//Sirve para DNI y NIE
+
+/**
+ * Valida un DNI o NIE español.
+ * @param string $dni El DNI o NIE a validar.
+ * @return string|false El DNI/NIE validado o false si no es válido.
+ */
 function validarDNI($dni) {
     $dniSaneado = sanearTexto($dni);
-    
-    if (!preg_match('/^([0-9]{8}[A-Z]|[XYZ][0-9]{7}[A-Z])$/', $dniSaneado)) {
-        $dniSaneado = false;
-    }
-    
-    return $dniSaneado;
+    return preg_match('/^([0-9]{8}[A-Z]|[XYZ][0-9]{7}[A-Z])$/', $dniSaneado) ? $dniSaneado : false;
 }
 
-
-
-
-//La contraseña deberá tener al menos 5 caracteres, una mayúscula y un número
+/**
+ * Valida una contraseña. Debe tener al menos 5 caracteres, una letra mayúscula y un número.
+ * @param string $password La contraseña a validar.
+ * @return string|false La contraseña validada o false si no cumple con los requisitos.
+ */
 function validarPassword($password){
     $passwordSaneado = sanearTexto($password);
-    if (!preg_match("/^(?=.*[A-Z])(?=.*\d).{5,}$/", $passwordSaneado)) {
-        $passwordSaneado = false;
-    }
-    
-    return $passwordSaneado;
+    return preg_match("/^(?=.*[A-Z])(?=.*\d).{5,}$/", $passwordSaneado) ? $passwordSaneado : false;
 }
 
+/**
+ * Valida un nombre de usuario. Acepta letras, tildes, ñ y espacios.
+ * @param string $usuario El nombre de usuario a validar.
+ * @return string|false El nombre de usuario validado o false si no es válido.
+ */
 function validarUsuario($usuario){
-    
     $usuarioSaneado = sanearTexto($usuario);
-    
-    // Expresión regular actualizada para aceptar letras, tildes, ñ y espacios
-    if (!preg_match('/^[A-Za-zÁÉÍÓÚáéíóúÑñ]+(?:\s[A-Za-zÁÉÍÓÚáéíóúÑñ]+)*$/', $usuarioSaneado)) {
-        
-        $usuarioSaneado = false;
-    }
-    
-    return $usuarioSaneado;
+    return preg_match('/^[A-Za-zÁÉÍÓÚáéíóúÑñ]+(?:\s[A-Za-zÁÉÍÓÚáéíóúÑñ]+)*$/', $usuarioSaneado) ? $usuarioSaneado : false;
 }
 
-
-//1 ó 2 apellidos, separados, no sensitivo a mayúsculas ni minúsculas
+/**
+ * Valida uno o dos apellidos. No distingue entre mayúsculas y minúsculas.
+ * @param string $apellidos Los apellidos a validar.
+ * @return string|false Los apellidos validados o false si no son válidos.
+ */
 function validarApellidos($apellidos){
     $apellidosSaneado = sanearTexto($apellidos);
-    if (!preg_match("/^[a-záéíóúñ]+( [a-záéíóúñ]+)?$/iu", $apellidosSaneado)) {
-        $apellidosSaneado = false;
-    }
-    
-    return $apellidosSaneado;
+    return preg_match("/^[a-záéíóúñ]+( [a-záéíóúñ]+)?$/iu", $apellidosSaneado) ? $apellidosSaneado : false;
 }
 
+/**
+ * Valida un código postal español (5 dígitos).
+ * @param string $codigoPostal El código postal a validar.
+ * @return string|false El código postal validado o false si no es válido.
+ */
 function validarCodigoPostal($codigoPostal){
     $codigoPostalSaneado = sanearTexto($codigoPostal);
-    if (!preg_match("/^\d{5}$/", $codigoPostalSaneado)) {
-        $codigoPostalSaneado = false;
-    }
-    
-    return $codigoPostalSaneado;
+    return preg_match("/^\d{5}$/", $codigoPostalSaneado) ? $codigoPostalSaneado : false;
 }
 
-//Función para validar el día
-
+/**
+ * Valida y estandariza el nombre de un día de la semana.
+ * @param string $dia El día a validar.
+ * @return string|false El día estandarizado o false si no es válido.
+ */
 function validarDiaSemana($dia) {
-    // Sanear el texto
     $diaSaneado = trim(mb_strtolower(sanearTexto($dia), 'UTF-8'));
 
-    // Lista de días válidos estandarizados
     $diasEstandarizados = [
         'lunes' => 'Lunes',
         'martes' => 'Martes',
@@ -93,22 +93,24 @@ function validarDiaSemana($dia) {
         'domingo' => 'Domingo'
     ];
 
-    // Estandarizar el día o devolver false si no es válido
-    $diaSaneado = $diasEstandarizados[$diaSaneado] ?? false;
-
-    return $diaSaneado;
+    return $diasEstandarizados[$diaSaneado] ?? false;
 }
 
-
-
-//Funciones de mensajes Flash. Evito mostrar los mensajes en 
-//la página del controlador.
-
-
+/**
+ * Almacena un mensaje flash en la sesión.
+ * @param string $key Clave identificadora del mensaje.
+ * @param string $message El mensaje a guardar.
+ * @return void
+ */
 function setFlash($key, $message) {
     $_SESSION['flash'][$key] = $message;
 }
 
+/**
+ * Recupera y elimina un mensaje flash de la sesión.
+ * @param string $key Clave identificadora del mensaje.
+ * @return string|null El mensaje si existe, o null si no existe.
+ */
 function getFlash($key) {
     if (isset($_SESSION['flash'][$key])) {
         $msg = $_SESSION['flash'][$key];
